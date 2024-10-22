@@ -1,0 +1,5 @@
+package data;
+
+public enum Role {
+    SALES_MANAGER, PURCHASE_MANAGER, INVENTORY_MANAGER, FINANCE_MANAGER, ADMIN
+}
