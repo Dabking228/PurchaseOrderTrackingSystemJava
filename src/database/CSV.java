@@ -12,12 +12,18 @@ public class CSV {
 
     // TODO test
     public static <T extends BaseItem> void save(Map<String, T> objects, String filePath) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(dataPath + filePath))) {
+        try {
+            filePath = dataPath + filePath;
+            FileWriter fileWriter = new FileWriter(filePath);
+            BufferedWriter writer = new BufferedWriter(fileWriter);
+
             if (!objects.isEmpty()) {
                 for (Map.Entry<String, T> entry : objects.entrySet()) {
-                    T object = entry.getValue();
                     StringBuilder csvString = new StringBuilder();
+
+                    T object = entry.getValue();
                     Field[] fields = object.getClass().getDeclaredFields();
+
                     for (Field field : fields) {
                         field.setAccessible(true);
                         csvString.append(field.get(object)).append(",");
@@ -31,6 +37,7 @@ public class CSV {
                     writer.newLine();
                 }
             }
+
             writer.close();
         } catch (IOException | IllegalAccessException e) {
             e.printStackTrace();
@@ -39,7 +46,11 @@ public class CSV {
 
     // TODO test
     public static <T extends BaseItem> void load(Map<String, T> objects, String filePath, Class<T> clazz) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(dataPath + filePath))) {
+        try {
+            filePath = dataPath + filePath;
+            FileReader fileReader = new FileReader(filePath);
+            BufferedReader reader = new BufferedReader(fileReader);
+
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
@@ -47,6 +58,9 @@ public class CSV {
                 T object = constructor.newInstance(data[0], data[1]);
                 objects.put(data[0], object);
             }
+
+            reader.close();
+
         } catch (IOException | ReflectiveOperationException e) {
             e.printStackTrace();
         }
