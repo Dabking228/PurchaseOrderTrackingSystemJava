@@ -8,9 +8,11 @@ import java.util.Map;
 // and since if we're already using reflection on load(), we might as well use it on save(), and get rid of toString()
 
 public class CSV {
+    static String dataPath = "data/";
+
     // TODO test
     public static <T extends BaseItem> void save(Map<String, T> objects, String filePath) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(dataPath + filePath))) {
             if (!objects.isEmpty()) {
                 for (Map.Entry<String, T> entry : objects.entrySet()) {
                     T object = entry.getValue();
@@ -24,10 +26,12 @@ public class CSV {
                     if (csvString.length() > 0) {
                         csvString.setLength(csvString.length() - 1);
                     }
+
                     writer.write(csvString.toString());
                     writer.newLine();
                 }
             }
+            writer.close();
         } catch (IOException | IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -35,7 +39,7 @@ public class CSV {
 
     // TODO test
     public static <T extends BaseItem> void load(Map<String, T> objects, String filePath, Class<T> clazz) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(dataPath + filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
