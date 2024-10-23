@@ -15,7 +15,7 @@ public class UserInterface {
     }
 
     private void initializeSystem() {
-        // TODO
+        Backend backend = new Backend();
     }
 
     private void initializeUserInterface() {

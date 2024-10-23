@@ -7,6 +7,8 @@ public class Backend {
     public Backend() {
         Database db = new Database();
 
+        // db.load();
+
         Account account = new Account("admin", "admin", Role.ADMIN);
         db.addAccount(account);
 
@@ -30,5 +32,7 @@ public class Backend {
                 new java.util.Date(),
                 500.00);
         db.addPurchaseOrder(po);
+
+        db.save();
     }
 }
