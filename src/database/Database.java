@@ -2,12 +2,7 @@ package database;
 
 import java.util.HashMap;
 
-import data.Account;
-import data.Item;
-import data.PurchaseOrder;
-import data.PurchaseRequisition;
-import data.Sale;
-import data.Supplier;
+import data.*;
 
 public class Database {
     private HashMap<String, Account> accountsMap = new HashMap<>();
@@ -16,6 +11,24 @@ public class Database {
     private HashMap<String, Sale> salesMap = new HashMap<>();
     private HashMap<String, PurchaseRequisition> purchaseRequisitionsMap = new HashMap<>();
     private HashMap<String, PurchaseOrder> purchaseOrdersMap = new HashMap<>();
+
+    public void save() {
+        CSV.save(accountsMap, "accounts.csv");
+        CSV.save(itemsMap, "items.csv");
+        CSV.save(suppliersMap, "suppliers.csv");
+        CSV.save(salesMap, "sales.csv");
+        CSV.save(purchaseRequisitionsMap, "purchase_requisitions.csv");
+        CSV.save(purchaseOrdersMap, "purchase_orders.csv");
+    }
+
+    public void load() {
+        CSV.load(accountsMap, "accounts.csv", Account.class);
+        CSV.load(itemsMap, "items.csv", Item.class);
+        CSV.load(suppliersMap, "suppliers.csv", Supplier.class);
+        CSV.load(salesMap, "sales.csv", Sale.class);
+        CSV.load(purchaseRequisitionsMap, "purchase_requisitions.csv", PurchaseRequisition.class);
+        CSV.load(purchaseOrdersMap, "purchase_orders.csv", PurchaseOrder.class);
+    }
 
     // Account Methods
     public void addAccount(Account account) {
