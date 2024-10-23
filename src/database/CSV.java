@@ -4,13 +4,14 @@ import java.io.*;
 import java.lang.reflect.*;
 import java.util.Map;
 
-// TODO last time we have one load function per class, which is less feasible now that we have so many tables, so i'm trying to use reflection.
+import data.*;
+
+// last time we have one load function per class, which is less feasible now that we have so many tables, so i'm trying to use reflection.
 // and since if we're already using reflection on load(), we might as well use it on save(), and get rid of toString()
 
 public class CSV {
     static String dataPath = "data/";
 
-    // TODO test
     public static <T extends BaseItem> void save(Map<String, T> objects, String filePath) {
         try {
             filePath = dataPath + filePath;
@@ -44,7 +45,7 @@ public class CSV {
         }
     }
 
-    // TODO test
+    // FIXME
     public static <T extends BaseItem> void load(Map<String, T> objects, String filePath, Class<T> clazz) {
         try {
             filePath = dataPath + filePath;
