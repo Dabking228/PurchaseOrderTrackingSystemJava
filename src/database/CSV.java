@@ -8,6 +8,7 @@ import data.*;
 
 // last time we have one load function per class, which is less feasible now that we have so many tables, so i'm trying to use reflection.
 // and since if we're already using reflection on load(), we might as well use it on save(), and get rid of toString()
+// TODO remove toString() on all classes
 
 public class CSV {
     static String dataPath = "data/";
@@ -45,7 +46,6 @@ public class CSV {
         }
     }
 
-    // FIXME
     public static <T extends BaseItem> void load(Map<String, T> objects, String filePath, Class<T> clazz) {
         try {
             filePath = dataPath + filePath;
@@ -55,9 +55,28 @@ public class CSV {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
-                Constructor<T> constructor = clazz.getConstructor(String.class, String.class);
-                T object = constructor.newInstance(data[0], data[1]);
-                objects.put(data[0], object);
+
+                Constructor<?>[] constructors = clazz.getConstructors();
+                Constructor<T> matchingConstructor = null;
+
+                // Find the constructor that matches the number of parameters
+                for (Constructor<?> constructor : constructors) {
+                    if (constructor.getParameterCount() == data.length) {
+                        matchingConstructor = (Constructor<T>) constructor;
+                        break;
+                    }
+                }
+
+                if (matchingConstructor != null) {
+                    // Convert data array to Object array
+                    Object[] parameters = new Object[data.length];
+                    System.arraycopy(data, 0, parameters, 0, data.length);
+
+                    // Create a new instance using the matching constructor
+                    // FIXME java.lang.IllegalArgumentException: argument type mismatch
+                    T object = matchingConstructor.newInstance(parameters);
+                    objects.put(data[0], object);
+                }
             }
 
             reader.close();
