@@ -24,4 +24,4 @@ hs_err_pid*
 replay_pid*
 
 # user data
-data/
+/data/
