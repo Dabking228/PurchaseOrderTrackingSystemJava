@@ -3,11 +3,13 @@ package database;
 import java.io.*;
 import java.lang.reflect.*;
 import java.util.Map;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 import data.*;
 
-// last time we have one load function per class, which is less feasible now that we have so many tables, so i'm trying to use reflection.
-// and since if we're already using reflection on load(), we might as well use it on save(), and get rid of toString()
+// last time we have one load function per class, and each class has a toString() function. this is much less feasible and elegant now that we have so many tables. so instead i'm using reflection.
 
 public class CSV {
     static String dataPath = "data/";
@@ -68,11 +70,15 @@ public class CSV {
 
                 if (matchingConstructor != null) {
                     // Convert data array to Object array
+                    Parameter[] parameterTypes = matchingConstructor.getParameters();
                     Object[] parameters = new Object[data.length];
                     System.arraycopy(data, 0, parameters, 0, data.length);
 
+                    for (int i = 0; i < data.length; i++) {
+                        parameters[i] = convertStringToType(data[i], parameterTypes[i].getType());
+                    }
+
                     // Create a new instance using the matching constructor
-                    // FIXME java.lang.IllegalArgumentException: argument type mismatch
                     T object = matchingConstructor.newInstance(parameters);
                     objects.put(data[0], object);
                 }
@@ -83,5 +89,32 @@ public class CSV {
         } catch (IOException | ReflectiveOperationException e) {
             e.printStackTrace();
         }
+    }
+
+    private static Object convertStringToType(String value, Class<?> type) {
+        if (type == String.class) {
+            return value;
+        } else if (type == int.class || type == Integer.class) {
+            return Integer.parseInt(value);
+        } else if (type == double.class || type == Double.class) {
+            return Double.parseDouble(value);
+        } else if (type == boolean.class || type == Boolean.class) {
+            return Boolean.parseBoolean(value);
+
+        } else if (type == Role.class) {
+            return Role.valueOf(value);
+        } else if (type == Status.class) {
+            return Status.valueOf(value);
+
+        } else if (type == Date.class) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+            try {
+                return dateFormat.parse(value);
+            } catch (ParseException e) {
+                throw new IllegalArgumentException("Invalid date format: " + value, e);
+            }
+        }
+
+        throw new IllegalArgumentException("Unsupported parameter type: " + type.getName());
     }
 }

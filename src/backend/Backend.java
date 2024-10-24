@@ -7,7 +7,7 @@ public class Backend {
     public Backend() {
         Database db = new Database();
 
-        // db.load();
+        db.load();
 
         Account account = new Account("admin", "admin", Role.ADMIN);
         db.addAccount(account);
