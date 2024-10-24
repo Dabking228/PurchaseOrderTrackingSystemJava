@@ -71,14 +71,4 @@ public class PurchaseOrder extends BaseItem {
     public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }
-
-    @Override
-    public String toString() {
-        return PurchaseRequisitionId + ","
-                + supplierId + ","
-                + purchaseManagerId + ","
-                + poStatus + ","
-                + createdDate + ","
-                + totalAmount;
-    }
 }

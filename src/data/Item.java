@@ -58,9 +58,4 @@ public class Item extends BaseItem {
     public void setReorderLevel(int reorderLevel) {
         this.reorderLevel = reorderLevel;
     }
-
-    @Override
-    public String toString() {
-        return itemCode + "," + itemName + "," + supplierId + "," + stockLevel + "," + reorderLevel;
-    }
 }

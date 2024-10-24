@@ -60,9 +60,4 @@ public class PurchaseRequisition extends BaseItem {
     public void setStatus(Status status) {
         this.status = status;
     }
-
-    @Override
-    public String toString() {
-        return itemId + "," + quantity + "," + requiredByDate + "," + salesManagerId + "," + status;
-    }
 }

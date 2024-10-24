@@ -38,9 +38,4 @@ public class Supplier extends BaseItem {
     public void setContactInfo(String contactInfo) {
         this.contactInfo = contactInfo;
     }
-
-    @Override
-    public String toString() {
-        return supplierCode + "," + supplierName + "," + contactInfo;
-    }
 }

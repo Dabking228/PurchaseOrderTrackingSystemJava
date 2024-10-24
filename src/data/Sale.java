@@ -50,9 +50,4 @@ public class Sale extends BaseItem {
     public void setSalesManagerId(int salesManagerId) {
         this.salesManagerId = salesManagerId;
     }
-
-    @Override
-    public String toString() {
-        return itemId + "," + quantitySold + "," + saleDate + "," + salesManagerId;
-    }
 }

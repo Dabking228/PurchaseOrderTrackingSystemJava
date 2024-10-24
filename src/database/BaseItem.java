@@ -16,6 +16,4 @@ public abstract class BaseItem {
     protected void setId(String id) {
         this.Id = id;
     }
-
-    public abstract String toString();
 }

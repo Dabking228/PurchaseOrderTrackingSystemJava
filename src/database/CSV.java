@@ -8,7 +8,6 @@ import data.*;
 
 // last time we have one load function per class, which is less feasible now that we have so many tables, so i'm trying to use reflection.
 // and since if we're already using reflection on load(), we might as well use it on save(), and get rid of toString()
-// TODO remove toString() on all classes
 
 public class CSV {
     static String dataPath = "data/";
