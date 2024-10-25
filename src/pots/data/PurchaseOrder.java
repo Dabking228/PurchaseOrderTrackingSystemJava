@@ -2,8 +2,6 @@ package data;
 
 import java.util.Date;
 
-import database.BaseItem;
-
 public class PurchaseOrder extends BaseItem {
     private String PurchaseRequisitionId;
     private String supplierId;

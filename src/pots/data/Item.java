@@ -1,7 +1,5 @@
 package data;
 
-import database.BaseItem;
-
 public class Item extends BaseItem {
     private String itemCode;
     private String itemName;

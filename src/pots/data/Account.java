@@ -1,7 +1,5 @@
 package data;
 
-import database.BaseItem;
-
 public class Account extends BaseItem {
     private String username;
     private String password;

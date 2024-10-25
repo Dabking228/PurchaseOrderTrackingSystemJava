@@ -1,7 +1,5 @@
 package data;
 
-import database.BaseItem;
-
 public class Supplier extends BaseItem {
     private String supplierCode;
     private String supplierName;

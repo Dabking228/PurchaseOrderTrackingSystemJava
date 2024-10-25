@@ -2,8 +2,6 @@ package data;
 
 import java.util.Date;
 
-import database.BaseItem;
-
 public class Sale extends BaseItem {
     private String itemId;
     private int quantitySold;
