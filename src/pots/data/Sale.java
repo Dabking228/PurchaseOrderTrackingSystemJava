@@ -18,6 +18,14 @@ public class Sale extends BaseItem {
         this.salesManagerId = salesManagerId;
     }
 
+    public Sale(String itemId, int quantitySold, Date saleDate, int salesManagerId, String Id) {
+        this.itemId = itemId;
+        this.quantitySold = quantitySold;
+        this.saleDate = saleDate;
+        this.salesManagerId = salesManagerId;
+        this.Id = Id;
+    }
+
     // Getters and Setters
     public String getItemId() {
         return itemId;

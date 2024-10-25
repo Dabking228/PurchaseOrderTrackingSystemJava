@@ -23,6 +23,17 @@ public class PurchaseOrder extends BaseItem {
         this.totalAmount = totalAmount;
     }
 
+    public PurchaseOrder(String PurchaseRequisitionId, String supplierId, String purchaseManagerId, String poStatus,
+            Date createdDate, double totalAmount, String Id) {
+        this.PurchaseRequisitionId = PurchaseRequisitionId;
+        this.supplierId = supplierId;
+        this.purchaseManagerId = purchaseManagerId;
+        this.poStatus = poStatus;
+        this.createdDate = createdDate;
+        this.totalAmount = totalAmount;
+        this.Id = Id;
+    }
+
     // Getters and Setters
     public String getPurchaseRequisitionId() {
         return PurchaseRequisitionId;

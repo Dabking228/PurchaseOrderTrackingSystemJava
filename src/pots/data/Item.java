@@ -18,6 +18,15 @@ public class Item extends BaseItem {
         this.reorderLevel = reorderLevel;
     }
 
+    public Item(String itemCode, String itemName, int supplierId, int stockLevel, int reorderLevel, String Id) {
+        this.itemCode = itemCode;
+        this.itemName = itemName;
+        this.supplierId = supplierId;
+        this.stockLevel = stockLevel;
+        this.reorderLevel = reorderLevel;
+        this.Id = Id;
+    }
+
     // Getters and Setters
     public String getItemCode() {
         return itemCode;

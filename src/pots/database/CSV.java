@@ -25,12 +25,17 @@ public class CSV {
                     StringBuilder csvString = new StringBuilder();
 
                     T object = entry.getValue();
-                    Field[] fields = object.getClass().getDeclaredFields();
+                    Class<?> clazz = object.getClass();
 
-                    for (Field field : fields) {
-                        field.setAccessible(true);
-                        csvString.append(field.get(object)).append(",");
+                    while (clazz != null) {
+                        Field[] fields = clazz.getDeclaredFields();
+                        for (Field field : fields) {
+                            field.setAccessible(true);
+                            csvString.append(field.get(object)).append(",");
+                        }
+                        clazz = clazz.getSuperclass();
                     }
+
                     // Remove the trailing comma
                     if (csvString.length() > 0) {
                         csvString.setLength(csvString.length() - 1);
@@ -47,7 +52,7 @@ public class CSV {
         }
     }
 
-    public static <T extends BaseItem> void load(Map<String, T> objects, String filePath, Class<T> clazz) {
+    public static <T extends BaseItem> void load(Map<String, T> hashMap, String filePath, Class<T> clazz) {
         try {
             filePath = dataPath + filePath;
             FileReader fileReader = new FileReader(filePath);
@@ -60,6 +65,7 @@ public class CSV {
                 Constructor<?>[] constructors = clazz.getConstructors();
                 Constructor<T> matchingConstructor = null;
 
+                // FIXME tons of weird behaviors here
                 // Find the constructor that matches the number of parameters
                 for (Constructor<?> constructor : constructors) {
                     if (constructor.getParameterCount() == data.length) {
@@ -80,7 +86,7 @@ public class CSV {
 
                     // Create a new instance using the matching constructor
                     T object = matchingConstructor.newInstance(parameters);
-                    objects.put(data[0], object);
+                    hashMap.put(data[0], object);
                 }
             }
 

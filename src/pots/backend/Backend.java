@@ -5,6 +5,7 @@ import database.*;
 
 public class Backend {
     public Backend() {
+        // test code for now
         Database db = new Database();
 
         db.load();

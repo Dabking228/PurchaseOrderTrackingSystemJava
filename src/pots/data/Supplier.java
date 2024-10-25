@@ -14,6 +14,13 @@ public class Supplier extends BaseItem {
         this.contactInfo = contactInfo;
     }
 
+    public Supplier(String supplierCode, String supplierName, String contactInfo, String Id) {
+        this.supplierCode = supplierCode;
+        this.supplierName = supplierName;
+        this.contactInfo = contactInfo;
+        this.Id = Id;
+    }
+
     // Getters and Setters
     public String getSupplierCode() {
         return supplierCode;

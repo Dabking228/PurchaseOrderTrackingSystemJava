@@ -13,6 +13,13 @@ public class Account extends BaseItem {
         this.role = role;
     }
 
+    public Account(String username, String password, Role role, String Id) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.Id = Id;
+    }
+
     // Getters and Setters
     public String getUsername() {
         return username;

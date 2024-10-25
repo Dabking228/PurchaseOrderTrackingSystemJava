@@ -20,6 +20,16 @@ public class PurchaseRequisition extends BaseItem {
         this.status = status;
     }
 
+    public PurchaseRequisition(String itemId, int quantity, Date requiredByDate, int salesManagerId, Status status,
+            String Id) {
+        this.itemId = itemId;
+        this.quantity = quantity;
+        this.requiredByDate = requiredByDate;
+        this.salesManagerId = salesManagerId;
+        this.status = status;
+        this.Id = Id;
+    }
+
     // Getters and Setters
     public String getItemId() {
         return itemId;
