@@ -10,7 +10,6 @@ public class Backend {
         db.load();
 
         // test code for now
-
         Account account = new Account("admin", "admin", Role.ADMIN);
         db.addAccount(account);
 
