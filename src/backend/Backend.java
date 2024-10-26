@@ -3,11 +3,13 @@ package backend;
 import data.*;
 
 public class Backend {
-    public Backend() {
-        // test code for now
-        Database db = new Database();
+    private Database db;
 
+    public Backend() {
+        db = new Database();
         db.load();
+
+        // test code for now
 
         Account account = new Account("admin", "admin", Role.ADMIN);
         db.addAccount(account);
@@ -33,6 +35,10 @@ public class Backend {
                 500.00);
         db.addPurchaseOrder(po);
 
+        db.save();
+    }
+
+    public void save() {
         db.save();
     }
 }
