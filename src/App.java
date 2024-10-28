@@ -1,5 +1,3 @@
-package pots;
-
 import user_interface.*;
 
 public class App {
