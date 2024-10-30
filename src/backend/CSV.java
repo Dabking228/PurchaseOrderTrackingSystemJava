@@ -13,13 +13,21 @@ import data.*;
 // last time we have one load function per class, and each class has a toString() function. this is much less feasible and elegant now that we have so many tables. so instead i'm using reflection.
 
 public class CSV {
-    static String dataPath = "data/";
+    static String dataDir = "data/";
 
-    public static <T extends BaseItem> void save(Map<String, T> objects, String filePath) {
+    public static <T extends BaseItem> void save(Map<String, T> objects, String fileName) {
         try {
-            filePath = dataPath + filePath;
-            FileWriter fileWriter = new FileWriter(filePath);
-            BufferedWriter writer = new BufferedWriter(fileWriter);
+            Path dir = Paths.get(dataDir);
+            if (!Files.exists(dir)) {
+                Files.createDirectories(dir);
+            }
+
+            Path file = dir.resolve(fileName);
+            if (!Files.exists(file)) {
+                Files.createFile(file);
+            }
+
+            BufferedWriter writer = Files.newBufferedWriter(file);
 
             if (!objects.isEmpty()) {
                 for (Map.Entry<String, T> entry : objects.entrySet()) {
@@ -55,7 +63,7 @@ public class CSV {
 
     public static <T extends BaseItem> void load(Map<String, T> hashMap, String filePath, Class<T> clazz) {
         try {
-            Path file = createOrRetrieve(dataPath, filePath);
+            Path file = Paths.get(dataDir + filePath);
             BufferedReader reader = Files.newBufferedReader(file);
 
             String line;
@@ -93,7 +101,7 @@ public class CSV {
             reader.close();
 
         } catch (IOException | ReflectiveOperationException e) {
-            e.printStackTrace();
+            System.out.println("File not created yet: " + filePath);
         }
     }
 
