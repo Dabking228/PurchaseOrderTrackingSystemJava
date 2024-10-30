@@ -2,6 +2,7 @@ package backend;
 
 import java.io.*;
 import java.lang.reflect.*;
+import java.nio.file.*;
 import java.util.Map;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -54,9 +55,8 @@ public class CSV {
 
     public static <T extends BaseItem> void load(Map<String, T> hashMap, String filePath, Class<T> clazz) {
         try {
-            filePath = dataPath + filePath;
-            FileReader fileReader = new FileReader(filePath);
-            BufferedReader reader = new BufferedReader(fileReader);
+            Path file = createOrRetrieve(dataPath, filePath);
+            BufferedReader reader = Files.newBufferedReader(file);
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -122,5 +122,12 @@ public class CSV {
         }
 
         throw new IllegalArgumentException("Unsupported parameter type: " + type.getName());
+    }
+
+    public static Path createOrRetrieve(String directory, String filename) throws IOException {
+        File dir = new File(directory);
+        if (!dir.exists())
+            dir.mkdirs();
+        return Paths.get(directory + File.separatorChar + filename);
     }
 }
