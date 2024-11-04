@@ -5,12 +5,12 @@ import java.util.HashMap;
 import data.*;
 
 public class Database {
-    private HashMap<String, Account> accountsMap = new HashMap<>();
-    private HashMap<String, Item> itemsMap = new HashMap<>();
-    private HashMap<String, Supplier> suppliersMap = new HashMap<>();
-    private HashMap<String, Sale> salesMap = new HashMap<>();
-    private HashMap<String, PurchaseRequisition> purchaseRequisitionsMap = new HashMap<>();
-    private HashMap<String, PurchaseOrder> purchaseOrdersMap = new HashMap<>();
+    public HashMap<String, Account> accountsMap = new HashMap<>();
+    public HashMap<String, Item> itemsMap = new HashMap<>();
+    public HashMap<String, Supplier> suppliersMap = new HashMap<>();
+    public HashMap<String, Sale> salesMap = new HashMap<>();
+    public HashMap<String, PurchaseRequisition> purchaseRequisitionsMap = new HashMap<>();
+    public HashMap<String, PurchaseOrder> purchaseOrdersMap = new HashMap<>();
 
     public void save() {
         CSV.save(accountsMap, "accounts.csv");
