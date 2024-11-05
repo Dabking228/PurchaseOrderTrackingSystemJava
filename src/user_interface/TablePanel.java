@@ -12,7 +12,7 @@ abstract class TablePanel extends JPanel {
     protected JTable itemsTable;
     protected int buttonColumnIndex;
 
-    // Creates the UI
+    // Create the UI
     public TablePanel(String title, int buttonColumnIndex) {
         this.buttonColumnIndex = buttonColumnIndex;
         setLayout(new BorderLayout());
