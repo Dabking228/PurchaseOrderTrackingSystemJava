@@ -4,6 +4,7 @@ import data.*;
 
 public class Backend {
     private Database db;
+    private Account currentAccount;
 
     public Backend() {
         db = new Database();
@@ -39,5 +40,20 @@ public class Backend {
 
     public void save() {
         db.save();
+    }
+
+    public void login(String username, String password) {
+        Account account = db.getAccount(username);
+
+        if (account.getPassword() == password) {
+            System.out.println("Login successful");
+            currentAccount = account;
+        } else {
+            System.out.println("Login failed");
+        }
+    }
+
+    public void logout() {
+        currentAccount = null;
     }
 }
