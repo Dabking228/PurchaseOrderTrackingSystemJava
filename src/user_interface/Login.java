@@ -105,22 +105,7 @@ public class Login extends javax.swing.JPanel {
     }
 
     private boolean validateLogin(String username, String password) {
-        File file = new File("users.txt");
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] credentials = line.split(",");
-                if (credentials.length == 2) {
-                    String fileUsername = credentials[0].split(": ")[1].trim();
-                    String filePassword = credentials[1].split(": ")[1].trim();
-                    if (fileUsername.equals(username) && filePassword.equals(password)) {
-                        return true;
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // TODO
         return false;
     }
 
