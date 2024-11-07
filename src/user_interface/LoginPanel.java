@@ -87,7 +87,7 @@ public class Login extends javax.swing.JFrame {
 
         if (validateLogin(username, password)) {
             JOptionPane.showMessageDialog(this, "Login successful!");
-            
+
         } else {
             JOptionPane.showMessageDialog(this, "Invalid Login! Try again.");
         }
