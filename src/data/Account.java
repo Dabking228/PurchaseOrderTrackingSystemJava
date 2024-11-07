@@ -1,32 +1,16 @@
 package data;
 
 public class Account extends BaseItem {
-    private String username;
     private String password;
     private Role role;
 
     public Account(String username, String password, Role role) {
-        this.username = username;
         this.password = password;
         this.role = role;
-    }
-
-    public Account(String username, String password, Role role, String Id) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
-        this.Id = Id;
+        this.Id = username;
     }
 
     // Getters and Setters
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
     }

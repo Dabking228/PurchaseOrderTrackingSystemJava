@@ -21,18 +21,16 @@ public class CSV {
             if (!Files.exists(dir)) {
                 Files.createDirectories(dir);
             }
-
             Path file = dir.resolve(fileName);
             if (!Files.exists(file)) {
                 Files.createFile(file);
             }
 
             BufferedWriter writer = Files.newBufferedWriter(file);
-
             if (!objects.isEmpty()) {
                 for (Map.Entry<String, T> entry : objects.entrySet()) {
-                    StringBuilder csvString = new StringBuilder();
 
+                    StringBuilder csvString = new StringBuilder();
                     T object = entry.getValue();
                     Class<?> clazz = object.getClass();
 
@@ -44,7 +42,6 @@ public class CSV {
                         }
                         clazz = clazz.getSuperclass();
                     }
-
                     // Remove the trailing comma
                     if (csvString.length() > 0) {
                         csvString.setLength(csvString.length() - 1);
