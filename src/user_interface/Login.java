@@ -1,9 +1,5 @@
 package user_interface;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JPanel {
