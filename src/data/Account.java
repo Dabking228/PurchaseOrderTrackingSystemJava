@@ -11,6 +11,14 @@ public class Account extends BaseItem {
     }
 
     // Getters and Setters
+    public String getUsername() {
+        return Id;
+    }
+
+    void setUsername(String username) {
+        this.Id = username;
+    }
+
     public String getPassword() {
         return password;
     }
