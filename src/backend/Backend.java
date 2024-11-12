@@ -3,7 +3,7 @@ package backend;
 import data.*;
 
 public class Backend {
-    private Database db;
+    public Database db;
     private Account currentAccount;
 
     public Backend() {
