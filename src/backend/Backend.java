@@ -42,15 +42,18 @@ public class Backend {
         db.save();
     }
 
-    public void login(String username, String password) {
+    public boolean login(String username, String password) {
         Account account = db.getAccount(username);
+        String accountPassword = account.getPassword();
 
-        if (account.getPassword() == password) {
+        if (accountPassword.equals(password)) {
             System.out.println("Login successful");
             currentAccount = account;
-        } else {
-            System.out.println("Login failed");
+            return true;
         }
+
+        System.out.println("Login failed");
+        return false;
     }
 
     public void logout() {

@@ -54,7 +54,7 @@ public class UserInterface {
         mainPanel.setLayout(cardLayout);
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        login = new Login();
+        login = new Login(backend);
         mainPanel.add(login, "login");
 
         frame.setContentPane(mainPanel);
