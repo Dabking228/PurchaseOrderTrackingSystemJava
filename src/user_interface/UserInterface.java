@@ -39,7 +39,7 @@ public class UserInterface {
 
         // Initialize frame
         cardLayout = new CardLayout();
-        frame = new JFrame("AHHASC System");
+        frame = new JFrame("POTS");
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             @Override
