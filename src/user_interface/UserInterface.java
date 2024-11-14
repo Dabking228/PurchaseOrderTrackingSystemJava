@@ -68,7 +68,7 @@ public class UserInterface {
         // }
 
         cardLayout.show(mainPanel, panelName);
-        // frame.pack();
+        frame.pack();
         frame.setVisible(true);
     }
 }
