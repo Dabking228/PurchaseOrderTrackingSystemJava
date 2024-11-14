@@ -12,6 +12,7 @@ public class UserInterface {
 
     private JPanel mainPanel;
     private Login login;
+    private MainMenu mainMenu;
 
     public UserInterface() {
         initializeSystem();
@@ -54,8 +55,11 @@ public class UserInterface {
         mainPanel.setLayout(cardLayout);
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        login = new Login(backend);
+        // WONTFIX might not be ideal since there are a lot of pages in this project
+        login = new Login(backend, this);
+        mainMenu = new MainMenu(backend, this);
         mainPanel.add(login, "login");
+        mainPanel.add(mainMenu, "mainMenu");
 
         frame.setContentPane(mainPanel);
 

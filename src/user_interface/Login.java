@@ -5,13 +5,15 @@ import backend.Backend;
 
 public class Login extends javax.swing.JPanel {
     Backend backend;
+    UserInterface userInterface;
 
     public Login() {
         initComponents();
     }
 
-    public Login(Backend backend) {
+    public Login(Backend backend, UserInterface userInterface) {
         this.backend = backend;
+        this.userInterface = userInterface;
         initComponents();
     }
 
@@ -101,7 +103,7 @@ public class Login extends javax.swing.JPanel {
 
         if (validateLogin(username, password)) {
             JOptionPane.showMessageDialog(this, "Login successful!");
-            // TODO open main menu
+            userInterface.showPanel("mainMenu");
 
         } else {
             JOptionPane.showMessageDialog(this, "Invalid Login! Try again.");
