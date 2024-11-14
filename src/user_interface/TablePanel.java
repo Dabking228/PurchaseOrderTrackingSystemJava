@@ -7,7 +7,7 @@ import javax.swing.*;
 
 // copied from my last assignment
 // TODO add child classes
-abstract class TablePanel extends JPanel {
+abstract class TablePanel extends JPanel implements TableRefreshable {
     protected JPanel panel, titleButtonPanel;
     protected JTable itemsTable;
     protected int buttonColumnIndex;
@@ -26,7 +26,7 @@ abstract class TablePanel extends JPanel {
         // Refresh table button
         JButton refreshButton = new JButton("Refresh");
         refreshButton.addActionListener(e -> {
-            refreshItemsTable();
+            refresh();
         });
         titleButtonPanel.add(refreshButton, BorderLayout.EAST);
         titlePanel.add(titleButtonPanel, BorderLayout.EAST);
@@ -57,5 +57,9 @@ abstract class TablePanel extends JPanel {
 
     abstract public void goToItem(int modelRow);
 
-    abstract public void refreshItemsTable();
+    abstract public void refresh();
+}
+
+interface TableRefreshable {
+    public void refresh();
 }

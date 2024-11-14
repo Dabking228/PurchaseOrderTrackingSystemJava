@@ -16,11 +16,12 @@ class AccountsTable extends TablePanel {
     private AccountsTableModel accountsTableModel;
     private Backend backend;
 
-    public AccountsTable() {
+    public AccountsTable(Backend backend) {
         super("Accounts", 2);
+        this.backend = backend;
 
-        // Back button?
-        // Add user button
+        // TODO BackButton
+        // TODO AddUserButton
     }
 
     @Override
@@ -30,7 +31,7 @@ class AccountsTable extends TablePanel {
     }
 
     @Override
-    public void refreshItemsTable() {
+    public void refresh() {
         accounts = backend.db.accountsMap;
         ArrayList<Account> accountsArray = new ArrayList<>(accounts.values());
         accountsTableModel.setAccounts(accountsArray);
@@ -41,7 +42,7 @@ class AccountsTable extends TablePanel {
         Account accountToDelete = accountsTableModel.accounts.get(modelRow);
         backend.db.accountsMap.remove(accountToDelete.getId());
         accounts = backend.db.accountsMap;
-        refreshItemsTable();
+        refresh();
     }
 }
 
