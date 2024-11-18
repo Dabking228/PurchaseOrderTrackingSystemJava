@@ -88,8 +88,9 @@ class MainMenuPanel extends JPanel {
     }
 
     private void createNestedPanel() {
-        nestedPanel = new JPanel(new FlowLayout());
-        add(nestedPanel, BorderLayout.CENTER);
+        nestedPanel = new JPanel(new GridLayout(0, 2, 20, 20));
+        nestedPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        add(nestedPanel);
     }
 
     private void createTitlePanel() {
