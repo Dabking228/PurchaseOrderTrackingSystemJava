@@ -1,7 +1,7 @@
 package user_interface;
 
-import javax.swing.JButton;
-import javax.swing.JTable;
+import java.awt.*;
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
 import java.util.ArrayList;
@@ -16,12 +16,23 @@ class AccountsTable extends TablePanel {
     private AccountsTableModel accountsTableModel;
     private Backend backend;
 
-    public AccountsTable(Backend backend) {
+    public AccountsTable(Backend backend, MainMenu parent) {
         super("Accounts", 2);
         this.backend = backend;
 
-        // TODO BackButton
-        // TODO AddUserButton
+        // back button
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(e -> {
+            parent.showMainMenu();
+        });
+        titleButtonPanel.add(backButton, 0);
+
+        // add account button
+        JButton addAccountButton = new JButton("Add Account");
+        addAccountButton.addActionListener(e -> {
+            // TODO
+        });
+        titleButtonPanel.add(addAccountButton, 2);
     }
 
     @Override

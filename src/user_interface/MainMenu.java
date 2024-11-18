@@ -28,7 +28,7 @@ public class MainMenu extends JPanel {
         setLayout(cardLayout);
 
         MainMenuPanel mainMenuPanel = new MainMenuPanel(backend, this);
-        accountsTable = new AccountsTable(backend);
+        accountsTable = new AccountsTable(backend, this);
         add(accountsTable, "accountsTable");
         add(mainMenuPanel, "mainMenuPanel");
 
@@ -42,6 +42,10 @@ public class MainMenu extends JPanel {
         if (currentPanel instanceof TableRefreshable) {
             ((TableRefreshable) currentPanel).refresh();
         }
+    }
+
+    void showMainMenu() {
+        showPanel("mainMenuPanel");
     }
 
     // WONTFIX i don't think there is any other way to do this
