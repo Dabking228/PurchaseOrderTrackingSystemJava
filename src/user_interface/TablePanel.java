@@ -8,7 +8,6 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
 import backend.Backend;
-import data.Account;
 import data.BaseItem;
 
 // copied from my last assignment

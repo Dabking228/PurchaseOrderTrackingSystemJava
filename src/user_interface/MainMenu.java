@@ -9,7 +9,6 @@ import backend.Backend;
 public class MainMenu extends JPanel {
     private CardLayout cardLayout;
     private AccountsTable accountsTable;
-    private JPanel currentPanel;
 
     private Backend backend;
     private UserInterface userInterface;
@@ -24,7 +23,7 @@ public class MainMenu extends JPanel {
         this.cardLayout = new CardLayout();
         setLayout(cardLayout);
 
-        MainMenuPanel mainMenuPanel = new MainMenuPanel(backend, this);
+        MainMenuPanel mainMenuPanel = new MainMenuPanel(this);
         accountsTable = new AccountsTable(backend, this);
         ItemsTable itemsTable = new ItemsTable(backend, this);
         add(accountsTable, "accountsTable");
@@ -71,10 +70,8 @@ class MainMenuPanel extends JPanel {
     private TitlePanel titlePanel;
 
     private MainMenu mainMenu;
-    private Backend backend;
 
-    public MainMenuPanel(Backend backend, MainMenu mainMenu) {
-        this.backend = backend;
+    public MainMenuPanel(MainMenu mainMenu) {
         this.mainMenu = mainMenu;
 
         createTitlePanel();
