@@ -104,6 +104,8 @@ public class Login extends javax.swing.JPanel {
         if (validateLogin(username, password)) {
             JOptionPane.showMessageDialog(this, "Login successful!");
             userInterface.showPanel("mainMenu");
+            Usernametxt.setText("");
+            Passwordtxt.setText("");
 
         } else {
             JOptionPane.showMessageDialog(this, "Invalid Login! Try again.");

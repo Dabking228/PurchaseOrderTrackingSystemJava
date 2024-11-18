@@ -1,11 +1,8 @@
 package user_interface;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Component;
-import java.awt.FlowLayout;
-
+import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 import backend.Backend;
 
@@ -29,7 +26,9 @@ public class MainMenu extends JPanel {
 
         MainMenuPanel mainMenuPanel = new MainMenuPanel(backend, this);
         accountsTable = new AccountsTable(backend, this);
+        ItemsTable itemsTable = new ItemsTable(backend, this);
         add(accountsTable, "accountsTable");
+        add(itemsTable, "itemsTable");
         add(mainMenuPanel, "mainMenuPanel");
 
         showPanel("mainMenuPanel");
@@ -46,6 +45,11 @@ public class MainMenu extends JPanel {
 
     void showMainMenu() {
         showPanel("mainMenuPanel");
+    }
+
+    void logout() {
+        backend.logout();
+        userInterface.showPanel("login");
     }
 
     // WONTFIX i don't think there is any other way to do this
@@ -84,7 +88,19 @@ class MainMenuPanel extends JPanel {
             mainMenu.showPanel("accountsTable");
         });
 
+        JButton itemsButton = new JButton("Items");
+        itemsButton.addActionListener(e -> {
+            mainMenu.showPanel("itemsTable");
+        });
+
+        JButton logoutButton = new JButton("Logout");
+        logoutButton.addActionListener(e -> {
+            mainMenu.logout();
+        });
+
         nestedPanel.add(accountsButton);
+        nestedPanel.add(itemsButton);
+        nestedPanel.add(logoutButton);
     }
 
     private void createNestedPanel() {
