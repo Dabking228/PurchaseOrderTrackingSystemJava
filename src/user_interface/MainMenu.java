@@ -9,13 +9,14 @@ import backend.Backend;
 public class MainMenu extends JPanel {
     private CardLayout cardLayout;
     private AccountsTable accountsTable;
-
     private Backend backend;
     private UserInterface userInterface;
+    private Role useRole;
 
     public MainMenu(Backend backend, UserInterface userInterface) {
         this.backend = backend;
         this.userInterface = userInterface;
+        this.userRole = userRole;
         initComponents();
     }
 
@@ -60,6 +61,14 @@ public class MainMenu extends JPanel {
         }
         return null;
     }
+    void handleRoleBasedActions() {
+        if (userRole == Role.ADMIN) {
+        } else if (userRole == Role.FINANCE_MANAGER) {
+        } else if (userRole == Role.INVENTORY_MANAGER) {
+        } else if (userRole == Role.SALES_MANAGER) {
+        }
+    }
+
 }
 
 class MainMenuPanel extends JPanel {
