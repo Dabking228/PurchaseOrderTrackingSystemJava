@@ -5,6 +5,11 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import backend.Backend;
+import user_interface.table.AccountsTable;
+import user_interface.table.ItemsTable;
+import user_interface.table.TableRefreshable;
+import user_interface.MainMenu;
+import user_interface.components.TitlePanel;
 
 public class MainMenu extends JPanel {
 
@@ -44,7 +49,7 @@ public class MainMenu extends JPanel {
         }
     }
 
-    void showMainMenu() {
+    public void showMainMenu() {
         showPanel("mainMenuPanel");
     }
 

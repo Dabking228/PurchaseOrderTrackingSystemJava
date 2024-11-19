@@ -1,4 +1,4 @@
-package user_interface;
+package user_interface.table;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -9,6 +9,9 @@ import javax.swing.table.AbstractTableModel;
 
 import backend.Backend;
 import data.BaseItem;
+import user_interface.MainMenu;
+import user_interface.components.ButtonColumn;
+import user_interface.components.TitlePanel;
 
 // copied from my last assignment
 // TODO add child classes
@@ -80,10 +83,6 @@ abstract class TablePanel<T extends BaseItem> extends JPanel implements TableRef
     }
 
     abstract public void itemButtonAction(int modelRow);
-}
-
-interface TableRefreshable {
-    public void refresh();
 }
 
 abstract class TablePanelModel<T extends BaseItem> extends AbstractTableModel {
