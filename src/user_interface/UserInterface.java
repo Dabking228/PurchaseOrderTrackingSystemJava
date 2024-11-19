@@ -14,7 +14,7 @@ public class UserInterface {
     private Login login;
     private MainMenu mainMenu;
 
-    public UserInterface() {
+    public void init() {
         initializeSystem();
         initializeUserInterface();
     }
