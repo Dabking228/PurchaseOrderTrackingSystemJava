@@ -58,8 +58,6 @@ public class UserInterface {
         // WONTFIX might not be ideal since there are a lot of pages in this project
         login = new Login(backend, this);
         mainPanel.add(login, "login");
-        mainMenu = new MainMenu(backend, this, backend.getRole());
-        mainPanel.add(mainMenu, "mainMenu");
 
         frame.setContentPane(mainPanel);
 
@@ -74,5 +72,15 @@ public class UserInterface {
         cardLayout.show(mainPanel, panelName);
         frame.pack();
         frame.setVisible(true);
+    }
+
+    public void showMainMenu() {
+        if (mainMenu != null) {
+            mainPanel.remove(mainMenu);
+        }
+        mainMenu = new MainMenu(backend, this, backend.getRole());
+        mainPanel.add(mainMenu, "mainMenu");
+
+        showPanel("mainMenu");
     }
 }
