@@ -3,12 +3,12 @@ package data;
 public class Item extends BaseItem {
     private String itemCode;
     private String itemName;
-    private int supplierId;
+    private String supplierId;
     private int stockLevel;
     private int reorderLevel;
 
     // Constructor
-    public Item(String itemCode, String itemName, int supplierId, int stockLevel, int reorderLevel) {
+    public Item(String itemCode, String itemName, String supplierId, int stockLevel, int reorderLevel) {
         this.itemCode = itemCode;
         this.itemName = itemName;
         this.supplierId = supplierId;
@@ -16,7 +16,7 @@ public class Item extends BaseItem {
         this.reorderLevel = reorderLevel;
     }
 
-    public Item(String itemCode, String itemName, int supplierId, int stockLevel, int reorderLevel, String Id) {
+    public Item(String itemCode, String itemName, String supplierId, int stockLevel, int reorderLevel, String Id) {
         this.itemCode = itemCode;
         this.itemName = itemName;
         this.supplierId = supplierId;
@@ -42,11 +42,11 @@ public class Item extends BaseItem {
         this.itemName = itemName;
     }
 
-    public int getSupplierId() {
+    public String getSupplierId() {
         return supplierId;
     }
 
-    public void setSupplierId(int supplierId) {
+    public void setSupplierId(String supplierId) {
         this.supplierId = supplierId;
     }
 

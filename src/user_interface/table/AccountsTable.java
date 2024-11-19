@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import data.Account;
 import user_interface.MainMenu;
+import user_interface.add_item_dialog.AddNewItem;
 import backend.Backend;
 
 public class AccountsTable extends TablePanel<Account> {
@@ -14,7 +15,7 @@ public class AccountsTable extends TablePanel<Account> {
         // add item button
         JButton addItemButton = new JButton("Add New");
         addItemButton.addActionListener(e -> {
-            // TODO AddNewAccountDialog
+            AddNewItem addNewItem = new AddNewItem(backend);
         });
         titleButtonPanel.add(addItemButton, 2);
     }

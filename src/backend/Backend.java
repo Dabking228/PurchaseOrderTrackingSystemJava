@@ -14,13 +14,13 @@ public class Backend {
         Account account = new Account("admin", "admin", Role.ADMIN);
         db.addAccount(account);
 
-        Item item = new Item("CODE123", "Item 1", 1, 100, 20);
-        db.addItem(item);
-
         Supplier supplier = new Supplier("SUP123", "Supplier 1", "contact@supplier1.com");
         db.addSupplier(supplier);
 
-        Sale sale = new Sale(item.getId(), 10, new java.util.Date(), 1);
+        Item item = new Item("CODE123", "Item 1", supplier.getId(), 100, 20);
+        db.addItem(item);
+
+        Sale sale = new Sale(item.getId(), 10, new java.util.Date(), account.getId());
         db.addSale(sale);
 
         PurchaseRequisition pr = new PurchaseRequisition(item.getId(), 50, new java.util.Date(), 1, Status.PENDING);
@@ -58,11 +58,21 @@ public class Backend {
 
     public void logout() {
         currentAccount = null;
+    }
 
-    public void addCustomItem(String code, String name, String supplierId, int stockLevel, int reorderLevel, String category) {
-        Item newItem = new Item(code, name, stockLevel, reorderLevel, 0); // Assuming price is set to 0 or handled elsewhere
+    public void addCustomItem(String code, String name, String supplierId, int stockLevel, int reorderLevel,
+            String category) {
+        Item newItem = new Item(code, name, supplierId, stockLevel, reorderLevel);
         db.addItem(newItem);
         System.out.println("Added custom item: " + name + " under category: " + category);
     }
-}
 
+    public Role getRole() {
+        return currentAccount.getRole();
+    }
+
+    public boolean addItem(Item newItem) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addItem'");
+    }
+}

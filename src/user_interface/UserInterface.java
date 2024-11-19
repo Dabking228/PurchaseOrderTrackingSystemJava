@@ -57,8 +57,8 @@ public class UserInterface {
 
         // WONTFIX might not be ideal since there are a lot of pages in this project
         login = new Login(backend, this);
-        mainMenu = new MainMenu(backend, this);
         mainPanel.add(login, "login");
+        mainMenu = new MainMenu(backend, this, backend.getRole());
         mainPanel.add(mainMenu, "mainMenu");
 
         frame.setContentPane(mainPanel);

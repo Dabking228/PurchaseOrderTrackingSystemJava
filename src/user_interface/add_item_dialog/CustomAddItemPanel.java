@@ -1,14 +1,14 @@
-package user_interface;
+package user_interface.add_item_dialog;
 
 import backend.Backend;
 
 public class CustomAddItemPanel extends AbstractAddItemPanel {
 
-    public CustomAddItemPanel(Backend backend, String categoryName) {
-        super(backend, categoryName);
+    public CustomAddItemPanel(Backend backend) {
+        super(backend);
     }
 
-    @Override
+    // @Override
     protected void addItem() {
         String code = itemCodeField.getText();
         String name = itemNameField.getText();
@@ -16,8 +16,7 @@ public class CustomAddItemPanel extends AbstractAddItemPanel {
         int stockLevel = Integer.parseInt(stockLevelField.getText());
         int reorderLevel = Integer.parseInt(reorderLevelField.getText());
 
-
-        backend.addCustomItem(code, name, supplierId, stockLevel, reorderLevel, categoryName);
-        clearFields();
+        // backend.addCustomItem(code, name, supplierId, stockLevel, reorderLevel);
+        // clearFields();
     }
 }

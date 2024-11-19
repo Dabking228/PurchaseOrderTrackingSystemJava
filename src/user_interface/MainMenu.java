@@ -5,6 +5,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import backend.Backend;
+import data.Role;
 import user_interface.table.AccountsTable;
 import user_interface.table.ItemsTable;
 import user_interface.table.TableRefreshable;
@@ -12,14 +13,13 @@ import user_interface.MainMenu;
 import user_interface.components.TitlePanel;
 
 public class MainMenu extends JPanel {
-
     private CardLayout cardLayout;
     private AccountsTable accountsTable;
     private Backend backend;
     private UserInterface userInterface;
-    private Role useRole;
+    private Role userRole;
 
-    public MainMenu(Backend backend, UserInterface userInterface) {
+    public MainMenu(Backend backend, UserInterface userInterface, Role userRole) {
         this.backend = backend;
         this.userInterface = userInterface;
         this.userRole = userRole;
@@ -112,17 +112,6 @@ class MainMenuPanel extends JPanel {
             mainMenu.logout();
         });
 
-        JButton addItemButton = new JButton("Add New Item");
-        addItemButton.addActionListener(e -> {
-            String categoryName = JOptionPane.showInputDialog(mainMenu, "Enter new category name:");
-            if (categoryName != null && !categoryName.trim().isEmpty()) {
-                ItemPanel newItemPanel = ItemPanelFactory.createItemPanel(categoryName, mainMenu.backend);
-                mainMenu.add(newItemPanel, categoryName);
-                mainMenu.showPanel(categoryName);
-            }
-        });
-
-        nestedPanel.add(addItemButton);
         nestedPanel.add(accountsButton);
         nestedPanel.add(itemsButton);
         nestedPanel.add(logoutButton);

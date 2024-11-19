@@ -6,17 +6,17 @@ public class Sale extends BaseItem {
     private String itemId;
     private int quantitySold;
     private Date saleDate;
-    private int salesManagerId;
+    private String salesManagerId;
 
     // Constructor
-    public Sale(String itemId, int quantitySold, Date saleDate, int salesManagerId) {
+    public Sale(String itemId, int quantitySold, Date saleDate, String salesManagerId) {
         this.itemId = itemId;
         this.quantitySold = quantitySold;
         this.saleDate = saleDate;
         this.salesManagerId = salesManagerId;
     }
 
-    public Sale(String itemId, int quantitySold, Date saleDate, int salesManagerId, String Id) {
+    public Sale(String itemId, int quantitySold, Date saleDate, String salesManagerId, String Id) {
         this.itemId = itemId;
         this.quantitySold = quantitySold;
         this.saleDate = saleDate;
@@ -49,11 +49,11 @@ public class Sale extends BaseItem {
         this.saleDate = saleDate;
     }
 
-    public int getSalesManagerId() {
+    public String getSalesManagerId() {
         return salesManagerId;
     }
 
-    public void setSalesManagerId(int salesManagerId) {
+    public void setSalesManagerId(String salesManagerId) {
         this.salesManagerId = salesManagerId;
     }
 }
