@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 import backend.Backend;
 
 public class MainMenu extends JPanel {
+
     private CardLayout cardLayout;
     private AccountsTable accountsTable;
     private Backend backend;
@@ -61,6 +62,7 @@ public class MainMenu extends JPanel {
         }
         return null;
     }
+
     void handleRoleBasedActions() {
         if (userRole == Role.ADMIN) {
         } else if (userRole == Role.FINANCE_MANAGER) {
@@ -72,6 +74,7 @@ public class MainMenu extends JPanel {
 }
 
 class MainMenuPanel extends JPanel {
+
     private BorderLayout layout;
     private JPanel nestedPanel;
     private JButton accountsButton;
@@ -104,6 +107,13 @@ class MainMenuPanel extends JPanel {
             mainMenu.logout();
         });
 
+        JButton addItemButton = new JButton("Add New Item");
+        addItemButton.addActionListener(e -> {
+            AddNewItem addNewItemPanel = new AddNewItem(backend);
+            mainMenu.showPanel("addNewItemPanel");
+        });
+
+        nestedPanel.add(addItemButton);
         nestedPanel.add(accountsButton);
         nestedPanel.add(itemsButton);
         nestedPanel.add(logoutButton);
