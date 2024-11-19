@@ -10,7 +10,6 @@ public class Backend {
         db = new Database();
         db.load();
 
-        // test code for now
         Account account = new Account("admin", "admin", Role.ADMIN);
         db.addAccount(account);
 
@@ -58,11 +57,11 @@ public class Backend {
 
     public void logout() {
         currentAccount = null;
+    }
 
     public void addCustomItem(String code, String name, String supplierId, int stockLevel, int reorderLevel, String category) {
-        Item newItem = new Item(code, name, stockLevel, reorderLevel, 0); // Assuming price is set to 0 or handled elsewhere
+        Item newItem = new Item(code, name, stockLevel, reorderLevel, 0); 
         db.addItem(newItem);
         System.out.println("Added custom item: " + name + " under category: " + category);
     }
 }
-

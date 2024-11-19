@@ -109,8 +109,12 @@ class MainMenuPanel extends JPanel {
 
         JButton addItemButton = new JButton("Add New Item");
         addItemButton.addActionListener(e -> {
-            AddNewItem addNewItemPanel = new AddNewItem(backend);
-            mainMenu.showPanel("addNewItemPanel");
+            String categoryName = JOptionPane.showInputDialog(mainMenu, "Enter new category name:");
+            if (categoryName != null && !categoryName.trim().isEmpty()) {
+                ItemPanel newItemPanel = ItemPanelFactory.createItemPanel(categoryName, mainMenu.backend);
+                mainMenu.add(newItemPanel, categoryName);
+                mainMenu.showPanel(categoryName);
+            }
         });
 
         nestedPanel.add(addItemButton);
