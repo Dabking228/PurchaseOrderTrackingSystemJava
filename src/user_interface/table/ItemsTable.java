@@ -34,7 +34,7 @@ class ItemsTableModel extends TablePanelModel<Item> {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 6;
     }
 
     // passwords are not shown in the table
@@ -79,7 +79,7 @@ class ItemsTableModel extends TablePanelModel<Item> {
 
     public boolean isCellEditable(int row, int column) {
         switch (column) {
-            case 2:
+            case 5:
                 return true;
             default:
                 return false;
