@@ -74,8 +74,10 @@ public class CSV {
                 // Find the constructor that matches the number of parameters
                 for (Constructor<?> constructor : constructors) {
                     if (constructor.getParameterCount() == data.length) {
-                        matchingConstructor = (Constructor<T>) constructor;
-                        break;
+                        if (constructor.getParameters()[constructor.getParameterCount() - 1].getName().equals("Id")) {
+                            matchingConstructor = (Constructor<T>) constructor;
+                            break;
+                        }
                     }
                 }
 

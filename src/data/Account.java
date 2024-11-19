@@ -7,10 +7,10 @@ public class Account extends BaseItem {
     // Constructor
     // Don't change the order of these two or else CSV will break
     // Yea it's kinda jank
-    public Account(String password, Role role, String username) {
+    public Account(String password, Role role, String Id) {
         this.password = password;
         this.role = role;
-        this.Id = username;
+        this.Id = Id;
     }
 
     public Account(String username, String password, Role role) {
