@@ -1,31 +1,33 @@
-package user_interface;
+package user_interface.table;
 
 import javax.swing.*;
 
-import data.Item;
+import data.Account;
+import user_interface.MainMenu;
 import backend.Backend;
 
-class ItemsTable extends TablePanel<Item> {
-    public ItemsTable(Backend backend, MainMenu parent) {
-        super("Items", 2, parent, backend.db.itemsMap, new ItemsTableModel(), backend);
+public class AccountsTable extends TablePanel<Account> {
+    public AccountsTable(Backend backend, MainMenu parent) {
+        super("Accounts", 2, parent, backend.db.accountsMap, new AccountsTableModel(), backend);
+        this.backend = backend;
 
         // add item button
         JButton addItemButton = new JButton("Add New");
         addItemButton.addActionListener(e -> {
-            // TODO
+            // TODO AddNewAccountDialog
         });
         titleButtonPanel.add(addItemButton, 2);
     }
 
     @Override
     public void itemButtonAction(int modelRow) {
-        Item accountToDelete = tableModel.items.get(modelRow);
+        Account accountToDelete = tableModel.items.get(modelRow);
         backend.db.accountsMap.remove(accountToDelete.getId());
-        items = backend.db.itemsMap;
+        items = backend.db.accountsMap;
     }
 }
 
-class ItemsTableModel extends TablePanelModel<Item> {
+class AccountsTableModel extends TablePanelModel<Account> {
     @Override
     public int getRowCount() {
         return items.size();
@@ -38,20 +40,14 @@ class ItemsTableModel extends TablePanelModel<Item> {
 
     // passwords are not shown in the table
     public Object getValueAt(int row, int column) {
-        Item account = items.get(row);
+        Account account = items.get(row);
         switch (column) {
             case 0:
-                return account.getItemCode();
+                return account.getUsername();
             case 1:
-                return account.getItemName();
+                return account.getRole();
             case 2:
-                return account.getSupplierId();
-            case 3:
-                return account.getStockLevel();
-            case 4:
-                return account.getReorderLevel();
-            case 5:
-                return "View";
+                return "Delete";
             default:
                 return null;
         }
@@ -60,17 +56,11 @@ class ItemsTableModel extends TablePanelModel<Item> {
     public String getColumnName(int column) {
         switch (column) {
             case 0:
-                return "Item Code";
+                return "User Name";
             case 1:
-                return "Item Name";
+                return "Role";
             case 2:
-                return "Supplier Id";
-            case 3:
-                return "Stock Level";
-            case 4:
-                return "Reorder Level";
-            case 5:
-                return "View item";
+                return "Delete user";
             default:
                 return null;
         }
