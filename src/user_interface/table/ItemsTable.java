@@ -8,7 +8,7 @@ import backend.Backend;
 
 public class ItemsTable extends TablePanel<Item> {
     public ItemsTable(Backend backend, MainMenu parent) {
-        super("Items", 2, parent, backend.db.itemsMap, new ItemsTableModel(), backend);
+        super("Items", 5, parent, backend.db.itemsMap, new ItemsTableModel(), backend);
 
         // add item button
         JButton addItemButton = new JButton("Add New");
