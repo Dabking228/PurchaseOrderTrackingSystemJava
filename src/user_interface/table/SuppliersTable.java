@@ -2,14 +2,14 @@ package user_interface.table;
 
 import javax.swing.*;
 
-import data.Account;
+import data.Supplier;
 import user_interface.MainMenu;
 import user_interface.add_item_dialog.AddNewItem;
 import backend.Backend;
 
-public class AccountsTable extends TablePanel<Account> {
-    public AccountsTable(Backend backend, MainMenu parent) {
-        super("Accounts", 2, parent, backend.db.accountsMap, new AccountsTableModel(), backend);
+public class SuppliersTable extends TablePanel<Supplier> {
+    public SuppliersTable(Backend backend, MainMenu parent) {
+        super("Suppliers", 3, parent, backend.db.suppliersMap, new SuppliersTableModel(), backend);
         this.backend = backend;
 
         // add item button
@@ -24,9 +24,10 @@ public class AccountsTable extends TablePanel<Account> {
     public void itemButtonAction(int modelRow) {
         // TODO add item button but with fields filled in
     }
+
 }
 
-class AccountsTableModel extends TablePanelModel<Account> {
+class SuppliersTableModel extends TablePanelModel<Supplier> {
     @Override
     public int getRowCount() {
         return items.size();
@@ -34,18 +35,19 @@ class AccountsTableModel extends TablePanelModel<Account> {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
 
-    // passwords are not shown in the table
     public Object getValueAt(int row, int column) {
-        Account account = items.get(row);
+        Supplier supplier = items.get(row);
         switch (column) {
             case 0:
-                return account.getUsername();
+                return supplier.getSupplierCode();
             case 1:
-                return account.getRole();
+                return supplier.getSupplierName();
             case 2:
+                return supplier.getContactInfo();
+            case 3:
                 return "View";
             default:
                 return null;
@@ -55,22 +57,15 @@ class AccountsTableModel extends TablePanelModel<Account> {
     public String getColumnName(int column) {
         switch (column) {
             case 0:
-                return "User Name";
+                return "Code";
             case 1:
-                return "Role";
+                return "Name";
             case 2:
+                return "Contact";
+            case 3:
                 return "View";
             default:
                 return null;
-        }
-    }
-
-    public boolean isCellEditable(int row, int column) {
-        switch (column) {
-            case 2:
-                return true;
-            default:
-                return false;
         }
     }
 }

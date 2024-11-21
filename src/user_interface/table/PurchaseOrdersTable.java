@@ -1,21 +1,21 @@
 package user_interface.table;
 
-import java.util.ArrayList;
-
 import javax.swing.*;
 
-import data.Item;
+import data.PurchaseOrder;
 import user_interface.MainMenu;
+import user_interface.add_item_dialog.AddNewItem;
 import backend.Backend;
 
-public class ItemsTable extends TablePanel<Item> {
-    public ItemsTable(Backend backend, MainMenu parent) {
-        super("Items", 5, parent, backend.db.itemsMap, new ItemsTableModel(), backend);
+public class PurchaseOrdersTable extends TablePanel<PurchaseOrder> {
+    public PurchaseOrdersTable(Backend backend, MainMenu parent) {
+        super("PurchaseOrders", 6, parent, backend.db.purchaseOrdersMap, new PurchaseOrdersTableModel(), backend);
+        this.backend = backend;
 
         // add item button
         JButton addItemButton = new JButton("Add New");
         addItemButton.addActionListener(e -> {
-            // TODO
+            AddNewItem addNewItem = new AddNewItem(backend);
         });
         titleButtonPanel.add(addItemButton, 2);
     }
@@ -26,13 +26,7 @@ public class ItemsTable extends TablePanel<Item> {
     }
 }
 
-class ItemsTableModel extends TablePanelModel<Item> {
-    @Override
-    public void setItems(ArrayList<Item> items) {
-        this.items = items;
-        fireTableDataChanged();
-    }
-
+class PurchaseOrdersTableModel extends TablePanelModel<PurchaseOrder> {
     @Override
     public int getRowCount() {
         return items.size();
@@ -40,23 +34,25 @@ class ItemsTableModel extends TablePanelModel<Item> {
 
     @Override
     public int getColumnCount() {
-        return 6;
+        return 7;
     }
 
     public Object getValueAt(int row, int column) {
-        Item account = items.get(row);
+        PurchaseOrder purchaseOrder = items.get(row);
         switch (column) {
             case 0:
-                return account.getItemCode();
+                return purchaseOrder.getPurchaseRequisitionId();
             case 1:
-                return account.getItemName();
+                return purchaseOrder.getSupplierId();
             case 2:
-                return account.getSupplierId();
+                return purchaseOrder.getPurchaseManagerId();
             case 3:
-                return account.getStockLevel();
+                return purchaseOrder.getPoStatus();
             case 4:
-                return account.getReorderLevel();
+                return purchaseOrder.getCreatedDate();
             case 5:
+                return purchaseOrder.getTotalAmount();
+            case 6:
                 return "View";
             default:
                 return null;
@@ -66,17 +62,19 @@ class ItemsTableModel extends TablePanelModel<Item> {
     public String getColumnName(int column) {
         switch (column) {
             case 0:
-                return "Item Code";
+                return "Purchase Requisition ID";
             case 1:
-                return "Item Name";
+                return "Supplier ID";
             case 2:
-                return "Supplier Id";
+                return "Purchase Manager ID";
             case 3:
-                return "Stock Level";
+                return "PO Status";
             case 4:
-                return "Reorder Level";
+                return "Created Date";
             case 5:
-                return "View item";
+                return "Total Amount";
+            case 6:
+                return "View";
             default:
                 return null;
         }
@@ -84,7 +82,7 @@ class ItemsTableModel extends TablePanelModel<Item> {
 
     public boolean isCellEditable(int row, int column) {
         switch (column) {
-            case 5:
+            case 6:
                 return true;
             default:
                 return false;

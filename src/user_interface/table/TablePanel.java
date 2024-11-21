@@ -13,8 +13,6 @@ import user_interface.MainMenu;
 import user_interface.components.ButtonColumn;
 import user_interface.components.TitlePanel;
 
-// copied from my last assignment
-// TODO add child classes
 abstract class TablePanel<T extends BaseItem> extends JPanel implements TableRefreshable {
     protected JPanel panel, titleButtonPanel;
     protected JTable itemsTable;

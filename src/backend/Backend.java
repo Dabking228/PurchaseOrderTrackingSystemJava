@@ -44,15 +44,16 @@ public class Backend {
 
     public boolean login(String username, String password) {
         Account account = db.getAccount(username);
-        String accountPassword = account.getPassword();
+        if (account == null) {
+            return false;
+        }
 
+        String accountPassword = account.getPassword();
         if (accountPassword.equals(password)) {
-            System.out.println("Login successful");
             currentAccount = account;
             return true;
         }
 
-        System.out.println("Login failed");
         return false;
     }
 
@@ -60,15 +61,19 @@ public class Backend {
         currentAccount = null;
     }
 
+    public Account getCurrentAccount() {
+        return currentAccount;
+    }
+
+    public Role getRole() {
+        return currentAccount.getRole();
+    }
+
     public void addCustomItem(String code, String name, String supplierId, int stockLevel, int reorderLevel,
             String category) {
         Item newItem = new Item(code, name, supplierId, stockLevel, reorderLevel);
         db.addItem(newItem);
         System.out.println("Added custom item: " + name + " under category: " + category);
-    }
-
-    public Role getRole() {
-        return currentAccount.getRole();
     }
 
     public boolean addItem(Item newItem) {

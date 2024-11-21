@@ -6,16 +6,13 @@ import javax.swing.border.EmptyBorder;
 
 import backend.Backend;
 import data.Role;
-import user_interface.table.AccountsTable;
-import user_interface.table.ItemsTable;
-import user_interface.table.TableRefreshable;
+import user_interface.table.*;
 import user_interface.MainMenu;
 import user_interface.components.TitlePanel;
 
 public class MainMenu extends JPanel {
     private CardLayout cardLayout;
-    private AccountsTable accountsTable;
-    private Backend backend;
+    Backend backend;
     private UserInterface userInterface;
     private Role userRole;
 
@@ -31,11 +28,19 @@ public class MainMenu extends JPanel {
         setLayout(cardLayout);
 
         MainMenuPanel mainMenuPanel = new MainMenuPanel(this);
-        accountsTable = new AccountsTable(backend, this);
+        AccountsTable accountsTable = new AccountsTable(backend, this);
         ItemsTable itemsTable = new ItemsTable(backend, this);
+        SalesTable salesTable = new SalesTable(backend, this);
+        SuppliersTable suppliersTable = new SuppliersTable(backend, this);
+        PurchaseRequisitionTable purchaseRequisitionTable = new PurchaseRequisitionTable(backend, this);
+        PurchaseOrdersTable purchaseOrdersTable = new PurchaseOrdersTable(backend, this);
         add(accountsTable, "accountsTable");
         add(itemsTable, "itemsTable");
         add(mainMenuPanel, "mainMenuPanel");
+        add(salesTable, "salesTable");
+        add(suppliersTable, "suppliersTable");
+        add(purchaseRequisitionTable, "purchaseRequisitionTable");
+        add(purchaseOrdersTable, "purchaseOrdersTable");
 
         showPanel("mainMenuPanel");
     }
@@ -79,10 +84,8 @@ public class MainMenu extends JPanel {
 }
 
 class MainMenuPanel extends JPanel {
-
     private BorderLayout layout;
     private JPanel nestedPanel;
-    private JButton accountsButton;
 
     private TitlePanel titlePanel;
 
@@ -97,14 +100,52 @@ class MainMenuPanel extends JPanel {
     }
 
     private void createButtons() {
-        accountsButton = new JButton("Accounts");
+        JButton accountsButton = new JButton("Edit Accounts Table");
         accountsButton.addActionListener(e -> {
             mainMenu.showPanel("accountsTable");
         });
 
-        JButton itemsButton = new JButton("Items");
+        JButton itemsButton = new JButton("Edit Items Table");
         itemsButton.addActionListener(e -> {
             mainMenu.showPanel("itemsTable");
+        });
+
+        JButton salesButton = new JButton("Edit Sales Table");
+        salesButton.addActionListener(e -> {
+            mainMenu.showPanel("salesTable");
+        });
+
+        JButton suppliersButton = new JButton("Edit Suppliers Table");
+        suppliersButton.addActionListener(e -> {
+            mainMenu.showPanel("suppliersTable");
+        });
+
+        JButton purchaseRequisitionButton = new JButton("Edit Purchase Requisition Table");
+        purchaseRequisitionButton.addActionListener(e -> {
+            mainMenu.showPanel("purchaseRequisitionTable");
+        });
+
+        JButton purchaseOrderButton = new JButton("Edit Purchase Order Table");
+        purchaseOrderButton.addActionListener(e -> {
+            mainMenu.showPanel("purchaseOrdersTable");
+        });
+
+        JButton stockEntryButton = new JButton("Stock Entry");
+        stockEntryButton.addActionListener(e -> {
+            // TODO
+            throw new UnsupportedOperationException("Not implemented yet");
+        });
+
+        JButton salesReportButton = new JButton("Sales Report");
+        salesReportButton.addActionListener(e -> {
+            // TODO
+            throw new UnsupportedOperationException("Not implemented yet");
+        });
+
+        JButton purchaseOrderUIButton = new JButton("Purchase Order");
+        purchaseOrderUIButton.addActionListener(e -> {
+            // TODO
+            throw new UnsupportedOperationException("Not implemented yet");
         });
 
         JButton logoutButton = new JButton("Logout");
@@ -112,8 +153,15 @@ class MainMenuPanel extends JPanel {
             mainMenu.logout();
         });
 
-        nestedPanel.add(accountsButton);
         nestedPanel.add(itemsButton);
+        nestedPanel.add(salesButton);
+        nestedPanel.add(suppliersButton);
+        nestedPanel.add(accountsButton);
+        nestedPanel.add(purchaseRequisitionButton);
+        nestedPanel.add(purchaseOrderButton);
+        nestedPanel.add(stockEntryButton);
+        nestedPanel.add(salesReportButton);
+        nestedPanel.add(purchaseOrderUIButton);
         nestedPanel.add(logoutButton);
     }
 
@@ -127,7 +175,7 @@ class MainMenuPanel extends JPanel {
         layout = new BorderLayout();
         setLayout(layout);
 
-        titlePanel = new TitlePanel("Main Menu");
+        titlePanel = new TitlePanel("Welcome, " + mainMenu.backend.getCurrentAccount().getUsername());
         add(titlePanel, BorderLayout.NORTH);
     }
 }
