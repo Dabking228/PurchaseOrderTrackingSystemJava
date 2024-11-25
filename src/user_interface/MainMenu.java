@@ -3,12 +3,12 @@ package user_interface;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 import backend.Backend;
 import data.Role;
 import user_interface.table.*;
 import user_interface.MainMenu;
 import user_interface.components.TitlePanel;
+import data.AddNewItem;   
 
 public class MainMenu extends JPanel {
     private CardLayout cardLayout;
@@ -125,6 +125,13 @@ class MainMenuPanel extends JPanel {
             mainMenu.showPanel("purchaseRequisitionTable");
         });
 
+        JButton addNewItemButton = new JButton("Add New Item");
+        addNewItemButton.setFont(new Font("Arial", Font.PLAIN, 20));
+        addNewItemButton.setBackground(Color.WHITE);
+        addNewItemButton.addActionListener(e -> {
+            new AddNewItem(mainMenu.backend, mainMenu).setVisible(true);
+        });
+
         JButton purchaseOrderButton = new JButton("Edit Purchase Order Table");
         purchaseOrderButton.addActionListener(e -> {
             mainMenu.showPanel("purchaseOrdersTable");
@@ -163,6 +170,7 @@ class MainMenuPanel extends JPanel {
         nestedPanel.add(salesReportButton);
         nestedPanel.add(purchaseOrderUIButton);
         nestedPanel.add(logoutButton);
+        nestedPanel.add(addNewItemButton);
     }
 
     private void createNestedPanel() {
