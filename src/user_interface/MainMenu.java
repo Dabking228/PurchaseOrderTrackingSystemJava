@@ -34,6 +34,7 @@ public class MainMenu extends JPanel {
         SuppliersTable suppliersTable = new SuppliersTable(backend, this);
         PurchaseRequisitionTable purchaseRequisitionTable = new PurchaseRequisitionTable(backend, this);
         PurchaseOrdersTable purchaseOrdersTable = new PurchaseOrdersTable(backend, this);
+        AddNewItem addNewItem = new AddNewItem(backend, this);
         add(accountsTable, "accountsTable");
         add(itemsTable, "itemsTable");
         add(mainMenuPanel, "mainMenuPanel");
@@ -41,6 +42,7 @@ public class MainMenu extends JPanel {
         add(suppliersTable, "suppliersTable");
         add(purchaseRequisitionTable, "purchaseRequisitionTable");
         add(purchaseOrdersTable, "purchaseOrdersTable");
+        add(addNewItem, "addNewItem");
 
         showPanel("mainMenuPanel");
     }

@@ -4,16 +4,15 @@ import javax.swing.*;
 
 import backend.Backend;
 import backend.Database;
-
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import user_interface.MainMenu;  
+import user_interface.MainMenu;
 
 public class AddNewItem extends JDialog {
     private JTextField nameField;
-    private JTextField descriptionField; 
+    private JTextField descriptionField;
     private JTextField priceField;
     private JTextField quantityField;
     private JButton submitButton;
