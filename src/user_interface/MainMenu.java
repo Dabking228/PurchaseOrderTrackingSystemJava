@@ -8,7 +8,7 @@ import data.Role;
 import user_interface.table.*;
 import user_interface.MainMenu;
 import user_interface.components.TitlePanel;
-import data.AddNewItem;   
+import data.AddNewItem;
 
 public class MainMenu extends JPanel {
     private CardLayout cardLayout;
@@ -126,10 +126,8 @@ class MainMenuPanel extends JPanel {
         });
 
         JButton addNewItemButton = new JButton("Add New Item");
-        addNewItemButton.setFont(new Font("Arial", Font.PLAIN, 20));
-        addNewItemButton.setBackground(Color.WHITE);
         addNewItemButton.addActionListener(e -> {
-            new AddNewItem(mainMenu.backend, mainMenu).setVisible(true);
+            mainMenu.showPanel("addNewItemButton");
         });
 
         JButton purchaseOrderButton = new JButton("Edit Purchase Order Table");

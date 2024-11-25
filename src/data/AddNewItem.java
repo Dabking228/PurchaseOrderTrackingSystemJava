@@ -9,7 +9,7 @@ import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import user_interface.MainMenu;  // Add this import
+import user_interface.MainMenu;  
 
 public class AddNewItem extends JDialog {
     private JTextField nameField;
@@ -28,13 +28,11 @@ public class AddNewItem extends JDialog {
         
         setLayout(new GridLayout(5, 2, 10, 10));
         
-        // Create form fields
         nameField = new JTextField(20);
         descriptionField = new JTextField(20);
         priceField = new JTextField(10);
         quantityField = new JTextField(10);
         
-        // Add labels and fields
         add(new JLabel("Item Name:"));
         add(nameField);
         add(new JLabel("Description:"));
@@ -64,8 +62,6 @@ public class AddNewItem extends JDialog {
             
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(this, "Item added successfully!");
-            
-            // Clear fields after successful addition
             nameField.setText("");
             descriptionField.setText("");
             priceField.setText("");
