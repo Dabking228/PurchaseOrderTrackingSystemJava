@@ -3,12 +3,12 @@ package user_interface;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
 import backend.Backend;
 import data.Role;
 import user_interface.table.*;
 import user_interface.MainMenu;
 import user_interface.components.TitlePanel;
-import data.AddNewItem;
 
 public class MainMenu extends JPanel {
     private CardLayout cardLayout;
@@ -34,7 +34,6 @@ public class MainMenu extends JPanel {
         SuppliersTable suppliersTable = new SuppliersTable(backend, this);
         PurchaseRequisitionTable purchaseRequisitionTable = new PurchaseRequisitionTable(backend, this);
         PurchaseOrdersTable purchaseOrdersTable = new PurchaseOrdersTable(backend, this);
-        AddNewItem addNewItem = new AddNewItem(backend, this);
         add(accountsTable, "accountsTable");
         add(itemsTable, "itemsTable");
         add(mainMenuPanel, "mainMenuPanel");
@@ -42,7 +41,6 @@ public class MainMenu extends JPanel {
         add(suppliersTable, "suppliersTable");
         add(purchaseRequisitionTable, "purchaseRequisitionTable");
         add(purchaseOrdersTable, "purchaseOrdersTable");
-        add(addNewItem, "addNewItem");
 
         showPanel("mainMenuPanel");
     }
@@ -127,11 +125,6 @@ class MainMenuPanel extends JPanel {
             mainMenu.showPanel("purchaseRequisitionTable");
         });
 
-        JButton addNewItemButton = new JButton("Add New Item");
-        addNewItemButton.addActionListener(e -> {
-            mainMenu.showPanel("addNewItemButton");
-        });
-
         JButton purchaseOrderButton = new JButton("Edit Purchase Order Table");
         purchaseOrderButton.addActionListener(e -> {
             mainMenu.showPanel("purchaseOrdersTable");
@@ -170,7 +163,6 @@ class MainMenuPanel extends JPanel {
         nestedPanel.add(salesReportButton);
         nestedPanel.add(purchaseOrderUIButton);
         nestedPanel.add(logoutButton);
-        nestedPanel.add(addNewItemButton);
     }
 
     private void createNestedPanel() {
