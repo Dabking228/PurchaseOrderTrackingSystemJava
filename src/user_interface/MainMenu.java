@@ -3,7 +3,7 @@ package user_interface;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import data.AddNewItem;
+import user_interface.add_item_dialog.AddNewItem;
 import backend.Backend;
 import data.Role;
 import user_interface.table.*;
