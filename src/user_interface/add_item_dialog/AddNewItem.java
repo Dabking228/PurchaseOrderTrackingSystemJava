@@ -1,83 +1,85 @@
 package user_interface.add_item_dialog;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.table.DefaultTableModel;
+
 import backend.Backend;
-import data.Item;
+import user_interface.MainMenu;
+
+import java.awt.*;
+import java.awt.event.*;
 
 public class AddNewItem extends JPanel {
-
     private JTextField itemCodeField;
     private JTextField itemNameField;
     private JTextField supplierIdField;
     private JTextField stockLevelField;
     private JTextField reorderLevelField;
-    private Backend backend;
+    private JTable table;
+    private DefaultTableModel tableModel;
 
-    public AddNewItem(Backend backend) {
-        this.backend = backend;
-        initComponents();
+    public AddNewItem(JTable table) {
+        this.table = table;
+        this.tableModel = (DefaultTableModel) table.getModel();
+        setLayout(new GridLayout(6, 2, 5, 5));
+
+        add(new JLabel("Item Code:"));
+        itemCodeField = new JTextField();
+        add(itemCodeField);
+
+        add(new JLabel("Item Name:"));
+        itemNameField = new JTextField();
+        add(itemNameField);
+
+        add(new JLabel("Supplier ID:"));
+        supplierIdField = new JTextField();
+        add(supplierIdField);
+
+        add(new JLabel("Stock Level:"));
+        stockLevelField = new JTextField();
+        add(stockLevelField);
+
+        add(new JLabel("Reorder Level:"));
+        reorderLevelField = new JTextField();
+        add(reorderLevelField);
+
+        JButton addButton = new JButton("Add Item");
+        addButton.addActionListener(e -> addItem());
+        add(addButton);
+
+        JButton clearButton = new JButton("Clear");
+        clearButton.addActionListener(e -> clearFields());
+        add(clearButton);
     }
 
-    private void initComponents() {
-        setLayout(new GridLayout(6, 2, 10, 10));
-
-        JLabel itemCodeLabel = new JLabel("Item Code:");
-        itemCodeField = new JTextField();
-
-        JLabel itemNameLabel = new JLabel("Item Name:");
-        itemNameField = new JTextField();
-
-        JLabel supplierIdLabel = new JLabel("Supplier ID:");
-        supplierIdField = new JTextField();
-
-        JLabel stockLevelLabel = new JLabel("Stock Level:");
-        stockLevelField = new JTextField();
-
-        JLabel reorderLevelLabel = new JLabel("Reorder Level:");
-        reorderLevelField = new JTextField();
-
-        JButton submitButton = new JButton("Add Item");
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addItem();
-            }
-        });
-
-        add(itemCodeLabel);
-        add(itemCodeField);
-        add(itemNameLabel);
-        add(itemNameField);
-        add(supplierIdLabel);
-        add(supplierIdField);
-        add(stockLevelLabel);
-        add(stockLevelField);
-        add(reorderLevelLabel);
-        add(reorderLevelField);
-        add(new JLabel()); // Empty cell for spacing
-        add(submitButton);
+    public AddNewItem(Backend backend) {
+        // TODO Auto-generated constructor stub
     }
 
     private void addItem() {
-        String itemCode = itemCodeField.getText();
-        String itemName = itemNameField.getText();
-        // TODO let them select from a list of suppliers
-        String supplierId = supplierIdField.getText();
-        int stockLevel = Integer.parseInt(stockLevelField.getText());
-        int reorderLevel = Integer.parseInt(reorderLevelField.getText());
+        try {
+            String code = itemCodeField.getText();
+            String name = itemNameField.getText();
+            String supplierId = supplierIdField.getText();
+            int stockLevel = Integer.parseInt(stockLevelField.getText());
+            int reorderLevel = Integer.parseInt(reorderLevelField.getText());
 
-        Item newItem = new Item(itemCode, itemName, supplierId, stockLevel, reorderLevel);
+            tableModel.addRow(new Object[] {
+                    code,
+                    name,
+                    supplierId,
+                    stockLevel,
+                    reorderLevel
+            });
 
-        // Assuming you have a method in Backend to add the item to the database
-        boolean success = backend.addItem(newItem);
-        if (success) {
             JOptionPane.showMessageDialog(this, "Item added successfully!");
             clearFields();
-        } else {
-            JOptionPane.showMessageDialog(this, "Failed to add item. Please try again.");
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Please enter valid numbers for stock and reorder levels",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 

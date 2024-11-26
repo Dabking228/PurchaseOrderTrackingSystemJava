@@ -10,7 +10,6 @@ import user_interface.table.*;
 import user_interface.MainMenu;
 import user_interface.components.TitlePanel;
 
-
 public class MainMenu extends JPanel {
     private CardLayout cardLayout;
     Backend backend;
@@ -35,7 +34,7 @@ public class MainMenu extends JPanel {
         SuppliersTable suppliersTable = new SuppliersTable(backend, this);
         PurchaseRequisitionTable purchaseRequisitionTable = new PurchaseRequisitionTable(backend, this);
         PurchaseOrdersTable purchaseOrdersTable = new PurchaseOrdersTable(backend, this);
-        AddNewItem addNewItem = new AddNewItem(backend, this);
+        AddNewItem addNewItem = new AddNewItem(backend);
         add(accountsTable, "accountsTable");
         add(itemsTable, "itemsTable");
         add(mainMenuPanel, "mainMenuPanel");
@@ -156,7 +155,7 @@ class MainMenuPanel extends JPanel {
             mainMenu.logout();
         });
 
-        JButton addNewItemButton = new JButton("Add New Item");  // Add this button
+        JButton addNewItemButton = new JButton("Add New Item"); // Add this button
         addNewItemButton.addActionListener(e -> {
             mainMenu.showPanel("addNewItem");
         });
