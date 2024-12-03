@@ -45,7 +45,7 @@ class SalesTableModel extends TablePanelModel<Sale> {
             case 1:
                 return sale.getQuantitySold();
             case 2:
-                return sale.getSaleDate();
+                return simpleDateFormat.format(sale.getSaleDate());
             case 3:
                 return sale.getSalesManagerId();
             case 4:

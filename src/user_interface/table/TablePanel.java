@@ -2,6 +2,7 @@ package user_interface.table;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Map;
 import javax.swing.*;
@@ -84,6 +85,9 @@ abstract class TablePanel<T extends BaseItem> extends JPanel implements TableRef
 }
 
 abstract class TablePanelModel<T extends BaseItem> extends AbstractTableModel {
+    String formatPattern = "dd-MM-yyyy HH:mm:ss";
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formatPattern);
+
     protected ArrayList<T> items = new ArrayList<>();
 
     public void setItems(ArrayList<T> items) {

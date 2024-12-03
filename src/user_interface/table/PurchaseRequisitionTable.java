@@ -46,7 +46,7 @@ class PurchaseRequisitionTableModel extends TablePanelModel<PurchaseRequisition>
             case 1:
                 return purchaseRequisition.getQuantity();
             case 2:
-                return purchaseRequisition.getRequiredByDate();
+                return simpleDateFormat.format(purchaseRequisition.getRequiredByDate());
             case 3:
                 return purchaseRequisition.getSalesManagerId();
             case 4:
