@@ -1,7 +1,11 @@
 package user_interface.table;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.swing.*;
 
+import data.Item;
 import data.PurchaseRequisition;
 import user_interface.MainMenu;
 import user_interface.add_item_dialog.AddNewItem;
@@ -25,9 +29,22 @@ public class PurchaseRequisitionTable extends TablePanel<PurchaseRequisition> {
     public void itemButtonAction(int modelRow) {
         // TODO add item button but with fields filled in
     }
+
+    @Override
+    public void refresh() {
+        ArrayList<PurchaseRequisition> array = new ArrayList<>(items.values());
+        tableModel.setItems(array);
+        ((PurchaseRequisitionTableModel) tableModel).setStoreItems(backend.db.itemsMap);
+    }
 }
 
 class PurchaseRequisitionTableModel extends TablePanelModel<PurchaseRequisition> {
+    public HashMap<String, Item> itemsMap;
+
+    void setStoreItems(HashMap<String, Item> items) {
+        this.itemsMap = items;
+    }
+
     @Override
     public int getRowCount() {
         return items.size();
@@ -40,9 +57,10 @@ class PurchaseRequisitionTableModel extends TablePanelModel<PurchaseRequisition>
 
     public Object getValueAt(int row, int column) {
         PurchaseRequisition purchaseRequisition = items.get(row);
+        String itemName = itemsMap.get(purchaseRequisition.getItemId()).getItemName();
         switch (column) {
             case 0:
-                return purchaseRequisition.getItemId();
+                return itemName;
             case 1:
                 return purchaseRequisition.getQuantity();
             case 2:
@@ -61,13 +79,13 @@ class PurchaseRequisitionTableModel extends TablePanelModel<PurchaseRequisition>
     public String getColumnName(int column) {
         switch (column) {
             case 0:
-                return "Item ID";
+                return "Item";
             case 1:
                 return "Quantity";
             case 2:
                 return "Required By Date";
             case 3:
-                return "Sales Manager ID";
+                return "Sales Manager";
             case 4:
                 return "Status";
             case 5:
