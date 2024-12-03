@@ -155,6 +155,7 @@ class MainMenuPanel extends JPanel {
             mainMenu.logout();
         });
 
+        // TODO test only, remove later
         JButton addNewItemButton = new JButton("Add New Item"); // Add this button
         addNewItemButton.addActionListener(e -> {
             mainMenu.showPanel("addNewItem");
