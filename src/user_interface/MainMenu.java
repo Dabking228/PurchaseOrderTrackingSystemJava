@@ -4,11 +4,13 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import user_interface.add_item_dialog.AddNewItem;
+import user_interface.add_item_dialog.CustomAddItemPanel;
 import backend.Backend;
 import data.Role;
 import user_interface.table.*;
 import user_interface.MainMenu;
 import user_interface.components.TitlePanel;
+import user_interface.panels.AddItemPanel;
 
 public class MainMenu extends JPanel {
     private CardLayout cardLayout;
@@ -34,7 +36,7 @@ public class MainMenu extends JPanel {
         SuppliersTable suppliersTable = new SuppliersTable(backend, this);
         PurchaseRequisitionTable purchaseRequisitionTable = new PurchaseRequisitionTable(backend, this);
         PurchaseOrdersTable purchaseOrdersTable = new PurchaseOrdersTable(backend, this);
-        AddNewItem addNewItem = new AddNewItem(backend);
+        AddItemPanel addItemPanel = new AddItemPanel(backend, this);
         add(accountsTable, "accountsTable");
         add(itemsTable, "itemsTable");
         add(mainMenuPanel, "mainMenuPanel");
@@ -42,7 +44,7 @@ public class MainMenu extends JPanel {
         add(suppliersTable, "suppliersTable");
         add(purchaseRequisitionTable, "purchaseRequisitionTable");
         add(purchaseOrdersTable, "purchaseOrdersTable");
-        add(addNewItem, "addNewItem");
+        add(addItemPanel, "addNewItem");
 
         showPanel("mainMenuPanel");
     }
