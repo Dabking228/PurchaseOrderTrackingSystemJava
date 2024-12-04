@@ -105,6 +105,20 @@ class MainMenuPanel extends JPanel {
         createButtons();
     }
 
+    private void createNestedPanel() {
+        nestedPanel = new JPanel(new GridLayout(0, 2, 20, 20));
+        nestedPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        add(nestedPanel);
+    }
+
+    private void createTitlePanel() {
+        layout = new BorderLayout();
+        setLayout(layout);
+
+        titlePanel = new TitlePanel("Welcome, " + mainMenu.backend.getCurrentAccount().getUsername());
+        add(titlePanel, BorderLayout.NORTH);
+    }
+
     private void createButtons() {
         createTableButton("itemsTable", "Edit Items Table", "itemsTable");
         createTableButton("accountsTable", "Edit Accounts Table", "accountsTable");
@@ -142,19 +156,5 @@ class MainMenuPanel extends JPanel {
             });
             nestedPanel.add(button);
         }
-    }
-
-    private void createNestedPanel() {
-        nestedPanel = new JPanel(new GridLayout(0, 2, 20, 20));
-        nestedPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
-        add(nestedPanel);
-    }
-
-    private void createTitlePanel() {
-        layout = new BorderLayout();
-        setLayout(layout);
-
-        titlePanel = new TitlePanel("Welcome, " + mainMenu.backend.getCurrentAccount().getUsername());
-        add(titlePanel, BorderLayout.NORTH);
     }
 }
