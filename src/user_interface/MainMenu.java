@@ -106,71 +106,70 @@ class MainMenuPanel extends JPanel {
         accountsButton.addActionListener(e -> {
             mainMenu.showPanel("accountsTable");
         });
+        nestedPanel.add(accountsButton);
 
         JButton itemsButton = new JButton("Edit Items Table");
         itemsButton.addActionListener(e -> {
             mainMenu.showPanel("itemsTable");
         });
+        nestedPanel.add(itemsButton);
 
         JButton salesButton = new JButton("Edit Sales Table");
         salesButton.addActionListener(e -> {
             mainMenu.showPanel("salesTable");
         });
+        nestedPanel.add(salesButton);
 
         JButton suppliersButton = new JButton("Edit Suppliers Table");
         suppliersButton.addActionListener(e -> {
             mainMenu.showPanel("suppliersTable");
         });
+        nestedPanel.add(suppliersButton);
 
         JButton purchaseRequisitionButton = new JButton("Edit Purchase Requisition Table");
         purchaseRequisitionButton.addActionListener(e -> {
             mainMenu.showPanel("purchaseRequisitionTable");
         });
+        nestedPanel.add(purchaseRequisitionButton);
 
         JButton purchaseOrderButton = new JButton("Edit Purchase Order Table");
         purchaseOrderButton.addActionListener(e -> {
             mainMenu.showPanel("purchaseOrdersTable");
         });
+        nestedPanel.add(purchaseOrderButton);
 
         JButton stockEntryButton = new JButton("Stock Entry");
         stockEntryButton.addActionListener(e -> {
             // TODO
             throw new UnsupportedOperationException("Not implemented yet");
         });
+        nestedPanel.add(stockEntryButton);
 
         JButton salesReportButton = new JButton("Sales Report");
         salesReportButton.addActionListener(e -> {
             // TODO
             throw new UnsupportedOperationException("Not implemented yet");
         });
+        nestedPanel.add(salesReportButton);
 
         JButton purchaseOrderUIButton = new JButton("Purchase Order");
         purchaseOrderUIButton.addActionListener(e -> {
             // TODO
             throw new UnsupportedOperationException("Not implemented yet");
         });
-
-        JButton logoutButton = new JButton("Logout");
-        logoutButton.addActionListener(e -> {
-            mainMenu.logout();
-        });
+        nestedPanel.add(purchaseOrderUIButton);
 
         // TODO test only, remove later
         JButton addNewItemButton = new JButton("Add New Item"); // Add this button
         addNewItemButton.addActionListener(e -> {
             mainMenu.showPanel("addNewItem");
         });
-
-        nestedPanel.add(itemsButton);
-        nestedPanel.add(salesButton);
         nestedPanel.add(addNewItemButton);
-        nestedPanel.add(suppliersButton);
-        nestedPanel.add(accountsButton);
-        nestedPanel.add(purchaseRequisitionButton);
-        nestedPanel.add(purchaseOrderButton);
-        nestedPanel.add(stockEntryButton);
-        nestedPanel.add(salesReportButton);
-        nestedPanel.add(purchaseOrderUIButton);
+
+        JButton logoutButton = new JButton("Logout");
+        logoutButton.addActionListener(e -> {
+            mainMenu.logout();
+        });
         nestedPanel.add(logoutButton);
     }
 
