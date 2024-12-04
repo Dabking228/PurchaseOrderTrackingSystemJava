@@ -5,6 +5,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import user_interface.add_item_dialog.AddNewItem;
 import backend.Backend;
+import data.Permission;
 import data.Role;
 import user_interface.table.*;
 import user_interface.MainMenu;
@@ -27,7 +28,7 @@ public class MainMenu extends JPanel {
         this.cardLayout = new CardLayout();
         setLayout(cardLayout);
 
-        MainMenuPanel mainMenuPanel = new MainMenuPanel(this);
+        MainMenuPanel mainMenuPanel = new MainMenuPanel(backend, this);
         AccountsTable accountsTable = new AccountsTable(backend, this);
         ItemsTable itemsTable = new ItemsTable(backend, this);
         SalesTable salesTable = new SalesTable(backend, this);
@@ -93,84 +94,54 @@ class MainMenuPanel extends JPanel {
 
     private MainMenu mainMenu;
 
-    public MainMenuPanel(MainMenu mainMenu) {
+    private Role role;
+
+    public MainMenuPanel(Backend backend, MainMenu mainMenu) {
         this.mainMenu = mainMenu;
 
         createTitlePanel();
         createNestedPanel();
+        this.role = backend.getCurrentAccount().getRole();
         createButtons();
     }
 
     private void createButtons() {
-        JButton accountsButton = new JButton("Edit Accounts Table");
-        accountsButton.addActionListener(e -> {
-            mainMenu.showPanel("accountsTable");
-        });
-        nestedPanel.add(accountsButton);
+        createTableButton("itemsTable", "Edit Items Table", "itemsTable");
+        createTableButton("accountsTable", "Edit Accounts Table", "accountsTable");
+        createTableButton("salesTable", "Edit Sales Table", "salesTable");
+        createTableButton("suppliersTable", "Edit Suppliers Table", "suppliersTable");
+        createTableButton("purchaseRequisitionTable", "Edit Purchase Requisition Table", "purchaseRequisitionTable");
+        createTableButton("purchaseOrdersTable", "Edit Purchase Order Table", "purchaseOrdersTable");
 
-        JButton itemsButton = new JButton("Edit Items Table");
-        itemsButton.addActionListener(e -> {
-            mainMenu.showPanel("itemsTable");
-        });
-        nestedPanel.add(itemsButton);
-
-        JButton salesButton = new JButton("Edit Sales Table");
-        salesButton.addActionListener(e -> {
-            mainMenu.showPanel("salesTable");
-        });
-        nestedPanel.add(salesButton);
-
-        JButton suppliersButton = new JButton("Edit Suppliers Table");
-        suppliersButton.addActionListener(e -> {
-            mainMenu.showPanel("suppliersTable");
-        });
-        nestedPanel.add(suppliersButton);
-
-        JButton purchaseRequisitionButton = new JButton("Edit Purchase Requisition Table");
-        purchaseRequisitionButton.addActionListener(e -> {
-            mainMenu.showPanel("purchaseRequisitionTable");
-        });
-        nestedPanel.add(purchaseRequisitionButton);
-
-        JButton purchaseOrderButton = new JButton("Edit Purchase Order Table");
-        purchaseOrderButton.addActionListener(e -> {
-            mainMenu.showPanel("purchaseOrdersTable");
-        });
-        nestedPanel.add(purchaseOrderButton);
-
-        JButton stockEntryButton = new JButton("Stock Entry");
-        stockEntryButton.addActionListener(e -> {
-            // TODO
-            throw new UnsupportedOperationException("Not implemented yet");
-        });
-        nestedPanel.add(stockEntryButton);
-
-        JButton salesReportButton = new JButton("Sales Report");
-        salesReportButton.addActionListener(e -> {
-            // TODO
-            throw new UnsupportedOperationException("Not implemented yet");
-        });
-        nestedPanel.add(salesReportButton);
-
-        JButton purchaseOrderUIButton = new JButton("Purchase Order");
-        purchaseOrderUIButton.addActionListener(e -> {
-            // TODO
-            throw new UnsupportedOperationException("Not implemented yet");
-        });
-        nestedPanel.add(purchaseOrderUIButton);
-
-        // TODO test only, remove later
-        JButton addNewItemButton = new JButton("Add New Item"); // Add this button
-        addNewItemButton.addActionListener(e -> {
-            mainMenu.showPanel("addNewItem");
-        });
-        nestedPanel.add(addNewItemButton);
+        createFeatureButton("stockEntry", "Stock Entry", "stockEntry");
+        createFeatureButton("salesReport", "Sales Report", "salesReport");
+        createFeatureButton("trackPurchaseOrder", "Track Purchase Order", "trackPurchaseOrder");
 
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(e -> {
             mainMenu.logout();
         });
         nestedPanel.add(logoutButton);
+    }
+
+    private void createTableButton(String tableName, String buttonTitle, String panelName) {
+        if (role.hasPermission(tableName, Permission.READ)) {
+            JButton button = new JButton(buttonTitle);
+            button.addActionListener(e -> {
+                mainMenu.showPanel(panelName);
+            });
+            nestedPanel.add(button);
+        }
+    }
+
+    private void createFeatureButton(String feature, String buttonTitle, String panelName) {
+        if (role.hasFeature(feature)) {
+            JButton button = new JButton(buttonTitle);
+            button.addActionListener(e -> {
+                mainMenu.showPanel(panelName);
+            });
+            nestedPanel.add(button);
+        }
     }
 
     private void createNestedPanel() {
