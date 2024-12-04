@@ -4,7 +4,7 @@ import java.util.*;
 
 public enum Role {
     // enum items
-    SALES_MANAGER(buildSalesManagerPermissions(), List.of("SalesReport")),
+    SALES_MANAGER(buildSalesManagerPermissions(), List.of("StockEntry", "SalesReport")),
     PURCHASE_MANAGER(buildPurchaseManagerPermissions(), List.of()),
     INVENTORY_MANAGER(buildInventoryManagerPermissions(), List.of()),
     FINANCE_MANAGER(buildFinanceManagerPermissions(), List.of("TrackPurchaseOrder")),
