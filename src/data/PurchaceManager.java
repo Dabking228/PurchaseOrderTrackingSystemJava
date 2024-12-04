@@ -24,7 +24,5 @@ public class PurchaceManager extends Account {
     public void setId(String Id) {
         this.Id = Id;
     }
-    
-    
-    
+
 }

@@ -13,8 +13,6 @@ public class Admin extends Account {
     public Admin(String username, String password, Role role) {
         super(username, password, role);
     }
-    
-    
 
     public String getId() {
         return Id;
@@ -23,6 +21,4 @@ public class Admin extends Account {
     public void setId(String Id) {
         this.Id = Id;
     }
-
-    
 }

@@ -9,9 +9,9 @@ package data;
  * @author Keith Lo Ze Hui
  */
 public class SaleManager extends Account {
-    
+
     public SaleManager(String username, String password) {
         super(username, password, Role.SALES_MANAGER);
     }
-    
+
 }

@@ -24,6 +24,5 @@ public class InventoryManager extends Account {
     public void setId(String Id) {
         this.Id = Id;
     }
-    
-    
+
 }
