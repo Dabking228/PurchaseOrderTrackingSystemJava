@@ -1,6 +1,8 @@
 package user_interface.panels;
 
 
+import java.text.NumberFormat;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -15,19 +17,28 @@ public class AddItemPanel extends Panel<Item> {
     public AddItemPanel(Backend backend, MainMenu parent){
         super("Add New Item",parent, backend.db.itemsMap, backend);
 
-        FieldCombo field = new FieldCombo("Item ID");
-        contentPanel.add(field);
+        FieldCombo itemID = new FieldCombo("Item ID");
+        contentPanel.add(itemID);
+
+        FieldCombo itemName = new FieldCombo("Item Name");
+        contentPanel.add(itemName);
+
+        // supplier dropdown here i guess
+
+        FieldCombo numStock = new FieldCombo("Stock",true);
+        contentPanel.add(numStock);
+
+        FieldCombo restockLevel = new FieldCombo("Minimum Stock", true);
+        contentPanel.add(restockLevel);
 
         JButton confirmButton = new JButton("Confirm?");
         confirmButton.addActionListener(e -> {
             //TODO
-            // System.out.println(field.getText());
+            System.out.println(itemID.getText());
+            System.out.println(numStock.getText());
         });
-        titleButtonPanel.add(confirmButton);
+        titleButtonPanel.add(confirmButton,1);
     }
 }
 
-// class AddItemSubPanel extends SubPanel{
-    
-// }
 

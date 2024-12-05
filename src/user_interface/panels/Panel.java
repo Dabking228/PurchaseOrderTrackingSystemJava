@@ -14,7 +14,8 @@ import user_interface.components.TitlePanel;
 
 
 abstract class Panel<T extends BaseItem> extends JPanel {
-    protected JPanel panel, titleButtonPanel, contentPanel;
+    protected JPanel panel, titleButtonPanel;
+    protected CustomJPanel contentPanel;
     protected Map<String, T> items;
     protected Backend backend;
 
@@ -39,7 +40,25 @@ abstract class Panel<T extends BaseItem> extends JPanel {
         titleButtonPanel.add(backButton, 0);
 
         // Content
-        contentPanel = new JPanel(new BorderLayout());
+        contentPanel = new CustomJPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.PAGE_AXIS));
         add(contentPanel, BorderLayout.CENTER);
+    }
+}
+
+class CustomJPanel extends JPanel{
+    @Override
+    public Component add(Component comp){
+        if (comp instanceof JComponent) {
+            ((JComponent) comp).setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
+        }
+
+        Component addedComponent = super.add(comp);
+
+        // Trigger layout updates
+        revalidate();
+        repaint();
+
+        return addedComponent;
     }
 }
