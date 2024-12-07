@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -32,6 +31,8 @@ public class FieldCombo extends JPanel {
         Font textFont = new Font(fieldText.getFont().getName(), Font.PLAIN, 15);
         fieldText.setFont(textFont);
         add(fieldText,BorderLayout.EAST);
+
+        
 
         if(isNumber){
             fieldText.addFocusListener(new FocusAdapter() {
