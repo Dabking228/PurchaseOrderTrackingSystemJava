@@ -12,7 +12,7 @@ import backend.Backend;
 import data.BaseItem;
 import user_interface.MainMenu;
 import user_interface.components.ButtonColumn;
-import user_interface.components.TitlePanel;
+import user_interface.panels.TitlePanel;
 
 abstract class TablePanel<T extends BaseItem> extends JPanel implements TableRefreshable {
     protected JPanel panel, titleButtonPanel;

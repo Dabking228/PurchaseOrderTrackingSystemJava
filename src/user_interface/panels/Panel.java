@@ -10,7 +10,6 @@ import javax.swing.GroupLayout.SequentialGroup;
 import backend.Backend;
 import data.BaseItem;
 import user_interface.MainMenu;
-import user_interface.components.TitlePanel;
 
 
 abstract class Panel<T extends BaseItem> extends JPanel {

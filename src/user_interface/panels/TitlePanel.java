@@ -1,4 +1,4 @@
-package user_interface.components;
+package user_interface.panels;
 
 import javax.swing.*;
 import java.awt.*;
