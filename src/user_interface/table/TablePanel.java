@@ -4,12 +4,16 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.Map;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
 import backend.Backend;
+import data.Account;
 import data.BaseItem;
+import data.Role;
+import data.Permission;
 import user_interface.MainMenu;
 import user_interface.components.ButtonColumn;
 import user_interface.components.TitlePanel;
@@ -28,8 +32,11 @@ abstract class TablePanel<T extends BaseItem> extends JPanel implements TableRef
         this.tableModel = tableModel;
         this.items = items;
         this.backend = backend;
-
         this.buttonColumnIndex = buttonColumnIndex;
+
+        Role currentRole = backend.getCurrentAccount().getRole();
+        String permissionsKey = "Items";
+
         setLayout(new BorderLayout());
 
         // Title

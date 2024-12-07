@@ -69,6 +69,7 @@ public enum Role {
         permissions.put("Sales", EnumSet.allOf(Permission.class));
         permissions.put("PurchaseRequisition", EnumSet.allOf(Permission.class));
         permissions.put("PurchaseOrder", EnumSet.allOf(Permission.class));
+        permissions.put("Accounts", EnumSet.allOf(Permission.class));
         return permissions;
     }
 }

@@ -28,6 +28,7 @@ public class MainMenu extends JPanel {
         this.cardLayout = new CardLayout();
         setLayout(cardLayout);
 
+        // TODO create based on role
         MainMenuPanel mainMenuPanel = new MainMenuPanel(backend, this);
         AccountsTable accountsTable = new AccountsTable(backend, this);
         ItemsTable itemsTable = new ItemsTable(backend, this);
@@ -35,7 +36,6 @@ public class MainMenu extends JPanel {
         SuppliersTable suppliersTable = new SuppliersTable(backend, this);
         PurchaseRequisitionTable purchaseRequisitionTable = new PurchaseRequisitionTable(backend, this);
         PurchaseOrdersTable purchaseOrdersTable = new PurchaseOrdersTable(backend, this);
-        AddNewItem addNewItem = new AddNewItem(backend);
         add(accountsTable, "accountsTable");
         add(itemsTable, "itemsTable");
         add(mainMenuPanel, "mainMenuPanel");
@@ -43,7 +43,6 @@ public class MainMenu extends JPanel {
         add(suppliersTable, "suppliersTable");
         add(purchaseRequisitionTable, "purchaseRequisitionTable");
         add(purchaseOrdersTable, "purchaseOrdersTable");
-        add(addNewItem, "addNewItem");
 
         showPanel("mainMenuPanel");
     }
@@ -120,12 +119,12 @@ class MainMenuPanel extends JPanel {
     }
 
     private void createButtons() {
-        createTableButton("itemsTable", "Edit Items Table", "itemsTable");
-        createTableButton("accountsTable", "Edit Accounts Table", "accountsTable");
-        createTableButton("salesTable", "Edit Sales Table", "salesTable");
-        createTableButton("suppliersTable", "Edit Suppliers Table", "suppliersTable");
-        createTableButton("purchaseRequisitionTable", "Edit Purchase Requisition Table", "purchaseRequisitionTable");
-        createTableButton("purchaseOrdersTable", "Edit Purchase Order Table", "purchaseOrdersTable");
+        createTableButton("Items", "Edit Items Table", "itemsTable");
+        createTableButton("Accounts", "Edit Accounts Table", "accountsTable");
+        createTableButton("Sales", "Edit Sales Table", "salesTable");
+        createTableButton("Suppliers", "Edit Suppliers Table", "suppliersTable");
+        createTableButton("PurchaseRequisition", "Edit Purchase Requisition Table", "purchaseRequisitionTable");
+        createTableButton("PurchaseOrder", "Edit Purchase Order Table", "purchaseOrdersTable");
 
         createFeatureButton("stockEntry", "Stock Entry", "stockEntry");
         createFeatureButton("salesReport", "Sales Report", "salesReport");
@@ -138,8 +137,8 @@ class MainMenuPanel extends JPanel {
         nestedPanel.add(logoutButton);
     }
 
-    private void createTableButton(String tableName, String buttonTitle, String panelName) {
-        if (role.hasPermission(tableName, Permission.READ)) {
+    private void createTableButton(String permissionName, String buttonTitle, String panelName) {
+        if (role.hasPermission(permissionName, Permission.READ)) {
             JButton button = new JButton(buttonTitle);
             button.addActionListener(e -> {
                 mainMenu.showPanel(panelName);
