@@ -10,6 +10,7 @@ import data.Role;
 import user_interface.table.*;
 import user_interface.MainMenu;
 import user_interface.panels.AddItemPanel;
+import user_interface.panels.StockTaking;
 import user_interface.panels.TitlePanel;
 
 public class MainMenu extends JPanel {
@@ -37,6 +38,7 @@ public class MainMenu extends JPanel {
         PurchaseRequisitionTable purchaseRequisitionTable = new PurchaseRequisitionTable(backend, this);
         PurchaseOrdersTable purchaseOrdersTable = new PurchaseOrdersTable(backend, this);
         AddItemPanel addItemPanel = new AddItemPanel(backend, this);
+        StockTaking stockTaking = new StockTaking(backend, this);
         add(accountsTable, "accountsTable");
         add(itemsTable, "itemsTable");
         add(mainMenuPanel, "mainMenuPanel");
@@ -45,6 +47,7 @@ public class MainMenu extends JPanel {
         add(purchaseRequisitionTable, "purchaseRequisitionTable");
         add(purchaseOrdersTable, "purchaseOrdersTable");
         add(addItemPanel, "addNewItem");
+        add(stockTaking, "stockTaking");
 
         showPanel("mainMenuPanel");
     }
@@ -137,7 +140,8 @@ class MainMenuPanel extends JPanel {
         JButton stockEntryButton = new JButton("Stock Entry");
         stockEntryButton.addActionListener(e -> {
             // TODO
-            throw new UnsupportedOperationException("Not implemented yet");
+            mainMenu.showPanel("stockTaking");
+            // throw new UnsupportedOperationException("Not implemented yet");
         });
 
         JButton salesReportButton = new JButton("Sales Report");
