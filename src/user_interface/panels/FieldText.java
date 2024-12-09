@@ -75,4 +75,9 @@ public class FieldText extends JPanel {
     public void resetField(){
         fieldText.setText("");
     }
+
+    public void setEditable(boolean value){
+        fieldText.setEditable(value);
+        fieldText.setFocusable(value);
+    }
 }
