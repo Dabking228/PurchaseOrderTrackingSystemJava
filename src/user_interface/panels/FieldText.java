@@ -72,4 +72,7 @@ public class FieldText extends JPanel {
         return Integer.toString(extractNum);
     }
 
+    public void resetField(){
+        fieldText.setText("");
+    }
 }
