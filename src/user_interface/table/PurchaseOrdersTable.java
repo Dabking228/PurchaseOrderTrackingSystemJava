@@ -15,7 +15,7 @@ import backend.Backend;
 
 public class PurchaseOrdersTable extends TablePanel<PurchaseOrder> {
     public PurchaseOrdersTable(Backend backend, MainMenu parent) {
-        super("PurchaseOrders", 6, parent, backend.db.purchaseOrdersMap, new PurchaseOrdersTableModel(), backend);
+        super("PurchaseOrders", 10, parent, backend.db.purchaseOrdersMap, new PurchaseOrdersTableModel(), backend);
         this.backend = backend;
 
         // add item button
@@ -61,12 +61,11 @@ class PurchaseOrdersTableModel extends TablePanelModel<PurchaseOrder> {
 
     @Override
     public int getColumnCount() {
-        return 7;
+        return 11;
     }
 
     public Object getValueAt(int row, int column) {
         PurchaseOrder purchaseOrder = items.get(row);
-        // TODO more columns to give purchase requsition info
         PurchaseRequisition purchaseRequisition = purchaseRequisitionsMap.get(purchaseOrder.getPurchaseRequisitionId());
         String purchaseItemName = itemsMap.get(purchaseRequisition.getItemId()).getItemName();
         String supplierName = suppliersMap.get(purchaseOrder.getSupplierId()).getSupplierName();
@@ -74,16 +73,24 @@ class PurchaseOrdersTableModel extends TablePanelModel<PurchaseOrder> {
             case 0:
                 return purchaseItemName;
             case 1:
-                return supplierName;
+                return purchaseRequisition.getQuantity();
             case 2:
-                return purchaseOrder.getPurchaseManagerId();
+                return purchaseRequisition.getStatus();
             case 3:
-                return purchaseOrder.getPoStatus();
+                return purchaseRequisition.getSalesManagerId();
             case 4:
-                return purchaseOrder.getCreatedDate();
+                return purchaseRequisition.getRequiredByDate();
             case 5:
-                return purchaseOrder.getTotalAmount();
+                return supplierName;
             case 6:
+                return purchaseOrder.getPurchaseManagerId();
+            case 7:
+                return purchaseOrder.getPoStatus();
+            case 8:
+                return purchaseOrder.getCreatedDate();
+            case 9:
+                return purchaseOrder.getTotalAmount();
+            case 10:
                 return "View";
             default:
                 return null;
@@ -93,18 +100,26 @@ class PurchaseOrdersTableModel extends TablePanelModel<PurchaseOrder> {
     public String getColumnName(int column) {
         switch (column) {
             case 0:
-                return "Purchase Requisition";
+                return "Item";
             case 1:
-                return "Supplier";
+                return "Quantity";
             case 2:
-                return "Purchase Manager";
+                return "PR Status";
             case 3:
-                return "PO Status";
+                return "PR Sales Manager";
             case 4:
-                return "Created Date";
+                return "Required By";
             case 5:
-                return "Total Amount";
+                return "Supplier";
             case 6:
+                return "Purchase Manager";
+            case 7:
+                return "PO Status";
+            case 8:
+                return "PO Created Date";
+            case 9:
+                return "Total Amount";
+            case 10:
                 return "View";
             default:
                 return null;
