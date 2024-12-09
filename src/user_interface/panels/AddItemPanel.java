@@ -1,16 +1,22 @@
 package user_interface.panels;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.function.Supplier;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import javax.xml.crypto.Data;
 
 import backend.Backend;
 import data.*;
+import user_interface.ConfirmPane;
 import user_interface.MainMenu;
 import user_interface.add_item_dialog.AddNewItem;
 
@@ -34,6 +40,12 @@ public class AddItemPanel extends Panel<Item> {
         FieldText fieldRestockLevel = new FieldText("Minimum Stock", true);
         contentPanel.add(fieldRestockLevel);
 
+        JLabel greenLabel = new JLabel("Item added");
+        greenLabel.setVisible(false);
+        greenLabel.setForeground(Color.GREEN);
+        greenLabel.setFont(new Font(greenLabel.getText(), Font.BOLD, 20));
+        contentPanel.add(greenLabel);
+
         JButton confirmButton = new JButton("Confirm?");
         confirmButton.addActionListener(e -> {
             // Test code
@@ -43,11 +55,26 @@ public class AddItemPanel extends Panel<Item> {
             int numStock = Integer.parseInt(fieldNumStock.getData());
             int minStock = Integer.parseInt(fieldRestockLevel.getData());
             
-            backend.db.addItem(new Item(itemID,itemName,supplierID,numStock,minStock));
+            
+            ConfirmPane cp = new ConfirmPane("Add thing item?",  "Add Item", this, JOptionPane.YES_NO_OPTION);
+            if(cp.getResult() == JOptionPane.YES_OPTION){
+                backend.db.addItem(new Item(itemID,itemName,supplierID,numStock,minStock));
+                greenLabel.setVisible(true);
+            } else {
+                parent.showMainMenu();
+            }
+            
+            // reset field
+            fieldItemID.resetField();
+            fieldItemName.resetField();
+            fieldNumStock.resetField();
+            fieldRestockLevel.resetField();
 
+            // adding a timer to hide the greenlabel
+            Timer timer = new Timer(2000, g -> greenLabel.setVisible(false));
+            timer.setRepeats(false);
+            timer.start();
 
-            // TODO
-            // add pop up after pressing comfirm
         });
         titleButtonPanel.add(confirmButton, 1);
     }
