@@ -9,8 +9,8 @@ import backend.Backend;
 import data.Role;
 import user_interface.table.*;
 import user_interface.MainMenu;
-import user_interface.components.TitlePanel;
 import user_interface.panels.AddItemPanel;
+import user_interface.panels.TitlePanel;
 
 public class MainMenu extends JPanel {
     private CardLayout cardLayout;
