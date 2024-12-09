@@ -18,7 +18,7 @@ import user_interface.MainMenu;
 import user_interface.components.ButtonColumn;
 import user_interface.components.TitlePanel;
 
-abstract class TablePanel<T extends BaseItem> extends JPanel implements TableRefreshable {
+public abstract class TablePanel<T extends BaseItem> extends JPanel implements TableRefreshable {
     protected JPanel panel, titleButtonPanel;
     protected JTable itemsTable;
     protected int buttonColumnIndex;

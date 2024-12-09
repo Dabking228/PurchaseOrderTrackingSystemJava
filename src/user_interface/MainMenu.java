@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import user_interface.add_item_dialog.AddNewItem;
+import user_interface.table.TablePanel;
 import backend.Backend;
 import data.Permission;
 import data.Role;
@@ -15,12 +16,12 @@ public class MainMenu extends JPanel {
     private CardLayout cardLayout;
     Backend backend;
     private UserInterface userInterface;
-    private Role userRole;
+    private Role role;
 
-    public MainMenu(Backend backend, UserInterface userInterface, Role userRole) {
+    public MainMenu(Backend backend, UserInterface userInterface) {
         this.backend = backend;
         this.userInterface = userInterface;
-        this.userRole = userRole;
+        this.role = backend.getRole();
         initComponents();
     }
 
@@ -28,23 +29,50 @@ public class MainMenu extends JPanel {
         this.cardLayout = new CardLayout();
         setLayout(cardLayout);
 
-        // TODO create based on role
         MainMenuPanel mainMenuPanel = new MainMenuPanel(backend, this);
-        AccountsTable accountsTable = new AccountsTable(backend, this);
-        ItemsTable itemsTable = new ItemsTable(backend, this);
-        SalesTable salesTable = new SalesTable(backend, this);
-        SuppliersTable suppliersTable = new SuppliersTable(backend, this);
-        PurchaseRequisitionTable purchaseRequisitionTable = new PurchaseRequisitionTable(backend, this);
-        PurchaseOrdersTable purchaseOrdersTable = new PurchaseOrdersTable(backend, this);
-        add(accountsTable, "accountsTable");
-        add(itemsTable, "itemsTable");
-        add(mainMenuPanel, "mainMenuPanel");
-        add(salesTable, "salesTable");
-        add(suppliersTable, "suppliersTable");
-        add(purchaseRequisitionTable, "purchaseRequisitionTable");
-        add(purchaseOrdersTable, "purchaseOrdersTable");
+        this.add(mainMenuPanel, "mainMenuPanel");
+
+        this.createTablePanel("Items", "itemsTable", ItemsTable.class);
+        this.createTablePanel("Accounts", "accountsTable", AccountsTable.class);
+        this.createTablePanel("Sales", "salesTable", SalesTable.class);
+        this.createTablePanel("Suppliers", "suppliersTable", SuppliersTable.class);
+        this.createTablePanel("PurchaseRequisition", "purchaseRequisitionTable", PurchaseRequisitionTable.class);
+        this.createTablePanel("PurchaseOrder", "purchaseOrdersTable", PurchaseOrdersTable.class);
+
+        this.createFeaturePanel("stockEntry", "stockEntry", AddNewItem.class);
+        // TODO the other panels
 
         showPanel("mainMenuPanel");
+    }
+
+    <T extends TablePanel<?>> void createTablePanel(String permissionName, String panelName, Class<T> tableClass) {
+        if (!role.hasPermission("Items", Permission.READ)) {
+            return;
+        }
+
+        try {
+            T tablePanel = tableClass
+                    .getDeclaredConstructor(Backend.class, MainMenu.class)
+                    .newInstance(backend, this);
+            this.add(tablePanel, panelName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    <T extends JPanel> void createFeaturePanel(String feature, String panelName, Class<T> panelClass) {
+        if (!role.hasFeature(feature)) {
+            return;
+        }
+
+        try {
+            T panel = panelClass
+                    .getDeclaredConstructor(Backend.class, MainMenu.class)
+                    .newInstance(backend, this);
+            this.add(panel, panelName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     void showPanel(String panelName) {
@@ -76,10 +104,10 @@ public class MainMenu extends JPanel {
     }
 
     void handleRoleBasedActions() {
-        if (userRole == Role.ADMIN) {
-        } else if (userRole == Role.FINANCE_MANAGER) {
-        } else if (userRole == Role.INVENTORY_MANAGER) {
-        } else if (userRole == Role.SALES_MANAGER) {
+        if (role == Role.ADMIN) {
+        } else if (role == Role.FINANCE_MANAGER) {
+        } else if (role == Role.INVENTORY_MANAGER) {
+        } else if (role == Role.SALES_MANAGER) {
         }
     }
 
@@ -100,7 +128,7 @@ class MainMenuPanel extends JPanel {
 
         createTitlePanel();
         createNestedPanel();
-        this.role = backend.getCurrentAccount().getRole();
+        this.role = backend.getRole();
         createButtons();
     }
 

@@ -77,7 +77,7 @@ public class UserInterface {
         if (mainMenu != null) {
             mainPanel.remove(mainMenu);
         }
-        mainMenu = new MainMenu(backend, this, backend.getRole());
+        mainMenu = new MainMenu(backend, this);
         mainPanel.add(mainMenu, "mainMenu");
 
         showPanel("mainMenu");
