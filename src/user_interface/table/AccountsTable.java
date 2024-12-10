@@ -14,8 +14,13 @@ public class AccountsTable extends TablePanel<Account> {
     }
 
     @Override
-    public void itemButtonAction(int modelRow) {
-        // TODO add item button but with fields filled in
+    public void createAddPanel() {
+        // TODO add item panel
+    }
+
+    @Override
+    public void createEditPanel(int modelRow) {
+        // TODO add item panel but with fields filled in
     }
 }
 

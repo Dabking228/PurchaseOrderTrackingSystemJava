@@ -66,7 +66,7 @@ public abstract class TablePanel<T extends BaseItem> extends JPanel implements T
         if (role.hasPermission(permissionsKey, Permission.CREATE)) {
             JButton addItemButton = new JButton("Add New");
             addItemButton.addActionListener(e -> {
-                // TODO
+                createAddPanel();
             });
             titleButtonPanel.add(addItemButton, 2);
         }
@@ -80,7 +80,7 @@ public abstract class TablePanel<T extends BaseItem> extends JPanel implements T
         Action goToItem = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
                 int modelRow = Integer.valueOf(e.getActionCommand());
-                itemButtonAction(modelRow);
+                createEditPanel(modelRow);
                 refresh();
             }
         };
@@ -98,7 +98,9 @@ public abstract class TablePanel<T extends BaseItem> extends JPanel implements T
         tableModel.setItems(array);
     }
 
-    abstract public void itemButtonAction(int modelRow);
+    abstract public void createAddPanel();
+
+    abstract public void createEditPanel(int modelRow);
 }
 
 abstract class TablePanelModel<T extends BaseItem> extends AbstractTableModel {
