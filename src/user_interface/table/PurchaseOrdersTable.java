@@ -106,17 +106,17 @@ class PurchaseOrdersTableModel extends TablePanelModel<PurchaseOrder> {
             case 2:
                 return "PR Status";
             case 3:
-                return "PR Sales Manager";
+                return "Sales Manager";
             case 4:
                 return "Required By";
             case 5:
                 return "Supplier";
             case 6:
-                return "Purchase Manager";
+                return "PO Manager";
             case 7:
                 return "PO Status";
             case 8:
-                return "PO Created Date";
+                return "PO Created";
             case 9:
                 return "Total Amount";
             case 10:
