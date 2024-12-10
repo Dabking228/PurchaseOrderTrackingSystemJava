@@ -11,13 +11,6 @@ public class AccountsTable extends TablePanel<Account> {
     public AccountsTable(Backend backend, MainMenu parent) {
         super("Accounts", 2, parent, backend.db.accountsMap, new AccountsTableModel(), backend);
         this.backend = backend;
-
-        // add item button
-        JButton addItemButton = new JButton("Add New");
-        addItemButton.addActionListener(e -> {
-            AddNewItem addNewItem = new AddNewItem(backend);
-        });
-        titleButtonPanel.add(addItemButton, 2);
     }
 
     @Override

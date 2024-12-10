@@ -34,7 +34,8 @@ public abstract class TablePanel<T extends BaseItem> extends JPanel implements T
         this.backend = backend;
         this.buttonColumnIndex = buttonColumnIndex;
 
-        Role currentRole = backend.getCurrentAccount().getRole();
+        Role role = backend.getCurrentAccount().getRole();
+        // TODO put in contructor
         String permissionsKey = "Items";
 
         setLayout(new BorderLayout());
@@ -60,6 +61,15 @@ public abstract class TablePanel<T extends BaseItem> extends JPanel implements T
             parent.showMainMenu();
         });
         titleButtonPanel.add(backButton, 0);
+
+        // Add new item button
+        if (role.hasPermission(permissionsKey, Permission.CREATE)) {
+            JButton addItemButton = new JButton("Add New");
+            addItemButton.addActionListener(e -> {
+                // TODO
+            });
+            titleButtonPanel.add(addItemButton, 2);
+        }
 
         // Table of items
         itemsTable = new JTable();

@@ -16,13 +16,6 @@ public class PurchaseRequisitionTable extends TablePanel<PurchaseRequisition> {
         super("PurchaseRequisition", 5, parent, backend.db.purchaseRequisitionsMap, new PurchaseRequisitionTableModel(),
                 backend);
         this.backend = backend;
-
-        // add item button
-        JButton addItemButton = new JButton("Add New");
-        addItemButton.addActionListener(e -> {
-            AddNewItem addNewItem = new AddNewItem(backend);
-        });
-        titleButtonPanel.add(addItemButton, 2);
     }
 
     @Override

@@ -11,13 +11,6 @@ public class SuppliersTable extends TablePanel<Supplier> {
     public SuppliersTable(Backend backend, MainMenu parent) {
         super("Suppliers", 3, parent, backend.db.suppliersMap, new SuppliersTableModel(), backend);
         this.backend = backend;
-
-        // add item button
-        JButton addItemButton = new JButton("Add New");
-        addItemButton.addActionListener(e -> {
-            AddNewItem addNewItem = new AddNewItem(backend);
-        });
-        titleButtonPanel.add(addItemButton, 2);
     }
 
     @Override

@@ -15,13 +15,6 @@ public class SalesTable extends TablePanel<Sale> {
     public SalesTable(Backend backend, MainMenu parent) {
         super("Sales", 4, parent, backend.db.salesMap, new SalesTableModel(), backend);
         this.backend = backend;
-
-        // add item button
-        JButton addItemButton = new JButton("Add New");
-        addItemButton.addActionListener(e -> {
-            AddNewItem addNewItem = new AddNewItem(backend);
-        });
-        titleButtonPanel.add(addItemButton, 2);
     }
 
     @Override

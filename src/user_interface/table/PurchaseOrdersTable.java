@@ -17,13 +17,6 @@ public class PurchaseOrdersTable extends TablePanel<PurchaseOrder> {
     public PurchaseOrdersTable(Backend backend, MainMenu parent) {
         super("PurchaseOrders", 10, parent, backend.db.purchaseOrdersMap, new PurchaseOrdersTableModel(), backend);
         this.backend = backend;
-
-        // add item button
-        JButton addItemButton = new JButton("Add New");
-        addItemButton.addActionListener(e -> {
-            AddNewItem addNewItem = new AddNewItem(backend);
-        });
-        titleButtonPanel.add(addItemButton, 2);
     }
 
     @Override
