@@ -78,7 +78,7 @@ public class MainMenu extends JPanel {
         }
     }
 
-    void showPanel(String panelName) {
+    public void showPanel(String panelName) {
         cardLayout.show(this, panelName);
 
         Component currentPanel = this.getCurrentComponent(this);
