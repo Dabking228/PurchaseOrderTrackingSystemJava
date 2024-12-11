@@ -1,10 +1,12 @@
 package user_interface.table;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.*;
 
 import data.Item;
+import data.Supplier;
 import user_interface.MainMenu;
 import backend.Backend;
 
@@ -21,16 +23,28 @@ public class ItemsTable extends TablePanel<Item> {
     }
 
     @Override
-    public void itemButtonAction(int modelRow) {
-        // TODO add item button but with fields filled in
+    public void createAddPanel() {
+        // TODO add item panel
+    }
+
+    @Override
+    public void createEditPanel(int modelRow) {
+        // TODO add item panel but with fields filled in
+    }
+
+    @Override
+    public void refresh() {
+        ArrayList<Item> array = new ArrayList<>(items.values());
+        tableModel.setItems(array);
+        ((ItemsTableModel) tableModel).setSuppliers(backend.db.suppliersMap);
     }
 }
 
 class ItemsTableModel extends TablePanelModel<Item> {
-    @Override
-    public void setItems(ArrayList<Item> items) {
-        this.items = items;
-        fireTableDataChanged();
+    public HashMap<String, Supplier> suppliersMap;
+
+    void setSuppliers(HashMap<String, Supplier> suppliers) {
+        this.suppliersMap = suppliers;
     }
 
     @Override
@@ -45,13 +59,14 @@ class ItemsTableModel extends TablePanelModel<Item> {
 
     public Object getValueAt(int row, int column) {
         Item account = items.get(row);
+        String supplierName = suppliersMap.get(account.getSupplierId()).getSupplierName();
         switch (column) {
             case 0:
                 return account.getItemCode();
             case 1:
                 return account.getItemName();
             case 2:
-                return account.getSupplierId();
+                return supplierName;
             case 3:
                 return account.getStockLevel();
             case 4:
@@ -70,7 +85,7 @@ class ItemsTableModel extends TablePanelModel<Item> {
             case 1:
                 return "Item Name";
             case 2:
-                return "Supplier Id";
+                return "Supplier";
             case 3:
                 return "Stock Level";
             case 4:

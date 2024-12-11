@@ -1,32 +1,57 @@
 package user_interface.table;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.swing.*;
 
+import data.Item;
 import data.PurchaseOrder;
+import data.PurchaseRequisition;
+import data.Supplier;
 import user_interface.MainMenu;
 import user_interface.add_item_dialog.AddNewItem;
 import backend.Backend;
 
 public class PurchaseOrdersTable extends TablePanel<PurchaseOrder> {
     public PurchaseOrdersTable(Backend backend, MainMenu parent) {
-        super("PurchaseOrders", 6, parent, backend.db.purchaseOrdersMap, new PurchaseOrdersTableModel(), backend);
+        super("PurchaseOrders", 10, parent, backend.db.purchaseOrdersMap, new PurchaseOrdersTableModel(), backend);
         this.backend = backend;
-
-        // add item button
-        JButton addItemButton = new JButton("Add New");
-        addItemButton.addActionListener(e -> {
-            AddNewItem addNewItem = new AddNewItem(backend);
-        });
-        titleButtonPanel.add(addItemButton, 2);
     }
 
     @Override
-    public void itemButtonAction(int modelRow) {
-        // TODO add item button but with fields filled in
+    public void createAddPanel() {
+        // TODO add item panel
+    }
+
+    @Override
+    public void createEditPanel(int modelRow) {
+        // TODO add item panel but with fields filled in
+    }
+
+    @Override
+    public void refresh() {
+        ArrayList<PurchaseOrder> array = new ArrayList<>(items.values());
+        tableModel.setItems(array);
+        ((PurchaseOrdersTableModel) tableModel).setMaps(backend.db.purchaseRequisitionsMap, backend.db.suppliersMap,
+                backend.db.itemsMap);
     }
 }
 
 class PurchaseOrdersTableModel extends TablePanelModel<PurchaseOrder> {
+    public HashMap<String, Item> itemsMap;
+    public HashMap<String, PurchaseRequisition> purchaseRequisitionsMap;
+    public HashMap<String, Supplier> suppliersMap;
+
+    void setMaps(
+            HashMap<String, PurchaseRequisition> purchaseRequisitions,
+            HashMap<String, Supplier> suppliers,
+            HashMap<String, Item> items) {
+        this.purchaseRequisitionsMap = purchaseRequisitions;
+        this.suppliersMap = suppliers;
+        this.itemsMap = items;
+    }
+
     @Override
     public int getRowCount() {
         return items.size();
@@ -34,25 +59,36 @@ class PurchaseOrdersTableModel extends TablePanelModel<PurchaseOrder> {
 
     @Override
     public int getColumnCount() {
-        return 7;
+        return 11;
     }
 
     public Object getValueAt(int row, int column) {
         PurchaseOrder purchaseOrder = items.get(row);
+        PurchaseRequisition purchaseRequisition = purchaseRequisitionsMap.get(purchaseOrder.getPurchaseRequisitionId());
+        String purchaseItemName = itemsMap.get(purchaseRequisition.getItemId()).getItemName();
+        String supplierName = suppliersMap.get(purchaseOrder.getSupplierId()).getSupplierName();
         switch (column) {
             case 0:
-                return purchaseOrder.getPurchaseRequisitionId();
+                return purchaseItemName;
             case 1:
-                return purchaseOrder.getSupplierId();
+                return purchaseRequisition.getQuantity();
             case 2:
-                return purchaseOrder.getPurchaseManagerId();
+                return purchaseRequisition.getStatus();
             case 3:
-                return purchaseOrder.getPoStatus();
+                return purchaseRequisition.getSalesManagerId();
             case 4:
-                return purchaseOrder.getCreatedDate();
+                return purchaseRequisition.getRequiredByDate();
             case 5:
-                return purchaseOrder.getTotalAmount();
+                return supplierName;
             case 6:
+                return purchaseOrder.getPurchaseManagerId();
+            case 7:
+                return purchaseOrder.getPoStatus();
+            case 8:
+                return purchaseOrder.getCreatedDate();
+            case 9:
+                return purchaseOrder.getTotalAmount();
+            case 10:
                 return "View";
             default:
                 return null;
@@ -62,18 +98,26 @@ class PurchaseOrdersTableModel extends TablePanelModel<PurchaseOrder> {
     public String getColumnName(int column) {
         switch (column) {
             case 0:
-                return "Purchase Requisition ID";
+                return "Item";
             case 1:
-                return "Supplier ID";
+                return "Quantity";
             case 2:
-                return "Purchase Manager ID";
+                return "PR Status";
             case 3:
-                return "PO Status";
+                return "Sales Manager";
             case 4:
-                return "Created Date";
+                return "Required By";
             case 5:
-                return "Total Amount";
+                return "Supplier";
             case 6:
+                return "PO Manager";
+            case 7:
+                return "PO Status";
+            case 8:
+                return "PO Created";
+            case 9:
+                return "Total Amount";
+            case 10:
                 return "View";
             default:
                 return null;

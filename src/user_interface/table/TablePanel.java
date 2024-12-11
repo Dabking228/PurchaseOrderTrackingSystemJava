@@ -4,17 +4,21 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.Map;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
 import backend.Backend;
+import data.Account;
 import data.BaseItem;
+import data.Role;
+import data.Permission;
 import user_interface.MainMenu;
 import user_interface.components.ButtonColumn;
 import user_interface.panels.TitlePanel;
 
-abstract class TablePanel<T extends BaseItem> extends JPanel implements TableRefreshable {
+public abstract class TablePanel<T extends BaseItem> extends JPanel implements TableRefreshable {
     protected JPanel panel, titleButtonPanel;
     protected JTable itemsTable;
     protected int buttonColumnIndex;
@@ -28,8 +32,10 @@ abstract class TablePanel<T extends BaseItem> extends JPanel implements TableRef
         this.tableModel = tableModel;
         this.items = items;
         this.backend = backend;
-
         this.buttonColumnIndex = buttonColumnIndex;
+
+        Role role = backend.getCurrentAccount().getRole();
+
         setLayout(new BorderLayout());
 
         // Title
@@ -54,6 +60,15 @@ abstract class TablePanel<T extends BaseItem> extends JPanel implements TableRef
         });
         titleButtonPanel.add(backButton, 0);
 
+        // Add new item button
+        if (role.hasPermission(title, Permission.CREATE)) {
+            JButton addItemButton = new JButton("Add New");
+            addItemButton.addActionListener(e -> {
+                createAddPanel();
+            });
+            titleButtonPanel.add(addItemButton, 2);
+        }
+
         // Table of items
         itemsTable = new JTable();
         itemsTable.setModel(tableModel);
@@ -63,7 +78,7 @@ abstract class TablePanel<T extends BaseItem> extends JPanel implements TableRef
         Action goToItem = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
                 int modelRow = Integer.valueOf(e.getActionCommand());
-                itemButtonAction(modelRow);
+                createEditPanel(modelRow);
                 refresh();
             }
         };
@@ -81,7 +96,9 @@ abstract class TablePanel<T extends BaseItem> extends JPanel implements TableRef
         tableModel.setItems(array);
     }
 
-    abstract public void itemButtonAction(int modelRow);
+    abstract public void createAddPanel();
+
+    abstract public void createEditPanel(int modelRow);
 }
 
 abstract class TablePanelModel<T extends BaseItem> extends AbstractTableModel {

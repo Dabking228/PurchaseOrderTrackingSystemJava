@@ -12,20 +12,16 @@ public class AccountsTable extends TablePanel<Account> {
     public AccountsTable(Backend backend, MainMenu parent) {
         super("Accounts", 2, parent, backend.db.accountsMap, new AccountsTableModel(), backend);
         this.backend = backend;
-
-        // add item button
-        JButton addItemButton = new JButton("Add New");
-        addItemButton.addActionListener(e -> {
-            // AddNewUser addNewUser = new AddNewUser(backend, parent);
-            // add(addNewUser,"addNewUser");
-            parent.showPanel("addNewUser");
-        });
-        titleButtonPanel.add(addItemButton, 2);
     }
 
     @Override
-    public void itemButtonAction(int modelRow) {
-        // TODO add item button but with fields filled in
+    public void createAddPanel() {
+        // TODO add item panel
+    }
+
+    @Override
+    public void createEditPanel(int modelRow) {
+        // TODO add item panel but with fields filled in
     }
 }
 

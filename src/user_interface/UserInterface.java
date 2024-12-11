@@ -55,7 +55,6 @@ public class UserInterface {
         mainPanel.setLayout(cardLayout);
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // WONTFIX might not be ideal since there are a lot of pages in this project
         login = new Login(backend, this);
         mainPanel.add(login, "login");
 
@@ -74,11 +73,11 @@ public class UserInterface {
         frame.setVisible(true);
     }
 
-    public void showMainMenu() {
+    public void login() {
         if (mainMenu != null) {
             mainPanel.remove(mainMenu);
         }
-        mainMenu = new MainMenu(backend, this, backend.getRole());
+        mainMenu = new MainMenu(backend, this);
         mainPanel.add(mainMenu, "mainMenu");
 
         showPanel("mainMenu");
