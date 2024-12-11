@@ -6,39 +6,38 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import backend.Backend;
+import data.Account;
 import user_interface.MainMenu;
 
-public class AddNewUser extends JPanel {
+public class AddNewUser extends Panel<Account> {
     public AddNewUser(Backend backend, MainMenu parent) {
-        
-        setLayout(null);
+        super("Add User", parent, backend.db.accountsMap,backend);
 
-        JLabel usernameLabel = new JLabel("Username:");
-        usernameLabel.setBounds(10, 10, 100, 25);
-        add(usernameLabel);
+        FieldText fieldUsername = new FieldText("Username:");
+        // usernameLabel.setBounds(10, 10, 100, 25);
+        contentPanel.add(fieldUsername);
 
-        JTextField usernameField = new JTextField();
-        usernameField.setBounds(120, 10, 150, 25);
-        add(usernameField);
+        FieldPassword fieldPassword = new FieldPassword("Password");
+        contentPanel.add(fieldPassword);
 
-        JLabel roleLabel = new JLabel("Role:");
-        roleLabel.setBounds(10, 50, 100, 25);
-        add(roleLabel);
+        // JLabel roleLabel = new JLabel("Role:");
+        // roleLabel.setBounds(10, 50, 100, 25);
+        // add(roleLabel);
 
-        String[] roles = {"Admin", "Finance Manager", "Inventory Manager", "Purchase Manager", "Sales Manager"};
-        JComboBox<String> roleComboBox = new JComboBox<>(roles);
-        roleComboBox.setBounds(120, 50, 150, 25);
-        add(roleComboBox);
+        // String[] roles = {"Admin", "Finance Manager", "Inventory Manager", "Purchase Manager", "Sales Manager"};
+        // JComboBox<String> roleComboBox = new JComboBox<>(roles);
+        // roleComboBox.setBounds(120, 50, 150, 25);
+        // add(roleComboBox);
 
-        JButton confirmButton = new JButton("Add User");
-        confirmButton.setBounds(10, 90, 120, 25);
-        confirmButton.addActionListener(e -> {
-            // Logic to add the user
-            String username = usernameField.getText();
-            String role = (String) roleComboBox.getSelectedItem();
-            // Ad thisser to the backend
-            System.out.println("Adding user: " + username + " with role: " + role);
-        });
-        add(confirmButton);
+        // JButton confirmButton = new JButton("Add User");
+        // confirmButton.setBounds(10, 90, 120, 25);
+        // confirmButton.addActionListener(e -> {
+        //     // Logic to add the user
+        //     char[] username = fieldPassword.getPassword();
+        //     String role = (String) roleComboBox.getSelectedItem();
+        //     // Ad thisser to the backend
+        //     System.out.println("Adding user: " + username + " with role: " + role);
+        // });
+        // add(confirmButton);
     }
 }

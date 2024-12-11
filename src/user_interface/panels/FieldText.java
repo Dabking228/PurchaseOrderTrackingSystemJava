@@ -57,6 +57,8 @@ public class FieldText extends JPanel {
             });
         }
 
+
+
         setMaximumSize(getPreferredSize());
 
     }
@@ -64,6 +66,9 @@ public class FieldText extends JPanel {
     public FieldText(String fieldName) {
         this(fieldName, false);
     }
+
+
+
 
     public String getData(){
         if(!isNumber){

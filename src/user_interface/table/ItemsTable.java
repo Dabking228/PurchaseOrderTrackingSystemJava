@@ -15,7 +15,7 @@ public class ItemsTable extends TablePanel<Item> {
         // add item button
         JButton addItemButton = new JButton("Add New");
         addItemButton.addActionListener(e -> {
-            // TODO
+            parent.showPanel("addNewItem");
         });
         titleButtonPanel.add(addItemButton, 2);
     }

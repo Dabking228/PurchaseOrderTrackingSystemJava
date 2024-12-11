@@ -30,8 +30,8 @@ public class AddItemPanel extends Panel<Item> {
         FieldText fieldItemName = new FieldText("Item Name");
         contentPanel.add(fieldItemName);
 
-        FieldCombo<data.Supplier> SupplierDrop = 
-            new FieldCombo<data.Supplier>("Supplier", backend.db.suppliersMap, new SupplierList());
+        FieldDropdown<data.Supplier> SupplierDrop = 
+            new FieldDropdown<data.Supplier>("Supplier", backend.db.suppliersMap, new SupplierList());
         contentPanel.add(SupplierDrop);
 
         FieldText fieldNumStock = new FieldText("Stock", true);

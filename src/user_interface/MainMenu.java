@@ -10,6 +10,7 @@ import data.Role;
 import user_interface.table.*;
 import user_interface.MainMenu;
 import user_interface.panels.AddItemPanel;
+import user_interface.panels.AddNewUser;
 import user_interface.panels.StockTaking;
 import user_interface.panels.TitlePanel;
 
@@ -39,6 +40,9 @@ public class MainMenu extends JPanel {
         PurchaseOrdersTable purchaseOrdersTable = new PurchaseOrdersTable(backend, this);
         AddItemPanel addItemPanel = new AddItemPanel(backend, this);
         StockTaking stockTaking = new StockTaking(backend, this);
+        AddNewUser addNewUser = new AddNewUser(backend, this);
+        
+
         add(accountsTable, "accountsTable");
         add(itemsTable, "itemsTable");
         add(mainMenuPanel, "mainMenuPanel");
@@ -48,11 +52,12 @@ public class MainMenu extends JPanel {
         add(purchaseOrdersTable, "purchaseOrdersTable");
         add(addItemPanel, "addNewItem");
         add(stockTaking, "stockTaking");
+        add(addNewUser,"addNewUser");
 
         showPanel("mainMenuPanel");
     }
 
-    void showPanel(String panelName) {
+    public void showPanel(String panelName) {
         cardLayout.show(this, panelName);
 
         Component currentPanel = this.getCurrentComponent(this);

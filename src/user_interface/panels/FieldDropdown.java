@@ -16,13 +16,13 @@ import javax.swing.JPanel;
 
 import data.BaseItem;
 
-public class FieldCombo<T extends BaseItem> extends JPanel {
+public class FieldDropdown<T extends BaseItem> extends JPanel {
     protected ComboList<T> lists;
     protected Map<String, T> items;
     protected JLabel fieldLabel;
     protected JComboBox<ComboItem<T>> fieldCombo;
 
-    public FieldCombo(String fieldName, Map<String, T> items, ComboList<T> lists) {
+    public FieldDropdown(String fieldName, Map<String, T> items, ComboList<T> lists) {
         this.items = items;
         this.lists = lists;
         setLayout(new GridLayout(1, 2));
