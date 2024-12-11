@@ -8,23 +8,22 @@ import javax.swing.*;
 import data.Item;
 import data.Supplier;
 import user_interface.MainMenu;
+import user_interface.panels.AddItemPanel;
 import backend.Backend;
 
 public class ItemsTable extends TablePanel<Item> {
+    MainMenu parent;
     public ItemsTable(Backend backend, MainMenu parent) {
         super("Items", 5, parent, backend.db.itemsMap, new ItemsTableModel(), backend);
-
-        // add item button
-        JButton addItemButton = new JButton("Add New");
-        addItemButton.addActionListener(e -> {
-            parent.showPanel("addNewItem");
-        });
-        titleButtonPanel.add(addItemButton, 2);
+        this.parent = parent;
+        AddItemPanel newItem = new AddItemPanel(backend, parent);
+        parent.add(newItem, "addNewItem");
+       
     }
 
     @Override
     public void createAddPanel() {
-        // TODO add item panel
+       parent.showPanel("addNewItem");
     }
 
     @Override
