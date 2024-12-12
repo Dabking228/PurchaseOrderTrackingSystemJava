@@ -8,27 +8,43 @@ import javax.swing.*;
 import data.Item;
 import data.Supplier;
 import user_interface.MainMenu;
-import user_interface.panels.AddItemPanel;
+import user_interface.panels.ItemPanel;
+import user_interface.panels.ViewItemPanel;
 import backend.Backend;
 
 public class ItemsTable extends TablePanel<Item> {
-    MainMenu parent;
+    protected MainMenu parent;
+    protected ItemPanel newItem, viewItem;
+
     public ItemsTable(Backend backend, MainMenu parent) {
         super("Items", 5, parent, backend.db.itemsMap, new ItemsTableModel(), backend);
         this.parent = parent;
-        AddItemPanel newItem = new AddItemPanel(backend, parent);
-        parent.add(newItem, "addNewItem");
+
+        // // adding panels
+        // newItem = new ItemPanel(backend, parent);
+        // parent.add(newItem, "addNewItem");
+
+        // viewItem = new ItemPanel(backend, parent,true);
+        // parent.add(viewItem, "viewItem");
        
     }
 
     @Override
     public void createAddPanel() {
-       parent.showPanel("addNewItem");
+       parent.showPanel("itemPanel");
     }
 
     @Override
     public void createEditPanel(int modelRow) {
-        // TODO add item panel but with fields filled in
+        parent.showPanel("itemPanelView");
+        viewItem = parent.getPanel("itemPanelView", ItemPanel.class);
+    
+        // for (java.awt.Component teee : parent.getComponents()) {
+        //     System.out.println(teee);
+        // }
+        viewItem.setRowNum(tableModel.getValueAt(modelRow, 0).toString());
+        viewItem.setData();
+        // parent.showPanel("viewItem");
     }
 
     @Override
