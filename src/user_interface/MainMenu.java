@@ -1,16 +1,19 @@
 package user_interface;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import user_interface.add_item_dialog.AddNewItem;
-import user_interface.table.TablePanel;
 import backend.Backend;
 import data.Permission;
 import data.Role;
 import user_interface.table.*;
 import user_interface.MainMenu;
-import user_interface.panels.AddItemPanel;
+import user_interface.panels.Panel;
+import user_interface.panels.ItemPanel;
 import user_interface.panels.AddNewUser;
 import user_interface.panels.StockTaking;
 import user_interface.panels.TitlePanel;
@@ -20,6 +23,7 @@ public class MainMenu extends JPanel {
     Backend backend;
     private UserInterface userInterface;
     private Role role;
+    private Map<String, Panel<?>> panels = new HashMap<>();
 
     public MainMenu(Backend backend, UserInterface userInterface) {
         this.backend = backend;
@@ -42,7 +46,9 @@ public class MainMenu extends JPanel {
         this.createTablePanel("PurchaseRequisition", "purchaseRequisitionTable", PurchaseRequisitionTable.class);
         this.createTablePanel("PurchaseOrder", "purchaseOrdersTable", PurchaseOrdersTable.class);
 
-        this.createFeaturePanel("stockEntry", "stockEntry", AddNewItem.class);
+        // this.createFeaturePanel("stockEntry", "stockEntry", AddNewItem.class);
+        this.createFeaturePanel("addItem", "itemPanel", ItemPanel.class);
+        this.createFeaturePanelViewOnly("viewItem", "itemPanelView", ItemPanel.class, true);
         // TODO the other panels
 
         showPanel("mainMenuPanel");
@@ -63,7 +69,7 @@ public class MainMenu extends JPanel {
         }
     }
 
-    <T extends JPanel> void createFeaturePanel(String feature, String panelName, Class<T> panelClass) {
+    <T extends Panel<?>> void createFeaturePanel(String feature, String panelName, Class<T> panelClass) {
         if (!role.hasFeature(feature)) {
             return;
         }
@@ -75,6 +81,31 @@ public class MainMenu extends JPanel {
             this.add(panel, panelName);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    <T extends Panel<?>> void createFeaturePanelViewOnly(String feature, String panelName, Class<T> panelClass, boolean viewOnly) {
+        if (!role.hasFeature(feature)) {
+            return;
+        }
+
+        try {
+            T panel = panelClass
+                    .getDeclaredConstructor(Backend.class, MainMenu.class, boolean.class)
+                    .newInstance(backend, this, viewOnly);
+            this.add(panel, panelName);
+            panels.put(panelName, panel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public <T extends Panel<?>> T getPanel(String panelName, Class<T> panelClass){
+       Panel<?> panel = panels.get(panelName);
+        if (panelClass.isInstance(panel)) {
+            return (T) panel;
+        } else {
+            throw new IllegalArgumentException("Panel not of expected type: " + panelClass.getName());
         }
     }
 
