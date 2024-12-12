@@ -14,13 +14,16 @@ import user_interface.MainMenu;
 
 abstract class Panel<T extends BaseItem> extends JPanel {
     protected JPanel panel, titleButtonPanel;
+    protected JButton backButton;
     protected CustomJPanel contentPanel;
     protected Map<String, T> items;
     protected Backend backend;
+    protected MainMenu parent;
 
     public Panel(String title, MainMenu parent, Map<String, T> items, Backend backend) {
         this.items = items;
         this.backend = backend;
+        this.parent = parent;
 
         // Title
         setLayout(new BorderLayout());
@@ -32,10 +35,7 @@ abstract class Panel<T extends BaseItem> extends JPanel {
         titlePanel.add(titleButtonPanel, BorderLayout.EAST);
 
         // Back button
-        JButton backButton = new JButton("Back");
-        backButton.addActionListener(e -> {
-            parent.showMainMenu();
-        });
+        backButton = new JButton("Back");
         titleButtonPanel.add(backButton, 0);
 
         // Content
@@ -43,6 +43,20 @@ abstract class Panel<T extends BaseItem> extends JPanel {
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.PAGE_AXIS));
         add(contentPanel, BorderLayout.CENTER);
     }
+    
+    
+    public void backMainMenu(String menuName){
+        backButton.addActionListener(e -> {
+            if(menuName == null || menuName == ""){
+                parent.showMainMenu();
+            } else {
+                parent.showPanel(menuName);
+            }
+        });
+    };
+
+    // abstract public void backMainMenu(String menuName);
+
 }
 
 class CustomJPanel extends JPanel{

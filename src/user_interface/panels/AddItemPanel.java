@@ -77,7 +77,12 @@ public class AddItemPanel extends Panel<Item> {
 
         });
         titleButtonPanel.add(confirmButton, 1);
+
+        // change the return panel based on the menu name
+        backMainMenu("itemsTable");
     }
+
+
 }
 
 class SupplierList extends ComboList<data.Supplier>{
