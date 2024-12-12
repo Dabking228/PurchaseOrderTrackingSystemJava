@@ -12,7 +12,7 @@ import data.BaseItem;
 import user_interface.MainMenu;
 
 
-abstract class Panel<T extends BaseItem> extends JPanel {
+public abstract class Panel<T extends BaseItem> extends JPanel {
     protected JPanel panel, titleButtonPanel;
     protected JButton backButton;
     protected CustomJPanel contentPanel;
@@ -55,7 +55,6 @@ abstract class Panel<T extends BaseItem> extends JPanel {
         });
     };
 
-    // abstract public void backMainMenu(String menuName);
 
 }
 
