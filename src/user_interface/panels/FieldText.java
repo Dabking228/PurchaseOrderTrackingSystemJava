@@ -67,7 +67,9 @@ public class FieldText extends JPanel {
         this(fieldName, false);
     }
 
-
+    public void setData(String t){
+        fieldText.setText(t);
+    }
 
 
     public String getData(){
