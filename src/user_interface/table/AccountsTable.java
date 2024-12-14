@@ -5,23 +5,30 @@ import javax.swing.*;
 import data.Account;
 import user_interface.MainMenu;
 import user_interface.add_item_dialog.AddNewItem;
-import user_interface.panels.AddNewUser;
+import user_interface.panels.AddUserPanel;
 import backend.Backend;
 
 public class AccountsTable extends TablePanel<Account> {
+    protected MainMenu parent;
+    protected AddUserPanel viewUser;
+    
     public AccountsTable(Backend backend, MainMenu parent) {
         super("Accounts", 2, parent, backend.db.accountsMap, new AccountsTableModel(), backend);
+        this.parent = parent;
         this.backend = backend;
     }
 
     @Override
     public void createAddPanel() {
-        // TODO add item panel
+        parent.showPanel("addUserPanel");
     }
 
     @Override
     public void createEditPanel(int modelRow) {
-        // TODO add item panel but with fields filled in
+        parent.showPanel("addUserPanelView");
+        viewUser = parent.getPanel("addUserPanelView", AddUserPanel.class);
+        viewUser.setRowNum(tableModel.getValueAt(modelRow, 0).toString());
+        viewUser.setData();
     }
 }
 
