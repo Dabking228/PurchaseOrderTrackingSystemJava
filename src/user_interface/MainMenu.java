@@ -14,7 +14,7 @@ import user_interface.table.*;
 import user_interface.MainMenu;
 import user_interface.panels.Panel;
 import user_interface.panels.ItemPanel;
-import user_interface.panels.AddNewUser;
+import user_interface.panels.AddUserPanel;
 import user_interface.panels.StockTaking;
 import user_interface.panels.TitlePanel;
 
@@ -46,9 +46,10 @@ public class MainMenu extends JPanel {
         this.createTablePanel("PurchaseRequisition", "purchaseRequisitionTable", PurchaseRequisitionTable.class);
         this.createTablePanel("PurchaseOrder", "purchaseOrdersTable", PurchaseOrdersTable.class);
 
-        // this.createFeaturePanel("stockEntry", "stockEntry", AddNewItem.class);
+        this.createFeaturePanel("addUser", "addUserPanel", AddUserPanel.class);
+        this.createFeaturePanelViewOnly("addUser", "addUserPanelView", AddUserPanel.class);
         this.createFeaturePanel("addItem", "itemPanel", ItemPanel.class);
-        this.createFeaturePanelViewOnly("viewItem", "itemPanelView", ItemPanel.class, true);
+        this.createFeaturePanelViewOnly("viewItem", "itemPanelView", ItemPanel.class);
         // TODO the other panels
 
         showPanel("mainMenuPanel");
@@ -85,7 +86,7 @@ public class MainMenu extends JPanel {
         }
     }
 
-    <T extends Panel<?>> void createFeaturePanelViewOnly(String feature, String panelName, Class<T> panelClass, boolean viewOnly) {
+    <T extends Panel<?>> void createFeaturePanelViewOnly(String feature, String panelName, Class<T> panelClass) {
         if (!role.hasFeature(feature)) {
             return;
         }
@@ -93,7 +94,7 @@ public class MainMenu extends JPanel {
         try {
             T panel = panelClass
                     .getDeclaredConstructor(Backend.class, MainMenu.class, boolean.class)
-                    .newInstance(backend, this, viewOnly);
+                    .newInstance(backend, this, true);
             this.add(panel, panelName);
             panels.put(panelName, panel);
         } catch (Exception e) {
