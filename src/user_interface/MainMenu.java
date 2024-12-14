@@ -79,6 +79,7 @@ public class MainMenu extends JPanel {
                     .getDeclaredConstructor(Backend.class, MainMenu.class)
                     .newInstance(backend, this);
             this.add(panel, panelName);
+            panels.put(panelName,panel);
         } catch (Exception e) {
             e.printStackTrace();
         }
