@@ -14,13 +14,11 @@ import javax.swing.border.Border;
 import backend.Backend;
 import data.*;
 import user_interface.MainMenu;
-public class StockEntry extends data<Item> {
+public class StockEntry extends Panel<Item> {
 
 
     public Item promptForItemDetails() {
-        
-        JPanel contentPanel = new JPanel();
-        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.PAGE_AXIS));
+        super();
 
         FieldText fieldItemCode = new FieldText("Item Code");
         contentPanel.add(fieldItemCode);
@@ -46,8 +44,7 @@ public class StockEntry extends data<Item> {
             int reorderLevel = Integer.parseInt(fieldReorderLevel.getText());
 
             return new Item(itemCode, itemName, supplierId, stockLevel, reorderLevel);
-        }
-        return null; 
+        } 
     }
 
 }
