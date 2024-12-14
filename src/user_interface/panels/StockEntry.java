@@ -17,7 +17,7 @@ import javax.swing.JLabel;
 import backend.Backend;
 import data.*;
 import user_interface.MainMenu;
-public class StockEntry extends data<Item> {
+public class StockEntry extends Panel<Item> {
 
     public StockEntry() {
     }
