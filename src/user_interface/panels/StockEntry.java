@@ -47,7 +47,7 @@ public class StockEntry extends data<Item> {
 
             return new Item(itemCode, itemName, supplierId, stockLevel, reorderLevel);
         }
-        return null; 
+        return null;
     }
 
 }
