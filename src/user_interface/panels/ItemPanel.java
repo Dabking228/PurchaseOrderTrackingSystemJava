@@ -2,72 +2,72 @@ package user_interface.panels;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.text.NumberFormat;
-import java.util.ArrayList;
+import java.awt.GridLayout;
 import java.util.Map;
-import java.util.function.Supplier;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import javax.xml.crypto.Data;
 
 import backend.Backend;
 import data.*;
-import user_interface.ConfirmPane;
+
 import user_interface.MainMenu;
-import user_interface.add_item_dialog.AddNewItem;
 
 public class ItemPanel extends Panel<Item> {
     protected FieldText fieldItemID, fieldItemName, fieldNumStock, fieldRestockLevel;
     protected FieldDropdown<data.Supplier> SupplierDrop;
-    protected JButton deleteButton,editButton;
+    protected JButton deleteButton, editButton, editConfirm, editCancel, confirmButton;
+    private JLabel greenLabel;
     private ItemList itemList;
     private boolean viewOnly;
     protected Role role;
     protected String rowData;
+    private JPanel editcfm;
 
-    public ItemPanel(Backend backend, MainMenu parent){
-        this(backend,parent,false);
+    public ItemPanel(Backend backend, MainMenu parent) {
+        this(backend, parent, false);
 
-        JLabel greenLabel = new JLabel("Item added");
+        greenLabel = new JLabel("Item added");
         greenLabel.setVisible(false);
         greenLabel.setForeground(Color.GREEN);
         greenLabel.setFont(new Font(greenLabel.getText(), Font.BOLD, 20));
         contentPanel.add(greenLabel);
 
-        JButton confirmButton = new JButton("Confirm?");
-        confirmButton.addActionListener(e -> {
-            String itemID = fieldItemID.getData();
-            String itemName = fieldItemName.getData();
-            String supplierID = SupplierDrop.getSelected().getValue().getId();
-            int numStock = Integer.parseInt(fieldNumStock.getData());
-            int minStock = Integer.parseInt(fieldRestockLevel.getData());
-            
-            
-            ConfirmPane cp = new ConfirmPane("Add thing item?",  "Add Item", this, JOptionPane.YES_NO_OPTION);
-            if(cp.getResult() == JOptionPane.YES_OPTION){
-                backend.db.addItem(new Item(itemID,itemName,supplierID,numStock,minStock));
-                greenLabel.setVisible(true);
-            } else {
-                parent.showMainMenu();
-            }
-            
-            // reset field
-            fieldItemID.resetField();
-            fieldItemName.resetField();
-            fieldNumStock.resetField();
-            fieldRestockLevel.resetField();
-
-            // adding a timer to hide the greenlabel
-            Timer timer = new Timer(2000, g -> greenLabel.setVisible(false));
-            timer.setRepeats(false);
-            timer.start();
-
-        });
+        // add confirmation button
+        confirmButton = new JButton("Confirm");
         titleButtonPanel.add(confirmButton, 1);
+
+        // confirmation button logic
+        confirmButton.addActionListener(e -> {
+            try{
+                String itemID = fieldItemID.getData();
+                String itemName = fieldItemName.getData();
+                String supplierID = SupplierDrop.getSelected().getValue().getId();
+                int numStock = fieldNumStock.getIntData();
+                int minStock = fieldRestockLevel.getIntData();
+                System.out.println(numStock);
+                if (!itemID.isEmpty() || !itemName.isEmpty() || numStock != 0 || minStock != 0) {
+                    backend.db.addItem(new Item(itemID, itemName, supplierID, numStock, minStock));
+                    greenLabel.setVisible(true);
+    
+                    // reset field
+                    fieldItemID.resetField();
+                    fieldItemName.resetField();
+                    fieldNumStock.resetField();
+                    fieldRestockLevel.resetField();
+    
+                    // adding a timer to hide the greenlabel
+                    Timer timer = new Timer(2000, g -> greenLabel.setVisible(false));
+                    timer.setRepeats(false);
+                    timer.start();
+                }
+    
+            } catch (Exception err){
+                System.out.println(err);
+            }
+        });
     }
 
     public ItemPanel(Backend backend, MainMenu parent, boolean viewOnly) {
@@ -91,94 +91,156 @@ public class ItemPanel extends Panel<Item> {
         fieldRestockLevel = new FieldText("Minimum Stock", true);
         contentPanel.add(fieldRestockLevel);
 
-
         // change the return panel based on the menu name
-        backMainMenu("itemsTable");
+
+        backButton.addActionListener(e -> {
+            parent.showPanel("itemsTable");
+        });
 
         // View only setups
-        if(viewOnly){
+        if (viewOnly) {
             fieldItemID.setEditable(false);
             fieldItemName.setEditable(false);
             SupplierDrop.setEditable(false);
             fieldNumStock.setEditable(false);
             fieldRestockLevel.setEditable(false);
 
-            //  init item lists
+            // init item lists
             itemList.setItem(items);
             itemList.setValue();
 
             if (role.hasPermission("Items", Permission.CREATE)) {
                 // Button creation for Edit, Delete
+                editcfm = new JPanel(new GridLayout(1, 2));
+                editConfirm = new JButton("Confirm");
+                editCancel = new JButton("Cancel");
+                editcfm.add(editConfirm);
+                editcfm.add(editCancel);
+                editcfm.setVisible(false);
+                contentPanel.add(editcfm);
+
                 deleteButton = new JButton("Delete");
                 editButton = new JButton("Edit");
-                titleButtonPanel.add(deleteButton); 
+                titleButtonPanel.add(deleteButton);
                 titleButtonPanel.add(editButton);
             }
         }
     }
-    
-    // Function for the panel when is in view only
-    public void setData(){
-        Item item;
-        if(viewOnly){
-            if (role.hasPermission("Items", Permission.CREATE)) {
-                item = itemList.getObject(rowData);
-                System.out.println("yay");
-                System.out.println(rowData);
-                System.out.println(itemList.getObject(rowData).getSupplierId());
 
-                fieldItemID.setData(item.getItemCode());
-                fieldItemName.setData(item.getItemName());
-                SupplierDrop.setData(item.getSupplierId());
-                fieldNumStock.setData(String.valueOf(item.getStockLevel()));
-                fieldRestockLevel.setData(String.valueOf(item.getReorderLevel()));
-                
+    // Function for the panel when is in view only
+    public void setData() {
+        Item item;
+        if (viewOnly) {
+            item = itemList.getObject(rowData);
+            System.out.println("yay"); //TODO: Remove
+            System.out.println(rowData); //TODO: Remove
+            System.out.println(itemList.getObject(rowData).getSupplierId()); //TODO: Remove
+
+            fieldItemID.setData(item.getItemCode());
+            fieldItemName.setData(item.getItemName());
+            SupplierDrop.setData(item.getSupplierId());
+            fieldNumStock.setData(String.valueOf(item.getStockLevel()));
+            fieldRestockLevel.setData(String.valueOf(item.getReorderLevel()));
+            
+            // Role with Create Permission
+            if (role.hasPermission("Items", Permission.CREATE)) {
                 // function for the edit and delete button
                 deleteButton.addActionListener(e -> {
-                    ConfirmPane cp = new ConfirmPane("Add thing item?",  "Add Item", this, JOptionPane.YES_NO_OPTION);
-                    if(cp.getResult() == JOptionPane.YES_OPTION){
-                        backend.db.itemsMap.remove(itemList.getObjectUUID(item.getItemCode()));
-                        parent.showPanel("itemsTable");
-                    } else {
-                        
-                    }
-                    
+
+                    backend.db.itemsMap.remove(itemList.getObjectUUID(item.getItemCode()));
+                    parent.showPanel("itemsTable");
+
                 });
+
+                editButton.addActionListener(e -> {
+                    editcfm.setVisible(true);
+                    fieldItemName.setEditable(true);
+                    fieldNumStock.setEditable(true);
+                    fieldRestockLevel.setEditable(true);
+                });
+
+                editConfirm.addActionListener(e -> {
+                    editcfm.setVisible(false);
+                    try{
+                        String itemName = fieldItemName.getData();
+                        int numStock = fieldNumStock.getIntData();
+                        int minStock = fieldRestockLevel.getIntData();
+    
+    
+                        if (item.getItemName() != itemName) {
+                            System.out.println("item changed"); //TODO: remove
+                            backend.db.itemsMap.get(itemList.getObjectUUID(item.getItemCode())).setItemName(itemName);
+                        }
+                        if (item.getStockLevel() != numStock) {
+                            System.out.println("numstock changed"); //TODO: remove
+                            backend.db.itemsMap.get(itemList.getObjectUUID(item.getItemCode())).setStockLevel(numStock);
+                        }
+                        if (item.getReorderLevel() != minStock) {
+                            System.out.println("restocknum changed"); //TODO: remove
+                            backend.db.itemsMap.get(itemList.getObjectUUID(item.getItemCode())).setReorderLevel(minStock);
+                        }
+    
+                        System.out.println("item updated"); //TODO: remove
+                        fieldItemName.setEditable(false);
+                        fieldNumStock.setEditable(false);
+                        fieldRestockLevel.setEditable(false);
+    
+                        editcfm.setVisible(false);
+                    } catch (Exception err){
+                        System.out.println(err);
+                    }
+                   
+                });
+
+                editCancel.addActionListener(e -> {
+                    fieldItemName.setEditable(false);
+                    fieldNumStock.setEditable(false);
+                    fieldRestockLevel.setEditable(false);
+
+                    fieldItemID.setData(item.getItemCode());
+                    fieldItemName.setData(item.getItemName());
+                    SupplierDrop.setData(item.getSupplierId());
+                    fieldNumStock.setData(String.valueOf(item.getStockLevel()));
+                    fieldRestockLevel.setData(String.valueOf(item.getReorderLevel()));
+                    editcfm.setVisible(false);
+                });
+                // add fcuntion for when editconfirm and ceditcancel is press
             }
         }
     }
 
-    public void setRowNum(String data){
+    public void setRowNum(String data) {
         this.rowData = data;
     }
 }
 
-class SupplierList extends ComboList<data.Supplier>{
+class SupplierList extends ComboList<data.Supplier> {
     @Override
-    public void setItem(Map<String, data.Supplier> items){
+    public void setItem(Map<String, data.Supplier> items) {
         this.items = items;
     }
 
     @Override
-    public String getName(String UUID){
+    public String getName(String UUID) {
+        return this.items.get(UUID).getSupplierName();
+    }
+
+    @SuppressWarnings("unlikely-arg-type")
+    @Override
+    public String toString() {
         return this.items.get(UUID).getSupplierName();
     }
 
     @Override
-    public String toString(){
-        return this.items.get(UUID).getSupplierName();
-    }
-
-    @Override
-    public void setValue(){
+    public void setValue() {
         this.values = new data.Supplier[this.items.size()];
         initGetValue();
-    }   
+    }
 
     @Override
-    public data.Supplier getObject(Object ItemName){
-        for(data.Supplier item: items.values()){
-            if(item.getId() == String.valueOf(ItemName)){
+    public data.Supplier getObject(Object ItemName) {
+        for (data.Supplier item : items.values()) {
+            if (item.getId() == String.valueOf(ItemName)) {
                 return item;
             }
         }
@@ -188,29 +250,29 @@ class SupplierList extends ComboList<data.Supplier>{
 
 class ItemList extends ComboList<Item> {
     @Override
-    public void setItem(Map<String, Item> items){
+    public void setItem(Map<String, Item> items) {
         this.items = items;
     }
 
     @Override
-    public void setValue(){
+    public void setValue() {
         this.values = new Item[this.items.size()];
         initGetValue();
-    }   
+    }
 
     @Override
-    public Item getObject(Object ItemName){
-        for(Item item: items.values()){
-            if(item.getItemCode() == String.valueOf(ItemName)){
+    public Item getObject(Object ItemName) {
+        for (Item item : items.values()) {
+            if (item.getItemCode() == String.valueOf(ItemName)) {
                 return item;
             }
         }
         return null;
     }
 
-    public String getObjectUUID(Object ItemName){
-        for(Map.Entry<String, Item> item : items.entrySet()){
-            if(item.getValue().getItemCode() == String.valueOf(ItemName)){
+    public String getObjectUUID(Object ItemCode) {
+        for (Map.Entry<String, Item> item : items.entrySet()) {
+            if (item.getValue().getItemCode() == String.valueOf(ItemCode)) {
                 return item.getKey();
             }
         }

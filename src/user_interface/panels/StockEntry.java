@@ -26,9 +26,7 @@ public class StockEntry extends Panel<Item> {
     }
 
     public Item promptForItemDetails() {
-        
-        JPanel contentPanel = new JPanel();
-        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.PAGE_AXIS));
+        super();
 
         FieldText fieldItemCode = new FieldText("Item Code");
         contentPanel.add(fieldItemCode);
@@ -73,7 +71,7 @@ public class StockEntry extends Panel<Item> {
 
             return new Item(itemCode, itemName, supplierId, stockLevel, reorderLevel);
         }
-        return null;
+        return null; 
     }
 
 }
