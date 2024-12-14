@@ -4,11 +4,11 @@ import java.util.*;
 
 public enum Role {
     // enum items
-    SALES_MANAGER(buildSalesManagerPermissions(), List.of("StockEntry", "SalesReport")),
-    PURCHASE_MANAGER(buildPurchaseManagerPermissions(), List.of()),
-    INVENTORY_MANAGER(buildInventoryManagerPermissions(), List.of()),
+    SALES_MANAGER(buildSalesManagerPermissions(), List.of("viewItem", "stockEntry")),
+    PURCHASE_MANAGER(buildPurchaseManagerPermissions(), List.of("viewItem")),
+    INVENTORY_MANAGER(buildInventoryManagerPermissions(), List.of("addItem", "viewItem")),
     FINANCE_MANAGER(buildFinanceManagerPermissions(), List.of("TrackPurchaseOrder")),
-    ADMIN(buildAdminPermissions(), List.of());
+    ADMIN(buildAdminPermissions(), List.of("addItem", "viewItem"));
 
     // fields for permissions and special features
     private final Map<String, EnumSet<Permission>> permissions;
@@ -40,7 +40,7 @@ public enum Role {
 
     private static Map<String, EnumSet<Permission>> buildPurchaseManagerPermissions() {
         Map<String, EnumSet<Permission>> permissions = new HashMap<>();
-        permissions.put("Items", EnumSet.allOf(Permission.class));
+        permissions.put("Items", EnumSet.of(Permission.READ));
         permissions.put("Suppliers", EnumSet.allOf(Permission.class));
         permissions.put("PurchaseRequisition", EnumSet.of(Permission.CREATE, Permission.READ));
         permissions.put("PurchaseOrder", EnumSet.allOf(Permission.class));
@@ -57,7 +57,7 @@ public enum Role {
 
     private static Map<String, EnumSet<Permission>> buildFinanceManagerPermissions() {
         Map<String, EnumSet<Permission>> permissions = new HashMap<>();
-        permissions.put("Items", EnumSet.of(Permission.READ));
+        // permissions.put("Items", EnumSet.of(Permission.READ));
         permissions.put("PurchaseOrder", EnumSet.of(Permission.READ, Permission.UPDATE));
         return permissions;
     }

@@ -13,12 +13,25 @@ public class Backend {
         // test code for now
         Account account = new Account("admin", "admin", Role.ADMIN);
         db.addAccount(account);
+        Account account2 = new Account("sale", "sale", Role.SALES_MANAGER);
+        db.addAccount(account2);
+        Account account3 = new Account("pm", "pm", Role.PURCHASE_MANAGER);
+        db.addAccount(account3);
+        Account account4 = new Account("im", "im", Role.INVENTORY_MANAGER);
+        db.addAccount(account4);
+        Account account5 = new Account("fm", "fm", Role.FINANCE_MANAGER);
+        db.addAccount(account5);
 
         Supplier supplier = new Supplier("SUP123", "Supplier 1", "contact@supplier1.com");
         db.addSupplier(supplier);
+        Supplier supplier2 = new Supplier("suppp2321", "Supplier 3123121", "contact@supplier1.com");
+        db.addSupplier(supplier2);
 
         Item item = new Item("CODE123", "Item 1", supplier.getId(), 100, 20);
         db.addItem(item);
+        Item item2 = new Item("CODE1323", "Item132", supplier.getId(), 40, 120);
+        db.addItem(item2);
+
 
         Sale sale = new Sale(item.getId(), 10, new java.util.Date(), account.getId());
         db.addSale(sale);
