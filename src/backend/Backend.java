@@ -1,5 +1,7 @@
 package backend;
 
+import java.math.BigDecimal;
+
 import data.*;
 
 public class Backend {
@@ -17,7 +19,7 @@ public class Backend {
         Supplier supplier = new Supplier("SUP123", "Supplier 1", "contact@supplier1.com");
         db.addSupplier(supplier);
 
-        Item item = new Item("CODE123", "Item 1", supplier.getId(), 100, 20);
+        Item item = new Item("CODE123", "Item 1", supplier.getId(), 100, 20, new BigDecimal("20.00"));
         db.addItem(item);
 
         Sale sale = new Sale(item.getId(), 10, new java.util.Date(), account.getId());
@@ -70,8 +72,8 @@ public class Backend {
     }
 
     public void addCustomItem(String code, String name, String supplierId, int stockLevel, int reorderLevel,
-            String category) {
-        Item newItem = new Item(code, name, supplierId, stockLevel, reorderLevel);
+            String category, BigDecimal price) {
+        Item newItem = new Item(code, name, supplierId, stockLevel, reorderLevel, price);
         db.addItem(newItem);
         System.out.println("Added custom item: " + name + " under category: " + category);
     }

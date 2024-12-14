@@ -1,5 +1,6 @@
 package user_interface;
 
+import backend.SalesReportGenerator;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -17,6 +18,13 @@ public class UserInterface {
     public void init() {
         initializeSystem();
         initializeUserInterface();
+
+        SalesReportGenerator.generateSalesReport(
+                "report.pdf",
+                new java.util.Date(),
+                backend.db.salesMap,
+                backend.db.accountsMap,
+                backend.db.itemsMap);
     }
 
     private void initializeSystem() {

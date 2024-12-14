@@ -1,27 +1,36 @@
 package data;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+
 public class Item extends BaseItem {
     private String itemCode;
     private String itemName;
     private String supplierId;
     private int stockLevel;
     private int reorderLevel;
+    private BigDecimal price;
 
     // Constructor
-    public Item(String itemCode, String itemName, String supplierId, int stockLevel, int reorderLevel) {
+    public Item(String itemCode, String itemName, String supplierId, int stockLevel, int reorderLevel,
+            BigDecimal price) {
         this.itemCode = itemCode;
         this.itemName = itemName;
         this.supplierId = supplierId;
         this.stockLevel = stockLevel;
         this.reorderLevel = reorderLevel;
+        this.price = price;
     }
 
-    public Item(String itemCode, String itemName, String supplierId, int stockLevel, int reorderLevel, String Id) {
+    public Item(String itemCode, String itemName, String supplierId, int stockLevel, int reorderLevel, BigDecimal price,
+            String Id) {
         this.itemCode = itemCode;
         this.itemName = itemName;
         this.supplierId = supplierId;
         this.stockLevel = stockLevel;
         this.reorderLevel = reorderLevel;
+        this.price = price;
         this.Id = Id;
     }
 
@@ -64,5 +73,13 @@ public class Item extends BaseItem {
 
     public void setReorderLevel(int reorderLevel) {
         this.reorderLevel = reorderLevel;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 }
