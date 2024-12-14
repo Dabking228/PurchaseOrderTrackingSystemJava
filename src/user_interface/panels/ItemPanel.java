@@ -25,6 +25,7 @@ public class ItemPanel extends Panel<Item> {
     protected Role role;
     protected String rowData;
     private JPanel editcfm;
+    protected Item item;
 
     public ItemPanel(Backend backend, MainMenu parent) {
         this(backend, parent, false);
@@ -123,28 +124,7 @@ public class ItemPanel extends Panel<Item> {
                 editButton = new JButton("Edit");
                 titleButtonPanel.add(deleteButton);
                 titleButtonPanel.add(editButton);
-            }
-        }
-    }
 
-    // Function for the panel when is in view only
-    public void setData() {
-        Item item;
-        if (viewOnly) {
-            item = itemList.getObject(rowData);
-            System.out.println("yay"); //TODO: Remove
-            System.out.println(rowData); //TODO: Remove
-            System.out.println(itemList.getObject(rowData).getSupplierId()); //TODO: Remove
-
-            fieldItemID.setData(item.getItemCode());
-            fieldItemName.setData(item.getItemName());
-            SupplierDrop.setData(item.getSupplierId());
-            fieldNumStock.setData(String.valueOf(item.getStockLevel()));
-            fieldRestockLevel.setData(String.valueOf(item.getReorderLevel()));
-            
-            // Role with Create Permission
-            if (role.hasPermission("Items", Permission.CREATE)) {
-                // function for the edit and delete button
                 deleteButton.addActionListener(e -> {
 
                     backend.db.itemsMap.remove(itemList.getObjectUUID(item.getItemCode()));
@@ -204,8 +184,24 @@ public class ItemPanel extends Panel<Item> {
                     fieldRestockLevel.setData(String.valueOf(item.getReorderLevel()));
                     editcfm.setVisible(false);
                 });
-                // add fcuntion for when editconfirm and ceditcancel is press
+
             }
+        }
+    }
+
+    // Function for the panel when is in view only
+    public void setData() {
+        if (viewOnly) {
+            item = itemList.getObject(rowData);
+            System.out.println("yay"); //TODO: Remove
+            System.out.println(rowData); //TODO: Remove
+            System.out.println(itemList.getObject(rowData).getSupplierId()); //TODO: Remove
+
+            fieldItemID.setData(item.getItemCode());
+            fieldItemName.setData(item.getItemName());
+            SupplierDrop.setData(item.getSupplierId());
+            fieldNumStock.setData(String.valueOf(item.getStockLevel()));
+            fieldRestockLevel.setData(String.valueOf(item.getReorderLevel()));
         }
     }
 
