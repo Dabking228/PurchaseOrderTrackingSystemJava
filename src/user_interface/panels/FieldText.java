@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
@@ -17,7 +16,6 @@ import javax.swing.border.LineBorder;
 
 public class FieldText extends JPanel {
     private boolean isNumber;
-    private int extractNum; 
     protected JLabel fieldLabel;
     protected JTextField fieldText;
 
@@ -47,7 +45,7 @@ public class FieldText extends JPanel {
                 @Override
                 public void focusLost(FocusEvent e){
                     try{
-                        extractNum = Integer.parseInt(fieldText.getText());
+                        Integer.parseInt(fieldText.getText());
                         fieldText.setBorder(defaultBorder);
                     } catch (NumberFormatException err){
                         fieldText.setText("");
@@ -72,16 +70,22 @@ public class FieldText extends JPanel {
     }
 
 
-    public String getData(){
+    public String getData() throws Exception{
         if(!isNumber){
             return fieldText.getText();
         }
-        return Integer.toString(extractNum);
+        throw new Exception("Text field is a number value, use getIntData");
+    }
+
+    public int getIntData() throws Exception  {
+        if(isNumber){
+            return Integer.parseInt(fieldText.getText());
+        }
+        throw new Exception("Text field is not a number value, use getData");
     }
 
     public void resetField(){
         fieldText.setText("");
-        extractNum =0;
     }
 
     public void setEditable(boolean value){
