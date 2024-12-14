@@ -13,6 +13,7 @@ import data.Role;
 import user_interface.table.*;
 import user_interface.MainMenu;
 import user_interface.panels.Panel;
+import user_interface.panels.StockEntry;
 import user_interface.panels.ItemPanel;
 import user_interface.panels.AddNewUser;
 import user_interface.panels.StockTaking;
@@ -46,7 +47,7 @@ public class MainMenu extends JPanel {
         this.createTablePanel("PurchaseRequisition", "purchaseRequisitionTable", PurchaseRequisitionTable.class);
         this.createTablePanel("PurchaseOrder", "purchaseOrdersTable", PurchaseOrdersTable.class);
 
-        // this.createFeaturePanel("stockEntry", "stockEntry", AddNewItem.class);
+        this.createFeaturePanel("stockEntry", "stockEntry", StockEntry.class);
         this.createFeaturePanel("addItem", "itemPanel", ItemPanel.class);
         this.createFeaturePanelViewOnly("viewItem", "itemPanelView", ItemPanel.class, true);
         // TODO the other panels
