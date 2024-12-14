@@ -1,27 +1,33 @@
-import javax.swing.JOptionPane;
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.LayoutManager;
-import java.awt.Color;
-
-import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.Timer;
-import javax.swing.JLabel;
-
+package user_interface.panels;
 import backend.Backend;
-import data.*;
-import user_interface.MainMenu;
+import data.Item;
+import user_interface.*;
+
 public class StockEntry extends Panel<Item> {
+    protected FieldText itemID, itemName, StockAmt, ReStckAmt;
+
 
     public StockEntry(Backend backend, MainMenu parent) {
-        super("");
+        super("Sotck Entry Form", parent, backend.db.itemsMap, backend);
+
+        itemID = new FieldText("Item ID");
+        contentPanel.add(itemID);
+
+        itemName = new FieldText("Item ID");
+        contentPanel.add(itemName);
+
+        StockAmt = new FieldText("Stock: ", true);
+        contentPanel.add(StockAmt);
+
+        ReStckAmt = new FieldText("Minimum Amount of Stock: , stock");
+        contentPanel.add(ReStckAmt);
+        
+        backButton.addActionListener(e -> {
+            parent.showPanel("itemsTable");
+        });
     }
+    
+    
 
     // public Item promptForItemDetails() {
     // }
