@@ -19,11 +19,11 @@ public class StockEntry extends Panel<Item> {
         StockAmt = new FieldText("Stock: ", true);
         contentPanel.add(StockAmt);
 
-        ReStckAmt = new FieldText("Minimum Amount of Stock: , stock");
+        ReStckAmt = new FieldText("Minimum Amount of Stock: ", true);
         contentPanel.add(ReStckAmt);
         
         backButton.addActionListener(e -> {
-            parent.showPanel("itemsTable");
+            parent.showMainMenu();
         });
     }
     
