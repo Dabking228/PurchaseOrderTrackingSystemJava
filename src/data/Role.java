@@ -41,7 +41,7 @@ public enum Role {
     private static Map<String, EnumSet<Permission>> buildPurchaseManagerPermissions() {
         Map<String, EnumSet<Permission>> permissions = new HashMap<>();
         permissions.put("Items", EnumSet.of(Permission.READ));
-        permissions.put("Suppliers", EnumSet.allOf(Permission.class));
+        permissions.put("Suppliers", EnumSet.of(Permission.READ));
         permissions.put("PurchaseRequisition", EnumSet.of(Permission.CREATE, Permission.READ));
         permissions.put("PurchaseOrder", EnumSet.allOf(Permission.class));
         return permissions;
