@@ -1,17 +1,21 @@
 import javax.swing.JOptionPane;
 
-import data.Item;
-import user_interface.components.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.LayoutManager;
 
+import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
+
+import backend.Backend;
+import data.*;
+import user_interface.MainMenu;
 public class StockEntry extends data<Item> {
 
-    private fieldText itemCodeField;
-    private fieldText itemNameField;
-    private fieldText supplierIdField;
-    private fieldText stockLevelField;
-    private fieldText reorderLevelField;
-    private fieldDrop comboBox;
-    private List<Item> itemList;
 
     public Item promptForItemDetails() {
 
