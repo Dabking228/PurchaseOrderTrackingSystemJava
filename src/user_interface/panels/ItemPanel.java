@@ -28,6 +28,7 @@ public class ItemPanel extends Panel<Item> {
     private boolean viewOnly;
     protected Role role;
     protected String rowData;
+    private ConfirmPane cp;
 
     public ItemPanel(Backend backend, MainMenu parent){
         this(backend,parent,false);
@@ -38,6 +39,7 @@ public class ItemPanel extends Panel<Item> {
         greenLabel.setFont(new Font(greenLabel.getText(), Font.BOLD, 20));
         contentPanel.add(greenLabel);
 
+        
         JButton confirmButton = new JButton("Confirm?");
         confirmButton.addActionListener(e -> {
             String itemID = fieldItemID.getData();
@@ -47,13 +49,9 @@ public class ItemPanel extends Panel<Item> {
             int minStock = Integer.parseInt(fieldRestockLevel.getData());
             
             
-            ConfirmPane cp = new ConfirmPane("Add thing item?",  "Add Item", this, JOptionPane.YES_NO_OPTION);
-            if(cp.getResult() == JOptionPane.YES_OPTION){
                 backend.db.addItem(new Item(itemID,itemName,supplierID,numStock,minStock));
                 greenLabel.setVisible(true);
-            } else {
-                parent.showMainMenu();
-            }
+            
             
             // reset field
             fieldItemID.resetField();
@@ -93,8 +91,14 @@ public class ItemPanel extends Panel<Item> {
 
 
         // change the return panel based on the menu name
-        backMainMenu("itemsTable");
-
+        
+        backButton.addActionListener(e -> {  
+                parent.showPanel("itemsTable");
+                cp = null;
+      
+        });
+        
+       
         // View only setups
         if(viewOnly){
             fieldItemID.setEditable(false);
@@ -132,17 +136,14 @@ public class ItemPanel extends Panel<Item> {
                 SupplierDrop.setData(item.getSupplierId());
                 fieldNumStock.setData(String.valueOf(item.getStockLevel()));
                 fieldRestockLevel.setData(String.valueOf(item.getReorderLevel()));
-                
+
+                   
                 // function for the edit and delete button
-                deleteButton.addActionListener(e -> {
-                    ConfirmPane cp = new ConfirmPane("Add thing item?",  "Add Item", this, JOptionPane.YES_NO_OPTION);
-                    if(cp.getResult() == JOptionPane.YES_OPTION){
-                        backend.db.itemsMap.remove(itemList.getObjectUUID(item.getItemCode()));
-                        parent.showPanel("itemsTable");
-                    } else {
-                        
-                    }
+                deleteButton.addActionListener(e -> {  
                     
+                        backend.db.itemsMap.remove(itemList.getObjectUUID(item.getItemCode()));
+                        parent.showPanel("itemsTable"); 
+                        
                 });
             }
         }
