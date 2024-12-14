@@ -16,7 +16,7 @@ import javax.xml.crypto.Data;
 
 import backend.Backend;
 import data.*;
-import user_interface.ConfirmPane;
+
 import user_interface.MainMenu;
 import user_interface.add_item_dialog.AddNewItem;
 
@@ -28,7 +28,7 @@ public class ItemPanel extends Panel<Item> {
     private boolean viewOnly;
     protected Role role;
     protected String rowData;
-    private ConfirmPane cp;
+   
 
     public ItemPanel(Backend backend, MainMenu parent){
         this(backend,parent,false);
@@ -47,27 +47,30 @@ public class ItemPanel extends Panel<Item> {
             String supplierID = SupplierDrop.getSelected().getValue().getId();
             int numStock = Integer.parseInt(fieldNumStock.getData());
             int minStock = Integer.parseInt(fieldRestockLevel.getData());
-            
-            
+            System.out.println(numStock);
+            if(!itemID.isEmpty()||!itemName.isEmpty()||numStock != 0||minStock!= 0){
                 backend.db.addItem(new Item(itemID,itemName,supplierID,numStock,minStock));
                 greenLabel.setVisible(true);
             
             
-            // reset field
-            fieldItemID.resetField();
-            fieldItemName.resetField();
-            fieldNumStock.resetField();
-            fieldRestockLevel.resetField();
+                // reset field
+                fieldItemID.resetField();
+                fieldItemName.resetField();
+                fieldNumStock.resetField();
+                fieldRestockLevel.resetField();
+                
 
-            // adding a timer to hide the greenlabel
-            Timer timer = new Timer(2000, g -> greenLabel.setVisible(false));
-            timer.setRepeats(false);
-            timer.start();
+                // adding a timer to hide the greenlabel
+                Timer timer = new Timer(2000, g -> greenLabel.setVisible(false));
+                timer.setRepeats(false);
+                timer.start();
+            }else { 
+
+            }
 
         });
         titleButtonPanel.add(confirmButton, 1);
     }
-
     public ItemPanel(Backend backend, MainMenu parent, boolean viewOnly) {
         super("Add New Item", parent, backend.db.itemsMap, backend);
         this.viewOnly = viewOnly;
@@ -94,7 +97,6 @@ public class ItemPanel extends Panel<Item> {
         
         backButton.addActionListener(e -> {  
                 parent.showPanel("itemsTable");
-                cp = null;
       
         });
         

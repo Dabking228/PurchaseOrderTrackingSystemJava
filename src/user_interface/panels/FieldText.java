@@ -81,6 +81,7 @@ public class FieldText extends JPanel {
 
     public void resetField(){
         fieldText.setText("");
+        extractNum =0;
     }
 
     public void setEditable(boolean value){
