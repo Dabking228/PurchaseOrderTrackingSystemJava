@@ -36,9 +36,9 @@ public class PurchaseOrderPanel extends Panel<data.PurchaseOrder> {
 
         JButton confirmButton = new JButton("Confirm");
              confirmButton.addActionListener(e -> {
-                String PurReqIDString = PurReqID.fieldText();
-                String SupplierIDString = SupplierID.fieldText();
-                String POStatString = POStat.fieldText();
+                String PurReqIDString = PurReqID.getData();
+                String SupplierIDString = SupplierID.getData();
+                String POStatString = POStat.getData();
                 
 
              });
