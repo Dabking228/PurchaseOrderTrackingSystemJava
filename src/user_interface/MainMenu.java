@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import user_interface.add_item_dialog.AddNewItem;
 import backend.Backend;
 import data.Permission;
+import data.PurchaseRequisition;
 import data.Role;
 import user_interface.table.*;
 import user_interface.MainMenu;
@@ -16,8 +17,8 @@ import user_interface.panels.Panel;
 import user_interface.panels.StockEntry;
 import user_interface.panels.ItemPanel;
 import user_interface.panels.AddUserPanel;
-import user_interface.panels.StockTaking;
 import user_interface.panels.TitlePanel;
+import user_interface.panels.PurchaseReqPanel;;
 
 public class MainMenu extends JPanel {
     private CardLayout cardLayout;
@@ -51,13 +52,14 @@ public class MainMenu extends JPanel {
         this.createFeaturePanelViewOnly("addUser", "addUserPanelView", AddUserPanel.class);
         this.createFeaturePanel("addItem", "itemPanel", ItemPanel.class);
         this.createFeaturePanelViewOnly("viewItem", "itemPanelView", ItemPanel.class);
+        this.createFeaturePanel("purReq", "purReqPane", PurchaseReqPanel.class);
         // TODO the other panels
 
         showPanel("mainMenuPanel");
     }
 
     <T extends TablePanel<?>> void createTablePanel(String permissionName, String panelName, Class<T> tableClass) {
-        if (!role.hasPermission("Items", Permission.READ)) {
+        if (!role.hasPermission(permissionName, Permission.READ)) {
             return;
         }
 

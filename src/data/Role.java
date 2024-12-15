@@ -8,7 +8,8 @@ public enum Role {
     PURCHASE_MANAGER(buildPurchaseManagerPermissions(), List.of("viewItem")),
     INVENTORY_MANAGER(buildInventoryManagerPermissions(), List.of("addItem", "viewItem")),
     FINANCE_MANAGER(buildFinanceManagerPermissions(), List.of("TrackPurchaseOrder")),
-    ADMIN(buildAdminPermissions(), List.of("addItem", "viewItem", "addUser","addUserPanelView"));
+    ADMIN(buildAdminPermissions(), 
+    List.of("addItem", "viewItem", "addUser","addUserPanelView","purReq"));
 
     // fields for permissions and special features
     private final Map<String, EnumSet<Permission>> permissions;
