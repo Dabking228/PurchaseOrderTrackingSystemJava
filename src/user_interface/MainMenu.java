@@ -13,6 +13,7 @@ import data.Role;
 import user_interface.table.*;
 import user_interface.MainMenu;
 import user_interface.panels.Panel;
+import user_interface.panels.StockEntry;
 import user_interface.panels.ItemPanel;
 import user_interface.panels.AddUserPanel;
 import user_interface.panels.StockTaking;
