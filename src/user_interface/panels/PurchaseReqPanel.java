@@ -200,6 +200,7 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
 
     public void viewOnly() {
         createHideOrShow(false);
+        editorHideOrShow(false);
         editHideOrShow(false);
 
         dropItemID.setEditable(false);

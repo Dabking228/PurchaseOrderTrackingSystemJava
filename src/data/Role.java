@@ -4,12 +4,12 @@ import java.util.*;
 
 public enum Role {
     // enum items
-    SALES_MANAGER(buildSalesManagerPermissions(), List.of("viewItem", "stockEntry")),
-    PURCHASE_MANAGER(buildPurchaseManagerPermissions(), List.of("viewItem")),
+    SALES_MANAGER(buildSalesManagerPermissions(), List.of("viewItem", "stockEntry", "purReq")),
+    PURCHASE_MANAGER(buildPurchaseManagerPermissions(), List.of("viewItem", "purReq")),
     INVENTORY_MANAGER(buildInventoryManagerPermissions(), List.of("addItem", "viewItem")),
     FINANCE_MANAGER(buildFinanceManagerPermissions(), List.of("TrackPurchaseOrder")),
-    ADMIN(buildAdminPermissions(), 
-    List.of("addItem", "viewItem", "addUser","addUserPanelView","purReq"));
+    ADMIN(buildAdminPermissions(),
+            List.of("addItem", "viewItem", "addUser", "addUserPanelView", "purReq"));
 
     // fields for permissions and special features
     private final Map<String, EnumSet<Permission>> permissions;
@@ -34,7 +34,7 @@ public enum Role {
         permissions.put("Items", EnumSet.of(Permission.READ));
         permissions.put("Suppliers", EnumSet.of(Permission.READ));
         permissions.put("Sales", EnumSet.allOf(Permission.class));
-        permissions.put("PurchaseRequisition", EnumSet.of(Permission.CREATE));
+        permissions.put("PurchaseRequisition", EnumSet.of(Permission.CREATE, Permission.READ));
         permissions.put("PurchaseOrder", EnumSet.of(Permission.READ));
         return permissions;
     }

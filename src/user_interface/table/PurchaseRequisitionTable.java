@@ -1,7 +1,9 @@
 package user_interface.table;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -46,8 +48,9 @@ public class PurchaseRequisitionTable extends TablePanel<PurchaseRequisition> {
         role = backend.getCurrentAccount().getRole();
         System.out.println("helo"); //TODO: Remove
         PRPanel = parent.getPanel("purReqPane", PurchaseReqPanel.class);
-
         PRPanel.viewOnly();
+
+
         if(role.hasPermission("PurchaseRequisition", Permission.UPDATE)){
             System.out.println("hewewe"); // TOOD: Remove
             PRPanel.viewOnlyUpdate();
