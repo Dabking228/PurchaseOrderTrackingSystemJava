@@ -22,6 +22,7 @@ public class PurchaseOrderPanel extends Panel<data.PurchaseOrder> {
         contentPanel.add(POStat);
 
         CreateDate = new FieldText("Date Created");
+        CreateDate.setData("Today's Date: " + java.time.LocalDate.now().toString());
         contentPanel.add(CreateDate);
 
         TotalAmt = new FieldText("Purchase orders Stats");
@@ -40,7 +41,7 @@ public class PurchaseOrderPanel extends Panel<data.PurchaseOrder> {
                 String PurReqIDString = PurReqID.getData();
                 String SupplierIDString = SupplierID.getData();
                 String POStatString = POStat.getData();
-                String CreateDateString = CreateDate.getData();
+                String CreateDateString = java.time.LocalDate.now().toString();
                 String TotalAmtString = TotalAmt.getData();
                 String IDString = ID.getData();
 
