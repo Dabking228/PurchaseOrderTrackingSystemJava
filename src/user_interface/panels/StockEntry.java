@@ -8,7 +8,7 @@ public class StockEntry extends Panel<Item> {
 
 
     public StockEntry(Backend backend, MainMenu parent) {
-        super("Sotck Entry Form", parent, backend.db.itemsMap, backend);
+        super("Stock Entry Form", parent, backend.db.itemsMap, backend);
 
         itemID = new FieldText("Item ID");
         contentPanel.add(itemID);
