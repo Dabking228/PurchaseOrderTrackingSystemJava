@@ -2,6 +2,7 @@ package user_interface.panels;
 
 
 import backend.Backend;
+import javax.swing.JButton;
 import user_interface.*;
 
 public class PurchaseOrderPanel extends Panel<data.PurchaseOrder> {
@@ -32,5 +33,13 @@ public class PurchaseOrderPanel extends Panel<data.PurchaseOrder> {
             parent.showMainMenu();
         });
 
+        JButton confirmButton = new JButton("Confirm");
+             confirmButton.addActionListener(e -> {
+                PurReqID = PurReqID.getText();
+                SupplierID = SupplierID.getText();
+                POStat = POStat.getText();
+                
+
+             });
     }
 }
