@@ -6,7 +6,8 @@ import javax.swing.JButton;
 import user_interface.*;
 
 public class PurchaseOrderPanel extends Panel<data.PurchaseOrder> {
-    protected FieldText PurReqID, SupplierID, POStat, CreateDate, TotalAmt, ID;
+    protected FieldText PurReqID, SupplierID, POStat, CreateDate, TotalAmt, ID, PurReqIDString, SupplierIDString
+    , POStatString;
     public PurchaseOrderPanel(Backend backend, MainMenu parent) {
 
         super("Purchase Order Panel", parent, backend.db.purchaseOrdersMap, backend);
@@ -35,9 +36,9 @@ public class PurchaseOrderPanel extends Panel<data.PurchaseOrder> {
 
         JButton confirmButton = new JButton("Confirm");
              confirmButton.addActionListener(e -> {
-                PurReqID = PurReqID.getText();
-                SupplierID = SupplierID.getText();
-                POStat = POStat.getText();
+                String PurReqIDString = PurReqID.getText();
+                String SupplierIDString = SupplierID.getText();
+                String POStatString = POStat.getText();
                 
 
              });
