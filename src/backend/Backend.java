@@ -1,5 +1,7 @@
 package backend;
 
+import java.math.BigDecimal;
+
 import data.*;
 
 public class Backend {
@@ -27,7 +29,7 @@ public class Backend {
         Supplier supplier2 = new Supplier("suppp2321", "Supplier 3123121", "contact@supplier1.com");
         db.addSupplier(supplier2);
 
-        Item item = new Item("CODE123", "Item 1", supplier.getId(), 100, 20);
+        Item item = new Item("CODE123", "Item 1", supplier.getId(), 100, 20, new BigDecimal("20.00"));
         db.addItem(item);
         Item item2 = new Item("CODE1323", "Item132", supplier.getId(), 40, 120);
         db.addItem(item2);
@@ -36,7 +38,8 @@ public class Backend {
         Sale sale = new Sale(item.getId(), 10, new java.util.Date(), account.getId());
         db.addSale(sale);
 
-        PurchaseRequisition pr = new PurchaseRequisition(item.getId(), 50, new java.util.Date(), 1, Status.PENDING);
+        PurchaseRequisition pr = new PurchaseRequisition(item.getId(), 50, new java.util.Date(), account.getId(),
+                Status.PENDING);
         db.addPurchaseRequisition(pr);
 
         PurchaseOrder po = new PurchaseOrder(
@@ -83,8 +86,8 @@ public class Backend {
     }
 
     public void addCustomItem(String code, String name, String supplierId, int stockLevel, int reorderLevel,
-            String category) {
-        Item newItem = new Item(code, name, supplierId, stockLevel, reorderLevel);
+            String category, BigDecimal price) {
+        Item newItem = new Item(code, name, supplierId, stockLevel, reorderLevel, price);
         db.addItem(newItem);
         System.out.println("Added custom item: " + name + " under category: " + category);
     }
