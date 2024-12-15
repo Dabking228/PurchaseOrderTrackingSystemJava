@@ -40,7 +40,10 @@ public class PurchaseOrderPanel extends Panel<data.PurchaseOrder> {
                 String PurReqIDString = PurReqID.getData();
                 String SupplierIDString = SupplierID.getData();
                 String POStatString = POStat.getData();
-                
+                String CreateDateString = CreateDate.getData();
+                String TotalAmtString = TotalAmt.getData();
+                String IDString = ID.getData();
+
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
