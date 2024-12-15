@@ -17,6 +17,7 @@ import user_interface.panels.ItemPanel;
 import user_interface.panels.AddNewUser;
 import user_interface.panels.StockTaking;
 import user_interface.panels.TitlePanel;
+import user_interface.panels.SalesReport;
 
 public class MainMenu extends JPanel {
     private CardLayout cardLayout;
@@ -49,6 +50,7 @@ public class MainMenu extends JPanel {
         // this.createFeaturePanel("stockEntry", "stockEntry", AddNewItem.class);
         this.createFeaturePanel("addItem", "itemPanel", ItemPanel.class);
         this.createFeaturePanelViewOnly("viewItem", "itemPanelView", ItemPanel.class, true);
+        this.createFeaturePanel("salesReport", "salesReport", SalesReport.class);
         // TODO the other panels
 
         showPanel("mainMenuPanel");

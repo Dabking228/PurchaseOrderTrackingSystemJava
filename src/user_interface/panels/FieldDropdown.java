@@ -57,13 +57,13 @@ public class FieldDropdown<T extends BaseItem> extends JPanel {
         return (ComboItem<T>) fieldCombo.getSelectedItem();
     }
 
-    public void setEditable(boolean value){
+    public void setEditable(boolean value) {
         fieldCombo.setEnabled(false);
     }
 
-    public void setData(Object object){
-        for(int i = 0; i < fieldCombo.getItemCount(); i++){
-            if(fieldCombo.getItemAt(i).getValue().getId() == object){
+    public void setData(Object object) {
+        for (int i = 0; i < fieldCombo.getItemCount(); i++) {
+            if (fieldCombo.getItemAt(i).getValue().getId() == object) {
                 fieldCombo.setSelectedIndex(i);
             }
         }
@@ -127,8 +127,8 @@ abstract class ComboList<T extends BaseItem> {
         return items.get(UUID);
     }
 
-    public T getObject(Object ItemName){
-        for(T item: items.values()){
+    public T getObject(Object ItemName) {
+        for (T item : items.values()) {
             return item;
         }
         return null;
