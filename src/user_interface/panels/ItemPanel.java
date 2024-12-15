@@ -21,7 +21,7 @@ public class ItemPanel extends Panel<Item> {
     protected FieldDropdown<data.Supplier> SupplierDrop;
     protected JButton deleteButton, editButton, editConfirm, editCancel, confirmButton;
     private JLabel greenLabel;
-    private ItemList itemList;
+    private ItemListPanel itemList;
     private boolean viewOnly;
     protected Role role;
     protected String rowData;
@@ -75,7 +75,7 @@ public class ItemPanel extends Panel<Item> {
     public ItemPanel(Backend backend, MainMenu parent, boolean viewOnly) {
         super("Add New Item", parent, backend.db.itemsMap, backend);
         this.viewOnly = viewOnly;
-        this.itemList = new ItemList();
+        this.itemList = new ItemListPanel();
         role = backend.getCurrentAccount().getRole();
 
         fieldItemID = new FieldText("Item ID");
@@ -244,7 +244,7 @@ class SupplierList extends ComboList<data.Supplier> {
     }
 }
 
-class ItemList extends ComboList<Item> {
+class ItemListPanel extends ComboList<Item> {
     @Override
     public void setItem(Map<String, Item> items) {
         this.items = items;
