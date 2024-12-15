@@ -58,7 +58,7 @@ public class FieldDropdown<T extends BaseItem> extends JPanel {
     }
 
     public void setEditable(boolean value){
-        fieldCombo.setEnabled(false);
+        fieldCombo.setEnabled(value);
     }
 
     public void setData(Object object){
