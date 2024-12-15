@@ -7,7 +7,7 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
     protected FieldText itemId, quantity, date, SaleMangID, Status, ID;
 
     public PurchaseReqPanel(Backend backend, MainMenu parent){
-       super("Purchase Requisition", parent, backend.db.PurchaseRequisition, backend);
+       super("Purchase Requisition", parent, backend.db.purchaseRequisitionsMap, backend);
        
        FieldText itemId = new FieldText("Item ID: ");
        contentPanel.add(itemId);
@@ -30,7 +30,7 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
        backButton.addActionListener(e -> {
         parent.showMainMenu();
     });
-    
+
     }
     
 }

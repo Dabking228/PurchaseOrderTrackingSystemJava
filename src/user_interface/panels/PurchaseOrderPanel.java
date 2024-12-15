@@ -1,11 +1,11 @@
 package user_interface.panels;
 
 
-import backend.Database;
-
+import backend.Backend;
 import user_interface.*;
 
 public class PurchaseOrderPanel extends Panel<data.PurchaseOrder> {
+    protected FieldText PurReqID, SupplierID, POStat, CreateDate, TotalAmt, ID;
     public PurchaseOrderPanel(Backend backend, MainMenu parent) {
 
         super("Purchase Order Panel", parent, backend.db.purchaseOrdersMap, backend);
@@ -14,4 +14,23 @@ public class PurchaseOrderPanel extends Panel<data.PurchaseOrder> {
         contentPanel.add(PurReqID);
 
         SupplierID = new FieldText("Supplier ID");
+        contentPanel.add(SupplierID);
+
+        POStat = new FieldText("Purchase orders Stats");
+        contentPanel.add(POStat);
+
+        CreateDate = new FieldText("Date Created");
+        contentPanel.add(CreateDate);
+
+        TotalAmt = new FieldText("Purchase orders Stats");
+        contentPanel.add(TotalAmt);
+
+        ID = new FieldText("Purchase orders Stats");
+        contentPanel.add(ID);
+
+        backButton.addActionListener(e -> {
+            parent.showMainMenu();
+        });
+
+    }
 }
