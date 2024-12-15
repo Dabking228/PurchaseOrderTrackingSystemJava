@@ -1,10 +1,11 @@
 package user_interface.panels;
 import backend.Backend;
 import data.Item;
+import javax.swing.JButton;
 import user_interface.*;
 
 public class StockEntry extends Panel<Item> {
-    protected FieldText itemID, itemName, StockAmt, ReStckAmt;
+    protected FieldText itemID, itemName, StockAmt, ReStckAmt, itemIDString;
 
 
     public StockEntry(Backend backend, MainMenu parent) {
@@ -24,6 +25,20 @@ public class StockEntry extends Panel<Item> {
         
         backButton.addActionListener(e -> {
             parent.showMainMenu();
+        });
+
+        JButton confirmButton = new JButton("Confirm");
+        confirmButton.addActionListener(e -> {
+            try {
+                
+                String itemIDString = itemID.getData();
+                String itemNameString = itemName.getData();
+                String StockAmtString = StockAmt.getData();
+                String ReStckAmtString = ReStckAmt.getData();
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         });
     }
     
