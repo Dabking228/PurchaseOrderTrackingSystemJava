@@ -35,12 +35,15 @@ public class PurchaseOrderPanel extends Panel<data.PurchaseOrder> {
         });
 
         JButton confirmButton = new JButton("Confirm");
-             confirmButton.addActionListener(e -> {
+        confirmButton.addActionListener(e -> {
+            try {
                 String PurReqIDString = PurReqID.getData();
                 String SupplierIDString = SupplierID.getData();
                 String POStatString = POStat.getData();
                 
-
-             });
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 }
