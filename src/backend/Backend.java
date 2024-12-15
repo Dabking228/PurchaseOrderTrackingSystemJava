@@ -36,7 +36,8 @@ public class Backend {
         Sale sale = new Sale(item.getId(), 10, new java.util.Date(), account.getId());
         db.addSale(sale);
 
-        PurchaseRequisition pr = new PurchaseRequisition(item.getId(), 50, new java.util.Date(), 1, Status.PENDING);
+        PurchaseRequisition pr = new PurchaseRequisition(item.getId(), 50, new java.util.Date(), account.getId(),
+                Status.PENDING);
         db.addPurchaseRequisition(pr);
 
         PurchaseOrder po = new PurchaseOrder(
