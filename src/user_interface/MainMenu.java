@@ -79,13 +79,14 @@ public class MainMenu extends JPanel {
                     .getDeclaredConstructor(Backend.class, MainMenu.class)
                     .newInstance(backend, this);
             this.add(panel, panelName);
-            panels.put(panelName,panel);
+            panels.put(panelName, panel);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    <T extends Panel<?>> void createFeaturePanelViewOnly(String feature, String panelName, Class<T> panelClass, boolean viewOnly) {
+    <T extends Panel<?>> void createFeaturePanelViewOnly(String feature, String panelName, Class<T> panelClass,
+            boolean viewOnly) {
         if (!role.hasFeature(feature)) {
             return;
         }
@@ -101,8 +102,8 @@ public class MainMenu extends JPanel {
         }
     }
 
-    public <T extends Panel<?>> T getPanel(String panelName, Class<T> panelClass){
-       Panel<?> panel = panels.get(panelName);
+    public <T extends Panel<?>> T getPanel(String panelName, Class<T> panelClass) {
+        Panel<?> panel = panels.get(panelName);
         if (panelClass.isInstance(panel)) {
             return (T) panel;
         } else {
