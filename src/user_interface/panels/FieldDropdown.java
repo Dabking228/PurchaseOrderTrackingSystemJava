@@ -102,10 +102,6 @@ abstract class ComboList<T extends BaseItem> {
     // protected ComboItems<T> Lists;
     protected String[] UUID;
     protected T[] values;
-
-    public ComboList(){
-
-    }
     
     public void setItem(Map<String, T> items) {
         this.items = items;
