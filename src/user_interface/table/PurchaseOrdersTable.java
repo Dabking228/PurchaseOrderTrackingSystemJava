@@ -44,6 +44,8 @@ public class PurchaseOrdersTable extends TablePanel<PurchaseOrder> {
         role = backend.getCurrentAccount().getRole();
         System.out.println("helo from purchase order table"); //TODO: remove
         POPanel = parent.getPanel("PurOrdPane", PurchaseOrderPanel.class);
+        
+        POPanel.setBack("purchaseOrdersTable");
         POPanel.setRowNum(tableModel.getValueAt(modelRow, 11).toString());
         
         
