@@ -1,8 +1,7 @@
 package backend;
 
-import java.math.BigDecimal;
-
 import data.*;
+import java.math.BigDecimal;
 
 public class Backend {
     public Database db;
