@@ -29,6 +29,7 @@ public class ItemsTable extends TablePanel<Item> {
     public void createEditPanel(int modelRow) {
         parent.showPanel("itemPanelView");
         viewItem = parent.getPanel("itemPanelView", ItemPanel.class);
+        viewItem.setBack("itemsTable");
         viewItem.setRowNum(tableModel.getValueAt(modelRow, 0).toString());
         viewItem.setData();
     }

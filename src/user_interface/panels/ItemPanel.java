@@ -28,6 +28,7 @@ public class ItemPanel extends Panel<Item> {
     protected String rowData;
     private JPanel editcfm;
     protected Item item;
+    private String panelName;
 
     public ItemPanel(Backend backend, MainMenu parent) {
         this(backend, parent, false);
@@ -102,7 +103,7 @@ public class ItemPanel extends Panel<Item> {
         // change the return panel based on the menu name
 
         backButton.addActionListener(e -> {
-            parent.showPanel("itemsTable");
+            parent.showPanel(panelName);
         });
 
         // View only setups
@@ -224,6 +225,10 @@ public class ItemPanel extends Panel<Item> {
 
     public void setRowNum(String data) {
         this.rowData = data;
+    }
+    
+    public void setBack(String PanelName){
+        this.panelName = PanelName;
     }
 }
 
