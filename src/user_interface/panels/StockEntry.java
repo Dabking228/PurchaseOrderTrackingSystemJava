@@ -94,16 +94,37 @@ public class StockEntry extends Panel<Item> {
     }
 }   
 
-class ItemList extends ComboList<Item> {
+class ItemList extends ComboList<data.Item> {
     @Override
-    public String getName(String UUID) {
-        Item item = getValue(UUID);
-        return item != null ? item.getItemCode() : "Unknown";  // or use item.getItemName() if you prefer
+    public void setItem(Map<String, data.Item> items) {
+        this.items = items;
     }
 
     @Override
-    public Item getValue(String UUID) {
-        return items.get(UUID);  // Return the corresponding item by its UUID
+    public String getName(String UUID) {
+        return this.items.get(UUID).getItemName();
+    }
+
+    @SuppressWarnings("unlikely-arg-type")
+    @Override
+    public String toString() {
+        return this.items.get(UUID).getId();
+    }
+
+    @Override
+    public void setValue() {
+        this.values = new data.Item[this.items.size()];
+        initGetValue();
+    }
+
+    @Override
+    public data.Item getObject(Object ItemName) {
+        for (data.Item item : items.values()) {
+            if (item.getItemName() == String.valueOf(ItemName)) {
+                return item;
+            }
+        }
+        return null;
     }
 }
 
