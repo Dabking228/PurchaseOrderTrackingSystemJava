@@ -228,19 +228,18 @@ public class ItemPanel extends Panel<Item> {
     // Function for the panel when is in view only
     public void setData() {
         SupplierDrop.AddUpdateItems();
+        // item = itemList.getObject(rowData);
+        item = backend.db.getItem(rowData);
+        System.out.println("yay"); // TODO: Remove
+        System.out.println(rowData); // TODO: Remove
+        System.out.println(item.getSupplierId()); // TODO: Remove
 
-            // item = itemList.getObject(rowData);
-            item = backend.db.getItem(rowData);
-            System.out.println("yay"); // TODO: Remove
-            System.out.println(rowData); // TODO: Remove
-            System.out.println(item.getSupplierId()); // TODO: Remove
-
-            fieldItemID.setData(item.getItemCode());
-            fieldItemName.setData(item.getItemName());
-            SupplierDrop.setData(item.getSupplierId());
-            fieldNumStock.setData(String.valueOf(item.getStockLevel()));
-            fieldRestockLevel.setData(String.valueOf(item.getReorderLevel()));
-            fieldPrice.setData(String.valueOf(item.getPrice()));
+        fieldItemID.setData(item.getItemCode());
+        fieldItemName.setData(item.getItemName());
+        SupplierDrop.setData(item.getSupplierId());
+        fieldNumStock.setData(String.valueOf(item.getStockLevel()));
+        fieldRestockLevel.setData(String.valueOf(item.getReorderLevel()));
+        fieldPrice.setData(String.valueOf(item.getPrice()));
         
     }
 
