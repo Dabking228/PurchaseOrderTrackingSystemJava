@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javax.swing.*;
 
 import data.Item;
+import data.Permission;
 import data.PurchaseOrder;
 import data.PurchaseRequisition;
 import data.Role;
@@ -21,7 +22,7 @@ public class PurchaseOrdersTable extends TablePanel<PurchaseOrder> {
     private Role role;
     
     public PurchaseOrdersTable(Backend backend, MainMenu parent) {
-        super("PurchaseOrders", 10, parent, backend.db.purchaseOrdersMap, new PurchaseOrdersTableModel(), backend);
+        super("PurchaseOrder", 10, parent, backend.db.purchaseOrdersMap, new PurchaseOrdersTableModel(), backend);
         this.backend = backend;
         this.parent = parent;
     }
@@ -29,6 +30,13 @@ public class PurchaseOrdersTable extends TablePanel<PurchaseOrder> {
     @Override
     public void createAddPanel() {
         // TODO add item panel
+        role = backend.getCurrentAccount().getRole();
+        POPanel = parent.getPanel("PurOrdPane", PurchaseOrderPanel.class);
+        if(role.hasPermission("PurchaseOrder", Permission.CREATE)){
+            POPanel.createPO();
+        }
+
+        parent.showPanel("PurOrdPane");
     }
 
     @Override
@@ -36,12 +44,18 @@ public class PurchaseOrdersTable extends TablePanel<PurchaseOrder> {
         role = backend.getCurrentAccount().getRole();
         System.out.println("helo from purchase order table"); //TODO: remove
         POPanel = parent.getPanel("PurOrdPane", PurchaseOrderPanel.class);
+        POPanel.setRowNum(tableModel.getValueAt(modelRow, 11).toString());
+        
+        
         POPanel.viewOnly();
 
-        // System.out.println(tableModel.getValueAt(modelRow, 11).toString());
-        POPanel.setRowNum(tableModel.getValueAt(modelRow, 11).toString());
+        if(role.hasPermission("PurchaseOrder", Permission.CREATE)){
+            POPanel.viewOnlyUpdate();
+        } else if(role == Role.FINANCE_MANAGER){
+            System.out.println("im a FMFMMMM");
+            POPanel.FMView(true);
+        }
         POPanel.setData();
-
         parent.showPanel("PurOrdPane");
     }
 
