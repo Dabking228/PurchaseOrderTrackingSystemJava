@@ -50,23 +50,20 @@ public class MainMenu extends JPanel {
         this.createTablePanel("PurchaseOrder", "purchaseOrdersTable", PurchaseOrdersTable.class);
 
         this.createFeaturePanel("addUser", "addUserPanel", AddUserPanel.class);
-        this.createFeaturePanelViewOnly("addUser", "addUserPanelView", AddUserPanel.class, true);
+        this.createFeaturePanel("addUser", "addUserPanelView", AddUserPanel.class, true);
         this.createFeaturePanel("addItem", "itemPanel", ItemPanel.class);
-        this.createFeaturePanelViewOnly("viewItem", "itemPanelView", ItemPanel.class, true);
+        this.createFeaturePanel("viewItem", "itemPanelView", ItemPanel.class, true);
         this.createFeaturePanel("salesReport", "salesReport", SalesReport.class);
-        this.createTablePanel("restockItem", "restockItem", RestockItemsTable.class);
-        this.createFeaturePanelViewOnly("viewItem", "itemPanelView", ItemPanel.class, true);
+        this.createFeatureTablePanel("restockItem", "restockItem", RestockItemsTable.class);
+        this.createFeaturePanel("viewItem", "itemPanelView", ItemPanel.class, true);
         this.createFeaturePanel("purReq", "purReqPane", PurchaseReqPanel.class);
         // TODO the other panels
 
         showPanel("mainMenuPanel");
     }
 
-    <T extends TablePanel<?>> void createTablePanel(String permissionName, String panelName, Class<T> tableClass) {
-        if (!role.hasPermission(permissionName, Permission.READ)) {
-            return;
-        }
-
+    // create panel methods
+    private <T extends TablePanel<?>> void createTablePanel(String panelName, Class<T> tableClass) {
         try {
             T tablePanel = tableClass
                     .getDeclaredConstructor(Backend.class, MainMenu.class)
@@ -77,11 +74,15 @@ public class MainMenu extends JPanel {
         }
     }
 
-    <T extends Panel<?>> void createFeaturePanel(String feature, String panelName, Class<T> panelClass) {
-        if (!role.hasFeature(feature)) {
+    private <T extends TablePanel<?>> void createTablePanel(String permissionName, String panelName,
+            Class<T> tableClass) {
+        if (!role.hasPermission(permissionName, Permission.READ)) {
             return;
         }
+        createTablePanel(panelName, tableClass);
+    }
 
+    private <T extends Panel<?>> void createFeaturePanel(String panelName, Class<T> panelClass) {
         try {
             T panel = panelClass
                     .getDeclaredConstructor(Backend.class, MainMenu.class)
@@ -93,7 +94,14 @@ public class MainMenu extends JPanel {
         }
     }
 
-    <T extends Panel<?>> void createFeaturePanelViewOnly(String feature, String panelName, Class<T> panelClass,
+    private <T extends Panel<?>> void createFeaturePanel(String feature, String panelName, Class<T> panelClass) {
+        if (!role.hasFeature(feature)) {
+            return;
+        }
+        createFeaturePanel(panelName, panelClass);
+    }
+
+    private <T extends Panel<?>> void createFeaturePanel(String feature, String panelName, Class<T> panelClass,
             boolean viewOnly) {
         if (!role.hasFeature(feature)) {
             return;
@@ -110,6 +118,15 @@ public class MainMenu extends JPanel {
         }
     }
 
+    private <T extends TablePanel<?>> void createFeatureTablePanel(String feature, String panelName,
+            Class<T> panelClass) {
+        if (!role.hasFeature(feature)) {
+            return;
+        }
+        createTablePanel(panelName, panelClass);
+    }
+
+    // other methods
     public <T extends Panel<?>> T getPanel(String panelName, Class<T> panelClass) {
         Panel<?> panel = panels.get(panelName);
         if (panelClass.isInstance(panel)) {
