@@ -51,6 +51,7 @@ public class MainMenu extends JPanel {
         this.createFeaturePanel("addItem", "itemPanel", ItemPanel.class);
         this.createFeaturePanelViewOnly("viewItem", "itemPanelView", ItemPanel.class, true);
         this.createFeaturePanel("salesReport", "salesReport", SalesReport.class);
+        this.createTablePanel("restockItem", "restockItem", RestockItemsTable.class);
         // TODO the other panels
 
         showPanel("mainMenuPanel");
@@ -195,6 +196,7 @@ class MainMenuPanel extends JPanel {
         createFeatureButton("stockEntry", "Stock Entry", "stockEntry");
         createFeatureButton("salesReport", "Sales Report", "salesReport");
         createFeatureButton("trackPurchaseOrder", "Track Purchase Order", "trackPurchaseOrder");
+        createFeatureButton("restockItem", "Restock Items", "restockItem");
 
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(e -> {
