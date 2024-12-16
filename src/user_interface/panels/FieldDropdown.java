@@ -78,7 +78,6 @@ public class FieldDropdown<T extends BaseItem> extends JPanel {
     }
     
     public void AddUpdateItems(){
-        System.out.println(items.size());
         lists.setValue();
         fieldCombo.removeAllItems();
         for (String UUID : lists.UUID) {
