@@ -28,7 +28,7 @@ public class ItemPanel extends Panel<Item> {
     protected String rowData;
     private JPanel editcfm;
     protected Item item;
-    private String panelName;
+    private String panelName = "itemsTable";
 
     public ItemPanel(Backend backend, MainMenu parent) {
         this(backend, parent, false);
@@ -208,6 +208,7 @@ public class ItemPanel extends Panel<Item> {
 
     // Function for the panel when is in view only
     public void setData() {
+        SupplierDrop.AddUpdateItems();
         if (viewOnly) {
             item = itemList.getObject(rowData);
             System.out.println("yay"); // TODO: Remove

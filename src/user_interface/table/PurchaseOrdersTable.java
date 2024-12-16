@@ -32,6 +32,7 @@ public class PurchaseOrdersTable extends TablePanel<PurchaseOrder> {
         // TODO add item panel
         role = backend.getCurrentAccount().getRole();
         POPanel = parent.getPanel("PurOrdPane", PurchaseOrderPanel.class);
+        POPanel.setBack("purchaseOrdersTable");
         if(role.hasPermission("PurchaseOrder", Permission.CREATE)){
             POPanel.createPO();
         }

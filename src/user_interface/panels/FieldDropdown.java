@@ -48,11 +48,7 @@ public class FieldDropdown<T extends BaseItem> extends JPanel {
 
         lists.setItem(items);
         lists.setValue();
-        for (String UUID : lists.UUID) {
-            fieldCombo.addItem(new ComboItem<T>(lists.getName(UUID), lists.getValue(UUID)));
-            // System.out.println(lists.getName(UUID));
-            // System.out.println(lists.getValue(UUID));
-        }
+        AddUpdateItems();
 
         setMaximumSize(getPreferredSize());
     }
@@ -81,6 +77,16 @@ public class FieldDropdown<T extends BaseItem> extends JPanel {
         }
     }
     
+    public void AddUpdateItems(){
+        System.out.println(items.size());
+        lists.setValue();
+        fieldCombo.removeAllItems();
+        for (String UUID : lists.UUID) {
+            fieldCombo.addItem(new ComboItem<T>(lists.getName(UUID), lists.getValue(UUID)));
+            // System.out.println(lists.getName(UUID));
+            // System.out.println(lists.getValue(UUID));
+        }
+    }
 
 }
 
