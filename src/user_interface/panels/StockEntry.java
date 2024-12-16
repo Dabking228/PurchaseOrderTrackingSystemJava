@@ -3,9 +3,14 @@ import backend.Backend;
 import data.Item;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.util.Map;
+import javax.swing.ButtonGroup;
 
 import user_interface.*;
 
@@ -14,6 +19,7 @@ public class StockEntry extends Panel<Item> {
     protected FieldText itemName, StockAmt, ReStockAmt;
     private JButton confirmButton, cancelButton;
     private JLabel successLabel;
+    protected JPanel buttonGroup;
 
 
     public StockEntry(Backend backend, MainMenu parent) {
@@ -70,7 +76,6 @@ public class StockEntry extends Panel<Item> {
                 ex.printStackTrace();
             }
         });
-        contentPanel.add(confirmButton, 1);
 
         // Cancel Button
         cancelButton = new JButton("Cancel");
@@ -91,7 +96,11 @@ public class StockEntry extends Panel<Item> {
                 ex.printStackTrace();
             }
         });
-    
+        buttonGroup = new JPanel(new GridLayout(1, 2));
+        buttonGroup.add(confirmButton);
+        buttonGroup.add(cancelButton);
+        buttonGroup.setMaximumSize(new Dimension(300, 69));
+        contentPanel.add(buttonGroup);
     }
 }   
 
