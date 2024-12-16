@@ -12,6 +12,7 @@
 
 # Package Files #
 *.jar
+!/libs/openpdf-2.0.3.jar
 *.war
 *.nar
 *.ear
