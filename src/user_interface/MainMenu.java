@@ -21,8 +21,7 @@ import user_interface.panels.AddUserPanel;
 import user_interface.panels.TitlePanel;
 import user_interface.panels.PurchaseReqPanel;;
 
-// TODO: the number get from the table cannot get the id of it
-// this make the item pass into it incorrectly
+
 public class MainMenu extends JPanel {
     private CardLayout cardLayout;
     Backend backend;

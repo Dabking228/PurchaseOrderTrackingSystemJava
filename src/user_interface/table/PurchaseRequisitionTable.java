@@ -48,8 +48,10 @@ public class PurchaseRequisitionTable extends TablePanel<PurchaseRequisition> {
         role = backend.getCurrentAccount().getRole();
         System.out.println("helo"); //TODO: Remove
         PRPanel = parent.getPanel("purReqPane", PurchaseReqPanel.class);
-        PRPanel.viewOnly();
+        PRPanel.setRowNum(tableModel.getValueAt(modelRow, 6).toString());
+        PRPanel.setData();
 
+        PRPanel.viewOnly();
 
         if(role.hasPermission("PurchaseRequisition", Permission.UPDATE)){
             System.out.println("hewewe"); // TOOD: Remove
@@ -59,8 +61,7 @@ public class PurchaseRequisitionTable extends TablePanel<PurchaseRequisition> {
             PRPanel.viewApprove();
         }
         
-        PRPanel.setRowNum(tableModel.getValueAt(modelRow, 0).toString());
-        PRPanel.setData();
+        
 
         parent.showPanel("purReqPane");
         
@@ -107,6 +108,8 @@ class PurchaseRequisitionTableModel extends TablePanelModel<PurchaseRequisition>
                 return purchaseRequisition.getStatus();
             case 5:
                 return "View";
+            case 6:
+                return purchaseRequisition.getId();
             default:
                 return null;
         }

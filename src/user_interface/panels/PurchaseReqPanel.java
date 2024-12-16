@@ -23,7 +23,6 @@ import user_interface.*;
 public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
     // private boolean viewOnly;
     protected String rowData;
-    private PRListReq PRList;
     private PurchaseRequisition PR;
     private Item item;
     protected ItemListReq ItemList;
@@ -37,10 +36,8 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
     public PurchaseReqPanel(Backend backend, MainMenu parent) {
         super("Purchase Requisition", parent, backend.db.purchaseRequisitionsMap, backend);
         this.backend = backend;
-        this.PRList = new PRListReq();
-        this.ItemList = new ItemListReq();
 
-        dropItemID = new FieldDropdown<data.Item>("Item Name", backend.db.itemsMap, ItemList);
+        dropItemID = new FieldDropdown<data.Item>("Item Name", backend.db.itemsMap, new ItemListReq());
         dropItemID.fieldCombo.setSelectedIndex(-1);
         contentPanel.add(dropItemID);
 
@@ -97,9 +94,6 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
         approvecfm.add(rejectButton);
         approvecfm.setMaximumSize(new Dimension(300,30));
         contentPanel.add(approvecfm);
-
-        PRList.setItem(items);
-        PRList.setValue();
 
         // auto pull data from itemsmap to fill up the details
         dropItemID.fieldCombo.addActionListener(e -> {
@@ -244,19 +238,18 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
     }
 
     public void viewApprove(){
-        approveHideOrSHow(true);
+        if(PR.getStatus() == Status.PENDING){
+            approveHideOrSHow(true);
+        }
+        
         fieldStatus.setVisible(true);
     }
 
     public void setData() {
-        item = ItemList.getObject(rowData);
-        PR = PRList.getObject(item.getId());
-        System.out.println(backend.db.purchaseRequisitionsMap);
-        System.out.println("yay"); // TODO: Remove
-        System.out.println(rowData); // TODO: Remove
-        System.out.println(PRList.getObject(item.getId()).getId()); // TODO: Remove
+        PR = backend.db.getPurchaseRequisition(rowData);
+        item = backend.db.getItem(PR.getItemId());
 
-        dropItemID.setData(PR.getItemId());
+        dropItemID.setData(item.getId());
         fieldItemStock.setData(String.valueOf(item.getStockLevel()));
         fieldItemMinStock.setData(String.valueOf(item.getReorderLevel()));
         fieldRestockVal.setData(String.valueOf(PR.getQuantity()));
@@ -296,38 +289,6 @@ class ItemListReq extends ComboList<data.Item> {
         for (data.Item item : items.values()) {
             if (item.getItemName() == String.valueOf(ItemName)) {
                 return item;
-            }
-        }
-        return null;
-    }
-}
-
-class PRListReq extends ComboList<PurchaseRequisition> {
-    @Override
-    public void setItem(Map<String, PurchaseRequisition> items) {
-        this.items = items;
-    }
-
-    @Override
-    public void setValue() {
-        this.values = new PurchaseRequisition[this.items.size()];
-        initGetValue();
-    }
-
-    @Override
-    public PurchaseRequisition getObject(Object ItemName) {
-        for (PurchaseRequisition item : items.values()) {
-            if (item.getItemId() == String.valueOf(ItemName)) {
-                return item;
-            }
-        }
-        return null;
-    }
-
-    public String getObjectUUID(Object ItemCode) {
-        for (Map.Entry<String, PurchaseRequisition> item : items.entrySet()) {
-            if (item.getValue().getId() == String.valueOf(ItemCode)) {
-                return item.getKey();
             }
         }
         return null;
