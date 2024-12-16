@@ -8,6 +8,7 @@ import javax.swing.*;
 import data.Item;
 import data.PurchaseOrder;
 import data.PurchaseRequisition;
+import data.Role;
 import data.Supplier;
 import user_interface.MainMenu;
 import user_interface.add_item_dialog.AddNewItem;
@@ -17,6 +18,8 @@ import backend.Backend;
 public class PurchaseOrdersTable extends TablePanel<PurchaseOrder> {
     protected MainMenu parent;
     private PurchaseOrderPanel POPanel;
+    private Role role;
+    
     public PurchaseOrdersTable(Backend backend, MainMenu parent) {
         super("PurchaseOrders", 10, parent, backend.db.purchaseOrdersMap, new PurchaseOrdersTableModel(), backend);
         this.backend = backend;
@@ -30,7 +33,15 @@ public class PurchaseOrdersTable extends TablePanel<PurchaseOrder> {
 
     @Override
     public void createEditPanel(int modelRow) {
-        System.out.println("helo");
+        role = backend.getCurrentAccount().getRole();
+        System.out.println("helo from purchase order table"); //TODO: remove
+        POPanel = parent.getPanel("PurOrdPane", PurchaseOrderPanel.class);
+        POPanel.viewOnly();
+
+        // System.out.println(tableModel.getValueAt(modelRow, 11).toString());
+        POPanel.setRowNum(tableModel.getValueAt(modelRow, 11).toString());
+        POPanel.setData();
+
         parent.showPanel("PurOrdPane");
     }
 
