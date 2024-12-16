@@ -9,15 +9,17 @@ import javax.swing.border.EmptyBorder;
 import user_interface.add_item_dialog.AddNewItem;
 import backend.Backend;
 import data.Permission;
+import data.PurchaseRequisition;
 import data.Role;
 import user_interface.table.*;
 import user_interface.MainMenu;
 import user_interface.panels.Panel;
+import user_interface.panels.StockEntry;
 import user_interface.panels.ItemPanel;
-import user_interface.panels.AddNewUser;
-import user_interface.panels.StockTaking;
+import user_interface.panels.AddUserPanel;
 import user_interface.panels.TitlePanel;
 import user_interface.panels.SalesReport;
+import user_interface.panels.PurchaseReqPanel;;
 
 public class MainMenu extends JPanel {
     private CardLayout cardLayout;
@@ -47,18 +49,21 @@ public class MainMenu extends JPanel {
         this.createTablePanel("PurchaseRequisition", "purchaseRequisitionTable", PurchaseRequisitionTable.class);
         this.createTablePanel("PurchaseOrder", "purchaseOrdersTable", PurchaseOrdersTable.class);
 
-        // this.createFeaturePanel("stockEntry", "stockEntry", AddNewItem.class);
+        this.createFeaturePanel("addUser", "addUserPanel", AddUserPanel.class);
+        this.createFeaturePanelViewOnly("addUser", "addUserPanelView", AddUserPanel.class, true);
         this.createFeaturePanel("addItem", "itemPanel", ItemPanel.class);
         this.createFeaturePanelViewOnly("viewItem", "itemPanelView", ItemPanel.class, true);
         this.createFeaturePanel("salesReport", "salesReport", SalesReport.class);
         this.createTablePanel("restockItem", "restockItem", RestockItemsTable.class);
+        this.createFeaturePanelViewOnly("viewItem", "itemPanelView", ItemPanel.class, true);
+        this.createFeaturePanel("purReq", "purReqPane", PurchaseReqPanel.class);
         // TODO the other panels
 
         showPanel("mainMenuPanel");
     }
 
     <T extends TablePanel<?>> void createTablePanel(String permissionName, String panelName, Class<T> tableClass) {
-        if (!role.hasPermission("Items", Permission.READ)) {
+        if (!role.hasPermission(permissionName, Permission.READ)) {
             return;
         }
 
@@ -97,7 +102,7 @@ public class MainMenu extends JPanel {
         try {
             T panel = panelClass
                     .getDeclaredConstructor(Backend.class, MainMenu.class, boolean.class)
-                    .newInstance(backend, this, viewOnly);
+                    .newInstance(backend, this, true);
             this.add(panel, panelName);
             panels.put(panelName, panel);
         } catch (Exception e) {

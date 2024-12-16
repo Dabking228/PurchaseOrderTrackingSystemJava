@@ -24,7 +24,7 @@ public class Account extends BaseItem {
         return Id;
     }
 
-    void setUsername(String username) {
+    public void setUsername(String username) {
         this.Id = username;
     }
 

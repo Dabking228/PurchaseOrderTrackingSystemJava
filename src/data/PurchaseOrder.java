@@ -6,12 +6,12 @@ public class PurchaseOrder extends BaseItem {
     private String PurchaseRequisitionId;
     private String supplierId;
     private String purchaseManagerId;
-    private String poStatus;
+    private Status poStatus;
     private Date createdDate;
     private double totalAmount;
 
     // Constructor
-    public PurchaseOrder(String PurchaseRequisitionId, String supplierId, String purchaseManagerId, String poStatus,
+    public PurchaseOrder(String PurchaseRequisitionId, String supplierId, String purchaseManagerId, Status poStatus,
             Date createdDate, double totalAmount) {
         this.PurchaseRequisitionId = PurchaseRequisitionId;
         this.supplierId = supplierId;
@@ -21,7 +21,7 @@ public class PurchaseOrder extends BaseItem {
         this.totalAmount = totalAmount;
     }
 
-    public PurchaseOrder(String PurchaseRequisitionId, String supplierId, String purchaseManagerId, String poStatus,
+    public PurchaseOrder(String PurchaseRequisitionId, String supplierId, String purchaseManagerId, Status poStatus,
             Date createdDate, double totalAmount, String Id) {
         this.PurchaseRequisitionId = PurchaseRequisitionId;
         this.supplierId = supplierId;
@@ -57,11 +57,11 @@ public class PurchaseOrder extends BaseItem {
         this.purchaseManagerId = purchaseManagerId;
     }
 
-    public String getPoStatus() {
+    public Status getPoStatus() {
         return poStatus;
     }
 
-    public void setPoStatus(String poStatus) {
+    public void setPoStatus(Status poStatus) {
         this.poStatus = poStatus;
     }
 
