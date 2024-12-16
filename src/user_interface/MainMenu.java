@@ -15,7 +15,7 @@ import user_interface.table.*;
 import user_interface.MainMenu;
 import user_interface.panels.Panel;
 import user_interface.panels.PurchaseOrderPanel;
-import user_interface.panels.StockEntry;
+import user_interface.panels.CreateSale;
 import user_interface.panels.ItemPanel;
 import user_interface.panels.AddUserPanel;
 import user_interface.panels.TitlePanel;
@@ -52,16 +52,14 @@ public class MainMenu extends JPanel {
         this.createTablePanel("PurchaseOrder", "purchaseOrdersTable", PurchaseOrdersTable.class);
 
         this.createFeaturePanel("addUser", "addUserPanel", AddUserPanel.class);
-        // this.createFeaturePanel("viewUser", "addUserPanelView", AddUserPanel.class, true);
         this.createFeaturePanel("addItem", "itemPanel", ItemPanel.class);
-        // this.createFeaturePanel("viewItem", "itemPanelView", ItemPanel.class, true);
         this.createFeaturePanel("salesReport", "salesReport", SalesReport.class);
         this.createFeatureTablePanel("restockItem", "restockItem", RestockItemsTable.class);
         this.createFeatureTablePanel("trackPurchaseOrder", "trackPO", TrackPurchaseOrderTable.class);
         this.createFeaturePanel("viewItem", "itemPanelView", ItemPanel.class, true);
         this.createFeaturePanel("purReq", "purReqPane", PurchaseReqPanel.class);
         this.createFeaturePanel("PurOrd", "PurOrdPane", PurchaseOrderPanel.class);
-        this.createFeaturePanel("stockEntry", "stockEntryPane", StockEntry.class);
+        this.createFeaturePanel("CreateSale", "CreateSalePane", CreateSale.class);
         // TODO the other panels
 
         showPanel("mainMenuPanel");
@@ -220,7 +218,7 @@ class MainMenuPanel extends JPanel {
         createTableButton("PurchaseRequisition", "Edit Purchase Requisition Table", "purchaseRequisitionTable");
         createTableButton("PurchaseOrder", "Edit Purchase Order Table", "purchaseOrdersTable");
 
-        createFeatureButton("stockEntry", "Stock Entry", "stockEntryPane");
+        createFeatureButton("CreateSale", "Create Sales", "CreateSalePane");
         createFeatureButton("salesReport", "Sales Report", "salesReport");
         createFeatureButton("trackPurchaseOrder", "Track Purchase Order", "trackPO");
         createFeatureButton("restockItem", "Restock Items", "restockItem");

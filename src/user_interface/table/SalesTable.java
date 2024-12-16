@@ -6,25 +6,46 @@ import java.util.HashMap;
 import javax.swing.*;
 
 import data.Item;
+import data.Permission;
+import data.Role;
 import data.Sale;
 import user_interface.MainMenu;
 import user_interface.add_item_dialog.AddNewItem;
+import user_interface.panels.CreateSale;
 import backend.Backend;
 
 public class SalesTable extends TablePanel<Sale> {
+    private MainMenu parent;
+    private CreateSale createSale;
+    private Role role;
     public SalesTable(Backend backend, MainMenu parent) {
         super("Sales", 4, parent, backend.db.salesMap, new SalesTableModel(), backend);
         this.backend = backend;
+        this.parent = parent;
     }
 
     @Override
     public void createAddPanel() {
-        // TODO add item panel
+        createSale = parent.getPanel("CreateSalePane", CreateSale.class);
+        createSale.setBack("salesTable");
+        parent.showPanel("CreateSalePane");
     }
 
     @Override
     public void createEditPanel(int modelRow) {
-        // TODO add item panel but with fields filled in
+        role = backend.getCurrentAccount().getRole();
+        createSale = parent.getPanel("CreateSalePane", CreateSale.class);
+        createSale.setBack("salesTable");
+
+        createSale.setRowNum(tableModel.getValueAt(modelRow, 5).toString());
+        createSale.setData();
+
+        createSale.viewOnly();
+        if(role.hasPermission("Sales", Permission.UPDATE)){
+            createSale.viewUpdate();
+        }
+
+        parent.showPanel("CreateSalePane");
     }
 
     @Override
@@ -66,6 +87,8 @@ class SalesTableModel extends TablePanelModel<Sale> {
                 return sale.getSalesManagerId();
             case 4:
                 return "View";
+            case 5:
+                return sale.getId();
             default:
                 return null;
         }

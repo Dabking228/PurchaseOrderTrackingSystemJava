@@ -6,6 +6,7 @@ import javax.swing.JButton;
 
 import backend.Backend;
 import data.Item;
+import data.Permission;
 import user_interface.MainMenu;
 import user_interface.panels.ItemPanel;
 
@@ -22,11 +23,17 @@ public class RestockItemsTable extends ItemsTable {
 
     @Override
     public void createEditPanel(int modelRow) {
-        parent.showPanel("itemPanelView");
-        viewItem = parent.getPanel("itemPanelView", ItemPanel.class);
-        viewItem.setBack("restockItem");
-        viewItem.setRowNum(tableModel.getValueAt(modelRow, 0).toString());
-        viewItem.setData();
+        role = backend.getCurrentAccount().getRole();
+        itemPanel = parent.getPanel("itemPanel", ItemPanel.class);
+        itemPanel.setBack("restockItem");
+
+        itemPanel.setRowNum(tableModel.getValueAt(modelRow, 6).toString());
+        itemPanel.setData();
+
+        itemPanel.viewOnly();
+       
+
+        parent.showPanel("itemPanel");
     }
 
     @Override
