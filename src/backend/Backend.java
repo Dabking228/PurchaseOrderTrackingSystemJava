@@ -33,6 +33,8 @@ public class Backend {
         db.addItem(item);
         Item item2 = new Item("CODE1323", "Item132", supplier.getId(), 40, 120,new BigDecimal("10.00"));
         db.addItem(item2);
+        Item item3 = new Item("CODE3123", "ie3221", supplier.getId(), 40, 120,new BigDecimal("10.00"));
+        db.addItem(item3);
 
         Sale sale = new Sale(item.getId(), 10, new java.util.Date(), account.getId());
         db.addSale(sale);
@@ -55,7 +57,7 @@ public class Backend {
                 pr2.getId(),
                 supplier.getId(),
                 account.getId(),
-                Status.PENDING,
+                Status.DELIVERD,
                 new java.util.Date(),
                 500.00);
         db.addPurchaseOrder(po2);

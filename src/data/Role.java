@@ -5,12 +5,12 @@ import java.util.*;
 public enum Role {
     // enum items
     SALES_MANAGER(buildSalesManagerPermissions(),
-            List.of("viewItem", "stockEntry", "salesReport", "restockItem", "purReq")),
+            List.of("viewItem", "stockEntry", "salesReport", "restockItem", "purReq", "PurOrd")),
     PURCHASE_MANAGER(buildPurchaseManagerPermissions(), List.of("viewItem", "purReq")),
     INVENTORY_MANAGER(buildInventoryManagerPermissions(), List.of("addItem", "viewItem")),
-    FINANCE_MANAGER(buildFinanceManagerPermissions(), List.of("TrackPurchaseOrder")),
+    FINANCE_MANAGER(buildFinanceManagerPermissions(), List.of("TrackPurchaseOrder", "PurOrd")),
     ADMIN(buildAdminPermissions(),
-            List.of("addItem", "viewItem", "TrackPurchaseOrder", "stockEntry", "salesReport", "restockItem", "purReq"));
+            List.of("addItem", "viewItem", "viewUser","addUser","TrackPurchaseOrder", "stockEntry", "salesReport", "restockItem", "purReq", "PurOrd"));
 
     // fields for permissions and special features
     private final Map<String, EnumSet<Permission>> permissions;

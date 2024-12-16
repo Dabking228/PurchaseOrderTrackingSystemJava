@@ -14,12 +14,14 @@ import data.Role;
 import user_interface.table.*;
 import user_interface.MainMenu;
 import user_interface.panels.Panel;
+import user_interface.panels.PurchaseOrderPanel;
 import user_interface.panels.StockEntry;
 import user_interface.panels.ItemPanel;
 import user_interface.panels.AddUserPanel;
 import user_interface.panels.TitlePanel;
 import user_interface.panels.SalesReport;
 import user_interface.panels.PurchaseReqPanel;;
+
 
 public class MainMenu extends JPanel {
     private CardLayout cardLayout;
@@ -50,13 +52,14 @@ public class MainMenu extends JPanel {
         this.createTablePanel("PurchaseOrder", "purchaseOrdersTable", PurchaseOrdersTable.class);
 
         this.createFeaturePanel("addUser", "addUserPanel", AddUserPanel.class);
-        this.createFeaturePanel("addUser", "addUserPanelView", AddUserPanel.class, true);
+        this.createFeaturePanel("viewUser", "addUserPanelView", AddUserPanel.class, true);
         this.createFeaturePanel("addItem", "itemPanel", ItemPanel.class);
         this.createFeaturePanel("viewItem", "itemPanelView", ItemPanel.class, true);
         this.createFeaturePanel("salesReport", "salesReport", SalesReport.class);
         this.createFeatureTablePanel("restockItem", "restockItem", RestockItemsTable.class);
         this.createFeaturePanel("viewItem", "itemPanelView", ItemPanel.class, true);
         this.createFeaturePanel("purReq", "purReqPane", PurchaseReqPanel.class);
+        this.createFeaturePanel("PurOrd", "PurOrdPane", PurchaseOrderPanel.class);
         // TODO the other panels
 
         showPanel("mainMenuPanel");

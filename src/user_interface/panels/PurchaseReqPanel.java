@@ -23,24 +23,21 @@ import user_interface.*;
 public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
     // private boolean viewOnly;
     protected String rowData;
-    private PRListReq PRList;
     private PurchaseRequisition PR;
     private Item item;
     protected ItemListReq ItemList;
 
     protected FieldDropdown<data.Item> dropItemID;
-    protected FieldText fieldItemName, fieldItemStock, fieldItemMinStock, fieldRestockVal;
+    protected FieldText fieldItemName, fieldItemStock, fieldItemMinStock, fieldRestockVal, fieldStatus;
     protected JLabel greenLabel;
-    protected JPanel editcfm;
-    protected JButton editConfirm, editCancel, confirmButton, deleteButton, editButton;
+    protected JPanel editcfm, approvecfm;
+    protected JButton editConfirm, editCancel, confirmButton, deleteButton, editButton, approveButton, rejectButton;
 
     public PurchaseReqPanel(Backend backend, MainMenu parent) {
         super("Purchase Requisition", parent, backend.db.purchaseRequisitionsMap, backend);
         this.backend = backend;
-        this.PRList = new PRListReq();
-        this.ItemList = new ItemListReq();
 
-        dropItemID = new FieldDropdown<data.Item>("Item Name", backend.db.itemsMap, ItemList);
+        dropItemID = new FieldDropdown<data.Item>("Item Name", backend.db.itemsMap, new ItemListReq());
         dropItemID.fieldCombo.setSelectedIndex(-1);
         contentPanel.add(dropItemID);
 
@@ -54,6 +51,11 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
 
         fieldRestockVal = new FieldText("Item Ordered", true);
         contentPanel.add(fieldRestockVal);
+
+        fieldStatus = new FieldText("Status");
+        fieldStatus.setEditable(false);
+        contentPanel.add(fieldStatus);
+
 
         greenLabel = new JLabel("Item added");
         greenLabel.setVisible(false);
@@ -85,9 +87,13 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
         editcfm.setMaximumSize(new Dimension(300, 30));
         contentPanel.add(editcfm);
 
-
-        PRList.setItem(items);
-        PRList.setValue();
+        approvecfm = new JPanel(new GridLayout(1,2));
+        approveButton = new JButton("Approve");
+        rejectButton = new JButton("Reject");
+        approvecfm.add(approveButton);
+        approvecfm.add(rejectButton);
+        approvecfm.setMaximumSize(new Dimension(300,30));
+        contentPanel.add(approvecfm);
 
         // auto pull data from itemsmap to fill up the details
         dropItemID.fieldCombo.addActionListener(e -> {
@@ -133,8 +139,7 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
         //delete button logic
         deleteButton.addActionListener(e -> {
             backend.db.purchaseRequisitionsMap.remove(PR.getId());
-            parent.showMainMenu(); // somehow deleting the item make the table funky
-            System.out.println(backend.db.purchaseRequisitionsMap);
+            parent.showPanel("purchaseRequisitionTable"); 
         });
 
         editButton.addActionListener(e -> {
@@ -148,7 +153,6 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
             try{
                 int RestockVal = fieldRestockVal.getIntData();
 
-
                 if (PR.getQuantity() != RestockVal) {
                     System.out.println("restocknum changed"); //TODO: remove
                     backend.db.purchaseRequisitionsMap.get(PR.getId()).setQuantity(RestockVal);
@@ -157,7 +161,6 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
                 System.out.println("item updated"); //TODO: remove
                 fieldRestockVal.setEditable(false);
 
-                editcfm.setVisible(false);
             } catch (Exception err){
                 System.out.println(err);
                 fieldRestockVal.setEditable(false);
@@ -173,6 +176,20 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
             
             editcfm.setVisible(false);
         });
+    
+        approveButton.addActionListener(e -> {
+            PR.setStatus(Status.APPROVED);
+            fieldStatus.setData(PR.getStatus().toString());
+
+            approvecfm.setVisible(false);
+        });
+
+        rejectButton.addActionListener(e->{
+            PR.setStatus(Status.REJECTED);
+            fieldStatus.setData(PR.getStatus().toString());
+
+            approvecfm.setVisible(false);
+        });
     }
 
 
@@ -180,7 +197,9 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
         createHideOrShow(true);
         editorHideOrShow(false);
         editHideOrShow(false);
+        approveHideOrSHow(false);
 
+        fieldStatus.setVisible(false);
         dropItemID.setEditable(true);
         fieldRestockVal.setEditable(true);
     }
@@ -198,31 +217,41 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
         editcfm.setVisible(bool);
     }
 
+    void approveHideOrSHow(boolean bool){
+        approvecfm.setVisible(bool);
+    }
     public void viewOnly() {
         createHideOrShow(false);
         editorHideOrShow(false);
         editHideOrShow(false);
+        approveHideOrSHow(false);
 
         dropItemID.setEditable(false);
         fieldRestockVal.setEditable(false);
+        fieldStatus.setVisible(true);
     }
 
     public void viewOnlyUpdate() {
         editorHideOrShow(true);
     }
 
-    public void setData() {
-        item = ItemList.getObject(rowData);
-        PR = PRList.getObject(item.getId());
-        System.out.println(backend.db.purchaseRequisitionsMap);
-        System.out.println("yay"); // TODO: Remove
-        System.out.println(rowData); // TODO: Remove
-        System.out.println(PRList.getObject(item.getId()).getId()); // TODO: Remove
+    public void viewApprove(){
+        if(PR.getStatus() == Status.PENDING){
+            approveHideOrSHow(true);
+        }
+        
+        fieldStatus.setVisible(true);
+    }
 
-        dropItemID.setData(PR.getItemId());
+    public void setData() {
+        PR = backend.db.getPurchaseRequisition(rowData);
+        item = backend.db.getItem(PR.getItemId());
+
+        dropItemID.setData(item.getId());
         fieldItemStock.setData(String.valueOf(item.getStockLevel()));
         fieldItemMinStock.setData(String.valueOf(item.getReorderLevel()));
         fieldRestockVal.setData(String.valueOf(PR.getQuantity()));
+        fieldStatus.setData(PR.getStatus().toString());
     }
 
     public void setRowNum(String data) {
@@ -258,38 +287,6 @@ class ItemListReq extends ComboList<data.Item> {
         for (data.Item item : items.values()) {
             if (item.getItemName() == String.valueOf(ItemName)) {
                 return item;
-            }
-        }
-        return null;
-    }
-}
-
-class PRListReq extends ComboList<PurchaseRequisition> {
-    @Override
-    public void setItem(Map<String, PurchaseRequisition> items) {
-        this.items = items;
-    }
-
-    @Override
-    public void setValue() {
-        this.values = new PurchaseRequisition[this.items.size()];
-        initGetValue();
-    }
-
-    @Override
-    public PurchaseRequisition getObject(Object ItemName) {
-        for (PurchaseRequisition item : items.values()) {
-            if (item.getItemId() == String.valueOf(ItemName)) {
-                return item;
-            }
-        }
-        return null;
-    }
-
-    public String getObjectUUID(Object ItemCode) {
-        for (Map.Entry<String, PurchaseRequisition> item : items.entrySet()) {
-            if (item.getValue().getId() == String.valueOf(ItemCode)) {
-                return item.getKey();
             }
         }
         return null;
