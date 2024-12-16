@@ -14,15 +14,17 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import backend.Backend;
 import data.BaseItem;
 
 public class FieldDropdown<T extends BaseItem> extends JPanel {
+    protected Backend backend;
     protected ComboList<T> lists;
     protected Map<String, T> items;
     protected JLabel fieldLabel;
     protected JComboBox<ComboItem<T>> fieldCombo;
 
-    public FieldDropdown(String fieldName, Map<String, T> items, ComboList<T> lists) {
+    public FieldDropdown(String fieldName, Map<String, T> items, ComboList<T> lists, Backend backend) {
         this.items = items;
         this.lists = lists;
         setLayout(new GridLayout(1, 2));
@@ -41,6 +43,9 @@ public class FieldDropdown<T extends BaseItem> extends JPanel {
         fieldCombo.setPreferredSize(new Dimension(208, fieldCombo.getPreferredSize().height));
         add(fieldCombo);
 
+        this.backend = backend;
+        lists.setBackend(backend);
+
         lists.setItem(items);
         lists.setValue();
         for (String UUID : lists.UUID) {
@@ -52,7 +57,11 @@ public class FieldDropdown<T extends BaseItem> extends JPanel {
         setMaximumSize(getPreferredSize());
     }
 
+    public FieldDropdown(String fieldName, Map<String, T> items, ComboList<T> lists){
+        this(fieldName, items, lists,null);
+       
 
+    }
     public ComboItem<T> getSelected() {
         if (fieldCombo.getSelectedIndex() != -1){
             return (ComboItem<T>) fieldCombo.getSelectedItem();
@@ -99,10 +108,14 @@ class ComboItem<T extends BaseItem> {
 
 abstract class ComboList<T extends BaseItem> {
     protected Map<String, T> items;
-    // protected ComboItems<T> Lists;
     protected String[] UUID;
     protected T[] values;
+    protected Backend backend;
     
+    public void setBackend(Backend backend){
+        this.backend = backend;
+    }
+
     public void setItem(Map<String, T> items) {
         this.items = items;
     }
