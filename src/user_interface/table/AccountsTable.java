@@ -3,6 +3,8 @@ package user_interface.table;
 import javax.swing.*;
 
 import data.Account;
+import data.Permission;
+import data.Role;
 import user_interface.MainMenu;
 import user_interface.add_item_dialog.AddNewItem;
 import user_interface.panels.AddUserPanel;
@@ -10,7 +12,8 @@ import backend.Backend;
 
 public class AccountsTable extends TablePanel<Account> {
     protected MainMenu parent;
-    protected AddUserPanel viewUser;
+    protected AddUserPanel UserPanel;
+    protected Role role;
     
     public AccountsTable(Backend backend, MainMenu parent) {
         super("Accounts", 2, parent, backend.db.accountsMap, new AccountsTableModel(), backend);
@@ -20,15 +23,27 @@ public class AccountsTable extends TablePanel<Account> {
 
     @Override
     public void createAddPanel() {
+        role = backend.getCurrentAccount().getRole();
+        UserPanel = parent.getPanel("addUserPanel", AddUserPanel.class);
+        if(role.hasPermission("Accounts", Permission.CREATE)){
+            UserPanel.CreateUser();
+        }
         parent.showPanel("addUserPanel");
     }
 
     @Override
     public void createEditPanel(int modelRow) {
-        parent.showPanel("addUserPanelView");
-        viewUser = parent.getPanel("addUserPanelView", AddUserPanel.class);
-        viewUser.setRowNum(tableModel.getValueAt(modelRow, 0).toString());
-        viewUser.setData();
+        role = backend.getCurrentAccount().getRole();
+        UserPanel = parent.getPanel("addUserPanel", AddUserPanel.class);
+        UserPanel.setRowNum(tableModel.getValueAt(modelRow, 0).toString());
+        UserPanel.setData();
+
+        UserPanel.viewOnly();
+        if(role.hasPermission("Accounts", Permission.UPDATE)){
+            UserPanel.viewUpdate();
+        }
+        parent.showPanel("addUserPanel");
+
     }
 }
 
@@ -53,6 +68,8 @@ class AccountsTableModel extends TablePanelModel<Account> {
                 return account.getRole();
             case 2:
                 return "View";
+            case 3:
+                return account.getId();
             default:
                 return null;
         }
