@@ -52,9 +52,9 @@ public class MainMenu extends JPanel {
         this.createTablePanel("PurchaseOrder", "purchaseOrdersTable", PurchaseOrdersTable.class);
 
         this.createFeaturePanel("addUser", "addUserPanel", AddUserPanel.class);
-        this.createFeaturePanel("viewUser", "addUserPanelView", AddUserPanel.class, true);
+        // this.createFeaturePanel("viewUser", "addUserPanelView", AddUserPanel.class, true);
         this.createFeaturePanel("addItem", "itemPanel", ItemPanel.class);
-        this.createFeaturePanel("viewItem", "itemPanelView", ItemPanel.class, true);
+        // this.createFeaturePanel("viewItem", "itemPanelView", ItemPanel.class, true);
         this.createFeaturePanel("salesReport", "salesReport", SalesReport.class);
         this.createFeatureTablePanel("restockItem", "restockItem", RestockItemsTable.class);
         this.createFeatureTablePanel("trackPurchaseOrder", "trackPO", TrackPurchaseOrderTable.class);
