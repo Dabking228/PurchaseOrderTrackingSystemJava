@@ -1,8 +1,10 @@
 package user_interface.panels;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.math.BigDecimal;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -16,15 +18,16 @@ import data.*;
 import user_interface.MainMenu;
 
 public class ItemPanel extends Panel<Item> {
-    protected FieldText fieldItemID, fieldItemName, fieldNumStock, fieldRestockLevel;
+    protected FieldText fieldItemID, fieldItemName, fieldNumStock, fieldRestockLevel, fieldPrice;
     protected FieldDropdown<data.Supplier> SupplierDrop;
     protected JButton deleteButton, editButton, editConfirm, editCancel, confirmButton;
     private JLabel greenLabel;
-    private ItemList itemList;
+    private ItemListPanel itemList;
     private boolean viewOnly;
     protected Role role;
     protected String rowData;
     private JPanel editcfm;
+    protected Item item;
 
     public ItemPanel(Backend backend, MainMenu parent) {
         this(backend, parent, false);
@@ -41,30 +44,32 @@ public class ItemPanel extends Panel<Item> {
 
         // confirmation button logic
         confirmButton.addActionListener(e -> {
-            try{
+            try {
                 String itemID = fieldItemID.getData();
                 String itemName = fieldItemName.getData();
                 String supplierID = SupplierDrop.getSelected().getValue().getId();
                 int numStock = fieldNumStock.getIntData();
                 int minStock = fieldRestockLevel.getIntData();
+                BigDecimal price = new BigDecimal(fieldPrice.getData());
                 System.out.println(numStock);
                 if (!itemID.isEmpty() || !itemName.isEmpty() || numStock != 0 || minStock != 0) {
-                    backend.db.addItem(new Item(itemID, itemName, supplierID, numStock, minStock));
+                    backend.db.addItem(new Item(itemID, itemName, supplierID, numStock, minStock, price));
                     greenLabel.setVisible(true);
-    
+
                     // reset field
                     fieldItemID.resetField();
                     fieldItemName.resetField();
                     fieldNumStock.resetField();
                     fieldRestockLevel.resetField();
-    
+                    fieldPrice.resetField();
+
                     // adding a timer to hide the greenlabel
                     Timer timer = new Timer(2000, g -> greenLabel.setVisible(false));
                     timer.setRepeats(false);
                     timer.start();
                 }
-    
-            } catch (Exception err){
+
+            } catch (Exception err) {
                 System.out.println(err);
             }
         });
@@ -73,7 +78,7 @@ public class ItemPanel extends Panel<Item> {
     public ItemPanel(Backend backend, MainMenu parent, boolean viewOnly) {
         super("Add New Item", parent, backend.db.itemsMap, backend);
         this.viewOnly = viewOnly;
-        this.itemList = new ItemList();
+        this.itemList = new ItemListPanel();
         role = backend.getCurrentAccount().getRole();
 
         fieldItemID = new FieldText("Item ID");
@@ -90,6 +95,9 @@ public class ItemPanel extends Panel<Item> {
 
         fieldRestockLevel = new FieldText("Minimum Stock", true);
         contentPanel.add(fieldRestockLevel);
+
+        fieldPrice = new FieldText("Price", false);
+        contentPanel.add(fieldPrice);
 
         // change the return panel based on the menu name
 
@@ -116,6 +124,7 @@ public class ItemPanel extends Panel<Item> {
                 editCancel = new JButton("Cancel");
                 editcfm.add(editConfirm);
                 editcfm.add(editCancel);
+                editcfm.setMaximumSize(new Dimension(300,30));
                 editcfm.setVisible(false);
                 contentPanel.add(editcfm);
 
@@ -123,33 +132,10 @@ public class ItemPanel extends Panel<Item> {
                 editButton = new JButton("Edit");
                 titleButtonPanel.add(deleteButton);
                 titleButtonPanel.add(editButton);
-            }
-        }
-    }
 
-    // Function for the panel when is in view only
-    public void setData() {
-        Item item;
-        if (viewOnly) {
-            item = itemList.getObject(rowData);
-            System.out.println("yay"); //TODO: Remove
-            System.out.println(rowData); //TODO: Remove
-            System.out.println(itemList.getObject(rowData).getSupplierId()); //TODO: Remove
-
-            fieldItemID.setData(item.getItemCode());
-            fieldItemName.setData(item.getItemName());
-            SupplierDrop.setData(item.getSupplierId());
-            fieldNumStock.setData(String.valueOf(item.getStockLevel()));
-            fieldRestockLevel.setData(String.valueOf(item.getReorderLevel()));
-            
-            // Role with Create Permission
-            if (role.hasPermission("Items", Permission.CREATE)) {
-                // function for the edit and delete button
                 deleteButton.addActionListener(e -> {
-
                     backend.db.itemsMap.remove(itemList.getObjectUUID(item.getItemCode()));
                     parent.showPanel("itemsTable");
-
                 });
 
                 editButton.addActionListener(e -> {
@@ -157,55 +143,81 @@ public class ItemPanel extends Panel<Item> {
                     fieldItemName.setEditable(true);
                     fieldNumStock.setEditable(true);
                     fieldRestockLevel.setEditable(true);
+                    fieldPrice.setEditable(true);
                 });
 
                 editConfirm.addActionListener(e -> {
                     editcfm.setVisible(false);
-                    try{
+                    try {
                         String itemName = fieldItemName.getData();
                         int numStock = fieldNumStock.getIntData();
                         int minStock = fieldRestockLevel.getIntData();
-    
-    
+                        BigDecimal price = new BigDecimal(fieldPrice.getData());
+
                         if (item.getItemName() != itemName) {
-                            System.out.println("item changed"); //TODO: remove
+                            System.out.println("item changed"); // TODO: remove
                             backend.db.itemsMap.get(itemList.getObjectUUID(item.getItemCode())).setItemName(itemName);
                         }
                         if (item.getStockLevel() != numStock) {
-                            System.out.println("numstock changed"); //TODO: remove
+                            System.out.println("numstock changed"); // TODO: remove
                             backend.db.itemsMap.get(itemList.getObjectUUID(item.getItemCode())).setStockLevel(numStock);
                         }
                         if (item.getReorderLevel() != minStock) {
-                            System.out.println("restocknum changed"); //TODO: remove
-                            backend.db.itemsMap.get(itemList.getObjectUUID(item.getItemCode())).setReorderLevel(minStock);
+                            System.out.println("restocknum changed"); // TODO: remove
+                            backend.db.itemsMap.get(itemList.getObjectUUID(item.getItemCode()))
+                                    .setReorderLevel(minStock);
                         }
-    
-                        System.out.println("item updated"); //TODO: remove
+                        if (item.getPrice() != price) {
+                            System.out.println("price changed"); // TODO: remove
+                            backend.db.itemsMap.get(itemList.getObjectUUID(item.getItemCode())).setPrice(price);
+                        }
+
+                        System.out.println("item updated"); // TODO: remove
                         fieldItemName.setEditable(false);
                         fieldNumStock.setEditable(false);
                         fieldRestockLevel.setEditable(false);
-    
+                        fieldPrice.setEditable(false);
+
                         editcfm.setVisible(false);
-                    } catch (Exception err){
+                    } catch (Exception err) {
                         System.out.println(err);
                     }
-                   
+
                 });
 
                 editCancel.addActionListener(e -> {
                     fieldItemName.setEditable(false);
                     fieldNumStock.setEditable(false);
                     fieldRestockLevel.setEditable(false);
+                    fieldPrice.setEditable(false);
 
                     fieldItemID.setData(item.getItemCode());
                     fieldItemName.setData(item.getItemName());
                     SupplierDrop.setData(item.getSupplierId());
                     fieldNumStock.setData(String.valueOf(item.getStockLevel()));
                     fieldRestockLevel.setData(String.valueOf(item.getReorderLevel()));
+                    fieldPrice.setData(String.valueOf(item.getPrice()));
                     editcfm.setVisible(false);
                 });
-                // add fcuntion for when editconfirm and ceditcancel is press
+
             }
+        }
+    }
+
+    // Function for the panel when is in view only
+    public void setData() {
+        if (viewOnly) {
+            item = itemList.getObject(rowData);
+            System.out.println("yay"); // TODO: Remove
+            System.out.println(rowData); // TODO: Remove
+            System.out.println(itemList.getObject(rowData).getSupplierId()); // TODO: Remove
+
+            fieldItemID.setData(item.getItemCode());
+            fieldItemName.setData(item.getItemName());
+            SupplierDrop.setData(item.getSupplierId());
+            fieldNumStock.setData(String.valueOf(item.getStockLevel()));
+            fieldRestockLevel.setData(String.valueOf(item.getReorderLevel()));
+            fieldPrice.setData(String.valueOf(item.getPrice()));
         }
     }
 
@@ -248,7 +260,7 @@ class SupplierList extends ComboList<data.Supplier> {
     }
 }
 
-class ItemList extends ComboList<Item> {
+class ItemListPanel extends ComboList<Item> {
     @Override
     public void setItem(Map<String, Item> items) {
         this.items = items;
