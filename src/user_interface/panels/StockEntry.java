@@ -10,7 +10,7 @@ import user_interface.*;
 
 public class StockEntry extends Panel<Item> {
     protected FieldDropdown<Item> itemIDDropdown;
-    protected FieldText itemName, StockAmt, ReStockAmt, itemIDString;
+    protected FieldText itemName, StockAmt, ReStockAmt;
     private JButton confirmButton, cancelButton;
     private JLabel successLabel;
 
@@ -20,7 +20,7 @@ public class StockEntry extends Panel<Item> {
 
         // itemID = new FieldText("Item ID: ");
         // contentPanel.add(itemID);
-        itemIDDropdown = new FieldDropdown<>("Item ID: ", backend.db.itemsMap, new ItemList());
+        itemIDDropdown = new FieldDropdown<>("Item ID: ", backend.db.itemsMap, new ItemList(), backend);
         contentPanel.add(itemIDDropdown);
 
         itemName = new FieldText("Item Name: ");
@@ -69,7 +69,7 @@ public class StockEntry extends Panel<Item> {
                 ex.printStackTrace();
             }
         });
-        contentPanel.add(confirmButton);
+        contentPanel.add(confirmButton, 1);
 
         // Cancel Button
         cancelButton = new JButton("Cancel");
@@ -79,12 +79,12 @@ public class StockEntry extends Panel<Item> {
         contentPanel.add(cancelButton);
 
         //Set up dropdown listener to populate fields
-        itemIDDropdown.addActionListener(e -> {
+        itemIDDropdown.fieldCombo.addActionListener(e -> {
             try {
                 Item selectedItem = itemIDDropdown.getSelected().getValue();
                 if (selectedItem != null) {
-                    fieldItemName.setData(selectedItem.getItemName());
-                    fieldRestockLevel.setData(String.valueOf(selectedItem.getReorderLevel()));
+                    itemName.setData(selectedItem.getItemName());
+                    ReStockAmt.setData(String.valueOf(selectedItem.getReorderLevel()));
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -93,6 +93,19 @@ public class StockEntry extends Panel<Item> {
     
     }
 }   
+
+class ItemList extends ComboList<Item> {
+    @Override
+    public String getName(String UUID) {
+        Item item = getValue(UUID);
+        return item != null ? item.getItemCode() : "Unknown";  // or use item.getItemName() if you prefer
+    }
+
+    @Override
+    public Item getValue(String UUID) {
+        return items.get(UUID);  // Return the corresponding item by its UUID
+    }
+}
 
         // JButton confirmButton = new JButton("Confirm");
         // confirmButton.addActionListener(e -> {
