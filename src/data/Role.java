@@ -8,7 +8,7 @@ public enum Role {
             List.of("viewItem", "stockEntry", "salesReport", "restockItem", "purReq", "PurOrd")),
     PURCHASE_MANAGER(buildPurchaseManagerPermissions(), List.of("viewItem", "purReq")),
     INVENTORY_MANAGER(buildInventoryManagerPermissions(), List.of("addItem", "viewItem")),
-    FINANCE_MANAGER(buildFinanceManagerPermissions(), List.of("TrackPurchaseOrder", "PurOrd")),
+    FINANCE_MANAGER(buildFinanceManagerPermissions(), List.of("trackPurchaseOrder", "PurOrd")),
     ADMIN(buildAdminPermissions(),
             List.of("addItem", "viewItem", "viewUser","addUser","TrackPurchaseOrder", "stockEntry", "salesReport", "restockItem", "purReq", "PurOrd"));
 

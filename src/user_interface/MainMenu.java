@@ -57,9 +57,11 @@ public class MainMenu extends JPanel {
         this.createFeaturePanel("viewItem", "itemPanelView", ItemPanel.class, true);
         this.createFeaturePanel("salesReport", "salesReport", SalesReport.class);
         this.createFeatureTablePanel("restockItem", "restockItem", RestockItemsTable.class);
+        this.createFeatureTablePanel("trackPurchaseOrder", "trackPO", TrackPurchaseOrderTable.class);
         this.createFeaturePanel("viewItem", "itemPanelView", ItemPanel.class, true);
         this.createFeaturePanel("purReq", "purReqPane", PurchaseReqPanel.class);
         this.createFeaturePanel("PurOrd", "PurOrdPane", PurchaseOrderPanel.class);
+        this.createFeaturePanel("stockEntry", "stockEntryPane", StockEntry.class);
         // TODO the other panels
 
         showPanel("mainMenuPanel");
@@ -218,9 +220,9 @@ class MainMenuPanel extends JPanel {
         createTableButton("PurchaseRequisition", "Edit Purchase Requisition Table", "purchaseRequisitionTable");
         createTableButton("PurchaseOrder", "Edit Purchase Order Table", "purchaseOrdersTable");
 
-        createFeatureButton("stockEntry", "Stock Entry", "stockEntry");
+        createFeatureButton("stockEntry", "Stock Entry", "stockEntryPane");
         createFeatureButton("salesReport", "Sales Report", "salesReport");
-        createFeatureButton("trackPurchaseOrder", "Track Purchase Order", "trackPurchaseOrder");
+        createFeatureButton("trackPurchaseOrder", "Track Purchase Order", "trackPO");
         createFeatureButton("restockItem", "Restock Items", "restockItem");
 
         JButton logoutButton = new JButton("Logout");

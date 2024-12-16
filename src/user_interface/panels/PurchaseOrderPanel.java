@@ -23,6 +23,7 @@ public class PurchaseOrderPanel extends Panel<PurchaseOrder> {
     private String rowData;
     private PurchaseOrder PO;
     private boolean FMView = false;
+    private String panelName;
 
     protected FieldText fieldItemID, fieldSupplierID, fieldPRStatus, fieldPOStatus, fieldtotalAmount, fieldCurrStock,
             fieldTotalStock;
@@ -108,7 +109,7 @@ public class PurchaseOrderPanel extends Panel<PurchaseOrder> {
         });
 
         backButton.addActionListener(e -> {
-            parent.showPanel("purchaseOrdersTable");
+            parent.showPanel(panelName);
             dropPR.fieldCombo.setSelectedIndex(-1);
             fieldItemID.setData("");
             fieldSupplierID.setData("");
@@ -311,6 +312,9 @@ public class PurchaseOrderPanel extends Panel<PurchaseOrder> {
         this.rowData = data;
     }
 
+    public void setBack(String PanelName){
+        this.panelName = PanelName;
+    }
 }
 
 class PRListPurOrder extends ComboList<PurchaseRequisition> {

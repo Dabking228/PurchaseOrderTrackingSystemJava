@@ -112,6 +112,7 @@ public class ItemPanel extends Panel<Item> {
             SupplierDrop.setEditable(false);
             fieldNumStock.setEditable(false);
             fieldRestockLevel.setEditable(false);
+            fieldPrice.setEditable(false);
 
             // init item lists
             itemList.setItem(items);
