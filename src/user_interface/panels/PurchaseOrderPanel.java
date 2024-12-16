@@ -6,29 +6,26 @@ import javax.swing.JButton;
 import user_interface.*;
 
 public class PurchaseOrderPanel extends Panel<data.PurchaseOrder> {
-    protected FieldText PurReqID, SupplierID, POStat, CreateDate, TotalAmt, ID, PurReqIDString, SupplierIDString
-    , POStatString;
+    protected FieldText fieldItemID, fieldSupplierID, fieldPRStatus, fieldPOStatus, fieldtotalAmount;
+    
     public PurchaseOrderPanel(Backend backend, MainMenu parent) {
 
         super("Purchase Order Panel", parent, backend.db.purchaseOrdersMap, backend);
 
-        PurReqID = new FieldText("Purchase ID");
-        contentPanel.add(PurReqID);
+        fieldItemID = new FieldText("Item Name");
+        contentPanel.add(fieldItemID);
 
-        SupplierID = new FieldText("Supplier ID");
-        contentPanel.add(SupplierID);
+        fieldSupplierID = new FieldText("Supplier");
+        contentPanel.add(fieldSupplierID);
 
-        POStat = new FieldText("Purchase orders Stats");
-        contentPanel.add(POStat);
+        fieldPRStatus = new FieldText("PR Status");
+        contentPanel.add(fieldPRStatus);
 
-        CreateDate = new FieldText("Date Created");
-        contentPanel.add(CreateDate);
+        fieldPOStatus = new FieldText("Purchase orders Status");
+        contentPanel.add(fieldPOStatus);
 
-        TotalAmt = new FieldText("Purchase orders Stats");
-        contentPanel.add(TotalAmt);
-
-        ID = new FieldText("Purchase orders Stats");
-        contentPanel.add(ID);
+        fieldtotalAmount = new FieldText("Purchase orders Stats");
+        contentPanel.add(fieldtotalAmount);
 
         backButton.addActionListener(e -> {
             parent.showMainMenu();
@@ -36,14 +33,14 @@ public class PurchaseOrderPanel extends Panel<data.PurchaseOrder> {
 
         JButton confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(e -> {
-            try {
-                String PurReqIDString = PurReqID.getData();
-                String SupplierIDString = SupplierID.getData();
-                String POStatString = POStat.getData();
+            // try {
+            //     String PurReqIDString = PurReqID.getData();
+            //     String SupplierIDString = SupplierID.getData();
+            //     String POStatString = POStat.getData();
                 
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            // } catch (Exception ex) {
+            //     ex.printStackTrace();
+            // }
         });
     }
 }

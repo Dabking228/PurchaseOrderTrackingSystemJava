@@ -14,6 +14,7 @@ import data.Role;
 import user_interface.table.*;
 import user_interface.MainMenu;
 import user_interface.panels.Panel;
+import user_interface.panels.PurchaseOrderPanel;
 import user_interface.panels.StockEntry;
 import user_interface.panels.ItemPanel;
 import user_interface.panels.AddUserPanel;
@@ -55,6 +56,7 @@ public class MainMenu extends JPanel {
         this.createFeaturePanel("addItem", "itemPanel", ItemPanel.class);
         this.createFeaturePanelViewOnly("viewItem", "itemPanelView", ItemPanel.class,true);
         this.createFeaturePanel("purReq", "purReqPane", PurchaseReqPanel.class);
+        this.createFeaturePanel("PurOrd", "PurOrdPane", PurchaseOrderPanel.class);
         // TODO the other panels
 
         showPanel("mainMenuPanel");

@@ -11,12 +11,16 @@ import data.PurchaseRequisition;
 import data.Supplier;
 import user_interface.MainMenu;
 import user_interface.add_item_dialog.AddNewItem;
+import user_interface.panels.PurchaseOrderPanel;
 import backend.Backend;
 
 public class PurchaseOrdersTable extends TablePanel<PurchaseOrder> {
+    protected MainMenu parent;
+    private PurchaseOrderPanel POPanel;
     public PurchaseOrdersTable(Backend backend, MainMenu parent) {
         super("PurchaseOrders", 10, parent, backend.db.purchaseOrdersMap, new PurchaseOrdersTableModel(), backend);
         this.backend = backend;
+        this.parent = parent;
     }
 
     @Override
@@ -26,7 +30,8 @@ public class PurchaseOrdersTable extends TablePanel<PurchaseOrder> {
 
     @Override
     public void createEditPanel(int modelRow) {
-        // TODO add item panel but with fields filled in
+        System.out.println("helo");
+        parent.showPanel("PurOrdPane");
     }
 
     @Override
@@ -90,6 +95,8 @@ class PurchaseOrdersTableModel extends TablePanelModel<PurchaseOrder> {
                 return purchaseOrder.getTotalAmount();
             case 10:
                 return "View";
+            case 11:
+                return purchaseOrder.getId();
             default:
                 return null;
         }
@@ -126,7 +133,7 @@ class PurchaseOrdersTableModel extends TablePanelModel<PurchaseOrder> {
 
     public boolean isCellEditable(int row, int column) {
         switch (column) {
-            case 6:
+            case 10:
                 return true;
             default:
                 return false;
