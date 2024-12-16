@@ -6,6 +6,8 @@ import java.util.HashMap;
 import javax.swing.*;
 
 import data.Item;
+import data.Permission;
+import data.Role;
 import data.Supplier;
 import user_interface.MainMenu;
 import user_interface.panels.ItemPanel;
@@ -13,7 +15,8 @@ import backend.Backend;
 
 public class ItemsTable extends TablePanel<Item> {
     protected MainMenu parent;
-    protected ItemPanel viewItem;
+    protected ItemPanel itemPanel;
+    protected Role role;
 
     public ItemsTable(Backend backend, MainMenu parent) {
         super("Items", 5, parent, backend.db.itemsMap, new ItemsTableModel(), backend);
@@ -22,16 +25,30 @@ public class ItemsTable extends TablePanel<Item> {
 
     @Override
     public void createAddPanel() {
+        role = backend.getCurrentAccount().getRole();
+        itemPanel = parent.getPanel("itemPanel", ItemPanel.class);
+        itemPanel.setBack("itemsTable");
+        if(role.hasPermission("Items", Permission.CREATE)){
+            itemPanel.CreateItem();
+        }
         parent.showPanel("itemPanel");
     }
 
     @Override
     public void createEditPanel(int modelRow) {
-        parent.showPanel("itemPanelView");
-        viewItem = parent.getPanel("itemPanelView", ItemPanel.class);
-        viewItem.setBack("itemsTable");
-        viewItem.setRowNum(tableModel.getValueAt(modelRow, 0).toString());
-        viewItem.setData();
+        role = backend.getCurrentAccount().getRole();
+        itemPanel = parent.getPanel("itemPanel", ItemPanel.class);
+        itemPanel.setBack("itemsTable");
+
+        itemPanel.setRowNum(tableModel.getValueAt(modelRow, 6).toString());
+        itemPanel.setData();
+
+        itemPanel.viewOnly();
+        if(role.hasPermission("Items", Permission.UPDATE)){
+            itemPanel.viewUpdate();
+        }
+
+        parent.showPanel("itemPanel");
     }
 
     @Override
@@ -75,6 +92,8 @@ class ItemsTableModel extends TablePanelModel<Item> {
                 return account.getReorderLevel();
             case 5:
                 return "View";
+            case 6:
+                return account.getId();
             default:
                 return null;
         }
