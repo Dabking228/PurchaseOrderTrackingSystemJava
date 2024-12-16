@@ -18,7 +18,6 @@ public class ItemsTable extends TablePanel<Item> {
     public ItemsTable(Backend backend, MainMenu parent) {
         super("Items", 5, parent, backend.db.itemsMap, new ItemsTableModel(), backend);
         this.parent = parent;
-       
     }
 
     @Override
@@ -33,7 +32,7 @@ public class ItemsTable extends TablePanel<Item> {
         viewItem.setRowNum(tableModel.getValueAt(modelRow, 0).toString());
         viewItem.setData();
     }
-    
+
     @Override
     public void refresh() {
         ArrayList<Item> array = new ArrayList<>(items.values());
