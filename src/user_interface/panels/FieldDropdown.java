@@ -52,13 +52,16 @@ public class FieldDropdown<T extends BaseItem> extends JPanel {
         setMaximumSize(getPreferredSize());
     }
 
-    @SuppressWarnings("unchecked")
+
     public ComboItem<T> getSelected() {
-        return (ComboItem<T>) fieldCombo.getSelectedItem();
+        if (fieldCombo.getSelectedIndex() != -1){
+            return (ComboItem<T>) fieldCombo.getSelectedItem();
+        }
+        return null;
     }
 
     public void setEditable(boolean value){
-        fieldCombo.setEnabled(false);
+        fieldCombo.setEnabled(value);
     }
 
     public void setData(Object object){
@@ -99,7 +102,7 @@ abstract class ComboList<T extends BaseItem> {
     // protected ComboItems<T> Lists;
     protected String[] UUID;
     protected T[] values;
-
+    
     public void setItem(Map<String, T> items) {
         this.items = items;
     }

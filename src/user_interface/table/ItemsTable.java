@@ -13,7 +13,7 @@ import backend.Backend;
 
 public class ItemsTable extends TablePanel<Item> {
     protected MainMenu parent;
-    protected ItemPanel newItem, viewItem;
+    protected ItemPanel viewItem;
 
     public ItemsTable(Backend backend, MainMenu parent) {
         super("Items", 5, parent, backend.db.itemsMap, new ItemsTableModel(), backend);

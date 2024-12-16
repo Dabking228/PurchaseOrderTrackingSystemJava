@@ -41,15 +41,25 @@ public class Backend {
         PurchaseRequisition pr = new PurchaseRequisition(item.getId(), 50, new java.util.Date(), account.getId(),
                 Status.PENDING);
         db.addPurchaseRequisition(pr);
-
+        PurchaseRequisition pr2 = new PurchaseRequisition(item2.getId(), 50, new java.util.Date(), 1, Status.PENDING);
+        db.addPurchaseRequisition(pr2);
+        
         PurchaseOrder po = new PurchaseOrder(
                 pr.getId(),
                 supplier.getId(),
                 account.getId(),
-                "pending",
+                Status.PENDING,
                 new java.util.Date(),
                 500.00);
         db.addPurchaseOrder(po);
+        PurchaseOrder po2 = new PurchaseOrder(
+                pr2.getId(),
+                supplier.getId(),
+                account.getId(),
+                Status.PENDING,
+                new java.util.Date(),
+                500.00);
+        db.addPurchaseOrder(po2);
 
         db.save();
     }
