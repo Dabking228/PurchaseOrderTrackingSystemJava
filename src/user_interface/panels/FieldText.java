@@ -45,7 +45,19 @@ public class FieldText extends JPanel {
                 @Override
                 public void focusLost(FocusEvent e){
                     try{
-                        Integer.parseInt(fieldText.getText());
+                        String text = fieldText.getText();
+                        
+                        // Check if the text can be parsed as an integer
+                        if (text.matches("-?\\d+")) { // Matches integers
+                            Integer.parseInt(text);
+                        }
+                        // Check if the text can be parsed as a double
+                        else if (text.matches("-?\\d+(\\.\\d+)?")) { // Matches decimals
+                            Double.parseDouble(text);
+                        } else {
+                            throw new NumberFormatException("Not a valid number");
+                        }
+
                         fieldText.setBorder(defaultBorder);
                     } catch (NumberFormatException err){
                         fieldText.setText("");
@@ -80,6 +92,13 @@ public class FieldText extends JPanel {
     public int getIntData() throws Exception  {
         if(isNumber){
             return Integer.parseInt(fieldText.getText());
+        }
+        throw new Exception("Text field is not a number value, use getData");
+    }
+
+    public double getDoubleData() throws Exception{
+        if(isNumber){
+            return Double.parseDouble(fieldText.getText());
         }
         throw new Exception("Text field is not a number value, use getData");
     }

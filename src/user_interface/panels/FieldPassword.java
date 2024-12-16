@@ -39,4 +39,17 @@ public class FieldPassword extends JPanel{
         
         return new String(fieldText.getPassword());
     }
+
+    public void resetField(){
+        fieldText.setText("");
+    }
+
+    public void setPassword(String pass){
+        fieldText.setText(pass);
+    }
+
+    public void setEditable(boolean bool){
+        fieldText.setEditable(bool);
+        fieldText.setFocusable(bool);
+    }
 }

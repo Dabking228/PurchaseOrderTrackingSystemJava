@@ -6,11 +6,11 @@ public class PurchaseRequisition extends BaseItem {
     private String itemId;
     private int quantity;
     private Date requiredByDate;
-    private int salesManagerId;
+    private String salesManagerId;
     private Status status;
 
     // Constructor
-    public PurchaseRequisition(String itemId, int quantity, Date requiredByDate, int salesManagerId, Status status) {
+    public PurchaseRequisition(String itemId, int quantity, Date requiredByDate, String salesManagerId, Status status) {
         this.itemId = itemId;
         this.quantity = quantity;
         this.requiredByDate = requiredByDate;
@@ -18,7 +18,7 @@ public class PurchaseRequisition extends BaseItem {
         this.status = status;
     }
 
-    public PurchaseRequisition(String itemId, int quantity, Date requiredByDate, int salesManagerId, Status status,
+    public PurchaseRequisition(String itemId, int quantity, Date requiredByDate, String salesManagerId, Status status,
             String Id) {
         this.itemId = itemId;
         this.quantity = quantity;
@@ -53,11 +53,11 @@ public class PurchaseRequisition extends BaseItem {
         this.requiredByDate = requiredByDate;
     }
 
-    public int getSalesManagerId() {
+    public String getSalesManagerId() {
         return salesManagerId;
     }
 
-    public void setSalesManagerId(int salesManagerId) {
+    public void setSalesManagerId(String salesManagerId) {
         this.salesManagerId = salesManagerId;
     }
 

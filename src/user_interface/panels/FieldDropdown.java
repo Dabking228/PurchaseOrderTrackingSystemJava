@@ -14,15 +14,17 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import backend.Backend;
 import data.BaseItem;
 
 public class FieldDropdown<T extends BaseItem> extends JPanel {
+    protected Backend backend;
     protected ComboList<T> lists;
     protected Map<String, T> items;
     protected JLabel fieldLabel;
     protected JComboBox<ComboItem<T>> fieldCombo;
 
-    public FieldDropdown(String fieldName, Map<String, T> items, ComboList<T> lists) {
+    public FieldDropdown(String fieldName, Map<String, T> items, ComboList<T> lists, Backend backend) {
         this.items = items;
         this.lists = lists;
         setLayout(new GridLayout(1, 2));
@@ -41,6 +43,9 @@ public class FieldDropdown<T extends BaseItem> extends JPanel {
         fieldCombo.setPreferredSize(new Dimension(208, fieldCombo.getPreferredSize().height));
         add(fieldCombo);
 
+        this.backend = backend;
+        lists.setBackend(backend);
+
         lists.setItem(items);
         lists.setValue();
         for (String UUID : lists.UUID) {
@@ -52,18 +57,25 @@ public class FieldDropdown<T extends BaseItem> extends JPanel {
         setMaximumSize(getPreferredSize());
     }
 
-    @SuppressWarnings("unchecked")
+    public FieldDropdown(String fieldName, Map<String, T> items, ComboList<T> lists){
+        this(fieldName, items, lists,null);
+       
+
+    }
     public ComboItem<T> getSelected() {
-        return (ComboItem<T>) fieldCombo.getSelectedItem();
+        if (fieldCombo.getSelectedIndex() != -1) {
+            return (ComboItem<T>) fieldCombo.getSelectedItem();
+        }
+        return null;
     }
 
-    public void setEditable(boolean value){
-        fieldCombo.setEnabled(false);
+    public void setEditable(boolean value) {
+        fieldCombo.setEnabled(value);
     }
 
-    public void setData(Object object){
-        for(int i = 0; i < fieldCombo.getItemCount(); i++){
-            if(fieldCombo.getItemAt(i).getValue().getId() == object){
+    public void setData(Object object) {
+        for (int i = 0; i < fieldCombo.getItemCount(); i++) {
+            if (fieldCombo.getItemAt(i).getValue().getId() == object) {
                 fieldCombo.setSelectedIndex(i);
             }
         }
@@ -97,9 +109,13 @@ class ComboItem<T extends BaseItem> {
 
 abstract class ComboList<T extends BaseItem> {
     protected Map<String, T> items;
-    // protected ComboItems<T> Lists;
     protected String[] UUID;
     protected T[] values;
+    protected Backend backend;
+    
+    public void setBackend(Backend backend){
+        this.backend = backend;
+    }
 
     public void setItem(Map<String, T> items) {
         this.items = items;
@@ -128,8 +144,8 @@ abstract class ComboList<T extends BaseItem> {
         return items.get(UUID);
     }
 
-    public T getObject(Object ItemName){
-        for(T item: items.values()){
+    public T getObject(Object ItemName) {
+        for (T item : items.values()) {
             return item;
         }
         return null;

@@ -11,7 +11,6 @@ import backend.Backend;
 import data.BaseItem;
 import user_interface.MainMenu;
 
-
 public abstract class Panel<T extends BaseItem> extends JPanel {
     protected JPanel panel, titleButtonPanel;
     protected JButton backButton;
@@ -43,24 +42,21 @@ public abstract class Panel<T extends BaseItem> extends JPanel {
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.PAGE_AXIS));
         add(contentPanel, BorderLayout.CENTER);
     }
-    
-    
-    public void backMainMenu(String menuName){
+
+    public void backMainMenu(String menuName) {
         backButton.addActionListener(e -> {
-            if(menuName == null || menuName == ""){
+            if (menuName == null || menuName == "") {
                 parent.showMainMenu();
             } else {
                 parent.showPanel(menuName);
             }
         });
     };
-
-
 }
 
-class CustomJPanel extends JPanel{
+class CustomJPanel extends JPanel {
     @Override
-    public Component add(Component comp){
+    public Component add(Component comp) {
         if (comp instanceof JComponent) {
             ((JComponent) comp).setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
         }

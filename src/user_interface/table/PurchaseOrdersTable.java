@@ -6,27 +6,57 @@ import java.util.HashMap;
 import javax.swing.*;
 
 import data.Item;
+import data.Permission;
 import data.PurchaseOrder;
 import data.PurchaseRequisition;
+import data.Role;
 import data.Supplier;
 import user_interface.MainMenu;
 import user_interface.add_item_dialog.AddNewItem;
+import user_interface.panels.PurchaseOrderPanel;
 import backend.Backend;
 
 public class PurchaseOrdersTable extends TablePanel<PurchaseOrder> {
+    protected MainMenu parent;
+    private PurchaseOrderPanel POPanel;
+    private Role role;
+    
     public PurchaseOrdersTable(Backend backend, MainMenu parent) {
-        super("PurchaseOrders", 10, parent, backend.db.purchaseOrdersMap, new PurchaseOrdersTableModel(), backend);
+        super("PurchaseOrder", 10, parent, backend.db.purchaseOrdersMap, new PurchaseOrdersTableModel(), backend);
         this.backend = backend;
+        this.parent = parent;
     }
 
     @Override
     public void createAddPanel() {
         // TODO add item panel
+        role = backend.getCurrentAccount().getRole();
+        POPanel = parent.getPanel("PurOrdPane", PurchaseOrderPanel.class);
+        if(role.hasPermission("PurchaseOrder", Permission.CREATE)){
+            POPanel.createPO();
+        }
+
+        parent.showPanel("PurOrdPane");
     }
 
     @Override
     public void createEditPanel(int modelRow) {
-        // TODO add item panel but with fields filled in
+        role = backend.getCurrentAccount().getRole();
+        System.out.println("helo from purchase order table"); //TODO: remove
+        POPanel = parent.getPanel("PurOrdPane", PurchaseOrderPanel.class);
+        POPanel.setRowNum(tableModel.getValueAt(modelRow, 11).toString());
+        
+        
+        POPanel.viewOnly();
+
+        if(role.hasPermission("PurchaseOrder", Permission.CREATE)){
+            POPanel.viewOnlyUpdate();
+        } else if(role == Role.FINANCE_MANAGER){
+            System.out.println("im a FMFMMMM");
+            POPanel.FMView(true);
+        }
+        POPanel.setData();
+        parent.showPanel("PurOrdPane");
     }
 
     @Override
@@ -90,6 +120,8 @@ class PurchaseOrdersTableModel extends TablePanelModel<PurchaseOrder> {
                 return purchaseOrder.getTotalAmount();
             case 10:
                 return "View";
+            case 11:
+                return purchaseOrder.getId();
             default:
                 return null;
         }
@@ -126,7 +158,7 @@ class PurchaseOrdersTableModel extends TablePanelModel<PurchaseOrder> {
 
     public boolean isCellEditable(int row, int column) {
         switch (column) {
-            case 6:
+            case 10:
                 return true;
             default:
                 return false;
