@@ -11,6 +11,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.Map;
 import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
 
 import user_interface.*;
 
@@ -18,7 +19,6 @@ public class StockEntry extends Panel<Item> {
     protected FieldDropdown<Item> itemIDDropdown;
     protected FieldText itemName, StockAmt, ReStockAmt;
     private JButton confirmButton, cancelButton;
-    private JLabel successLabel;
     protected JPanel buttonGroup;
 
 
@@ -45,13 +45,6 @@ public class StockEntry extends Panel<Item> {
             parent.showMainMenu();
         });
 
-        // Success label
-        successLabel = new JLabel("Stock entered successfully!");
-        successLabel.setVisible(false);
-        successLabel.setForeground(Color.GREEN);
-        successLabel.setFont(new Font(successLabel.getText(), Font.BOLD, 20));
-        contentPanel.add(successLabel);
-
         // Confirm Button
         confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(e -> {
@@ -64,13 +57,18 @@ public class StockEntry extends Panel<Item> {
                     selectedItem.setStockLevel(stockAmount);
 
                     // Show success message
-                    successLabel.setVisible(true);
+                    JOptionPane.showMessageDialog(this, "Stock entered successfully!");
 
-                    // Reset stock input field
+                    // Reset fields
+                    itemName.resetField();
                     StockAmt.resetField();
+                    ReStockAmt.resetField();
 
                     // Save changes to the database
                     backend.db.save();
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "Try Again!");
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
