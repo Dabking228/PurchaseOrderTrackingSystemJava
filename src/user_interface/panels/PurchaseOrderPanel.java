@@ -256,6 +256,7 @@ public class PurchaseOrderPanel extends Panel<PurchaseOrder> {
     
 
     public void createPO() {
+        dropPR.AddUpdateItems();
         createHideOrShow(true);
         editorHideOrShow(false);
         editHideOrShow(false);
@@ -282,6 +283,7 @@ public class PurchaseOrderPanel extends Panel<PurchaseOrder> {
     }
 
     public void setData() {
+        dropPR.AddUpdateItems();
         PO = backend.db.purchaseOrdersMap.get(rowData);
         PurchaseRequisition PR = backend.db.purchaseRequisitionsMap.get(PO.getPurchaseRequisitionId());
         Item item = backend.db.itemsMap.get(PR.getItemId());

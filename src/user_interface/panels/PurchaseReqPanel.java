@@ -194,6 +194,7 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
 
 
     public void createPR() {
+        dropItemID.AddUpdateItems();
         createHideOrShow(true);
         editorHideOrShow(false);
         editHideOrShow(false);
@@ -244,6 +245,7 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
     }
 
     public void setData() {
+        dropItemID.AddUpdateItems();
         PR = backend.db.getPurchaseRequisition(rowData);
         item = backend.db.getItem(PR.getItemId());
 
