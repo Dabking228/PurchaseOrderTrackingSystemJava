@@ -139,8 +139,7 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
         //delete button logic
         deleteButton.addActionListener(e -> {
             backend.db.purchaseRequisitionsMap.remove(PR.getId());
-            parent.showMainMenu(); // somehow deleting the item make the table funky
-            System.out.println(backend.db.purchaseRequisitionsMap);
+            parent.showPanel("purchaseRequisitionTable"); 
         });
 
         editButton.addActionListener(e -> {
@@ -162,7 +161,6 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
                 System.out.println("item updated"); //TODO: remove
                 fieldRestockVal.setEditable(false);
 
-                editcfm.setVisible(false);
             } catch (Exception err){
                 System.out.println(err);
                 fieldRestockVal.setEditable(false);
