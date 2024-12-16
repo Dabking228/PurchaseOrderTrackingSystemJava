@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.math.BigDecimal;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -51,7 +52,7 @@ public class ItemPanel extends Panel<Item> {
                 int minStock = fieldRestockLevel.getIntData();
                 System.out.println(numStock); // TODO: remove
                 if (!itemID.isEmpty() || !itemName.isEmpty() || numStock != 0 || minStock != 0) {
-                    backend.db.addItem(new Item(itemID, itemName, supplierID, numStock, minStock));
+                    backend.db.addItem(new Item(itemID, itemName, supplierID, numStock, minStock, new BigDecimal("10.00")));
                     greenLabel.setVisible(true);
     
                     // reset field

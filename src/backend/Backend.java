@@ -31,7 +31,7 @@ public class Backend {
 
         Item item = new Item("CODE123", "Item 1", supplier.getId(), 100, 20, new BigDecimal("20.00"));
         db.addItem(item);
-        Item item2 = new Item("CODE1323", "Item132", supplier.getId(), 40, 120);
+        Item item2 = new Item("CODE1323", "Item132", supplier.getId(), 40, 120,new BigDecimal("10.00"));
         db.addItem(item2);
 
 
@@ -41,7 +41,7 @@ public class Backend {
         PurchaseRequisition pr = new PurchaseRequisition(item.getId(), 50, new java.util.Date(), account.getId(),
                 Status.PENDING);
         db.addPurchaseRequisition(pr);
-        PurchaseRequisition pr2 = new PurchaseRequisition(item2.getId(), 50, new java.util.Date(), 1, Status.PENDING);
+        PurchaseRequisition pr2 = new PurchaseRequisition(item2.getId(), 50, new java.util.Date(), account.getId(), Status.PENDING);
         db.addPurchaseRequisition(pr2);
         
         PurchaseOrder po = new PurchaseOrder(

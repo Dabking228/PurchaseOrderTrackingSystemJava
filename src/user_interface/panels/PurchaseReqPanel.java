@@ -19,7 +19,7 @@ import data.PurchaseRequisition;
 import data.Role;
 import data.Status;
 import user_interface.*;
-
+// TODO: Data added doesnt update in the dropdown
 public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
     // private boolean viewOnly;
     protected String rowData;
@@ -111,7 +111,7 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
                 System.out.println(fieldRestockVal.getIntData());
 
                 if(!itemID.isEmpty()|| RestockVal != 0){
-                    backend.db.addPurchaseRequisition(new PurchaseRequisition(itemID, RestockVal, new java.util.Date(), 1, Status.PENDING));
+                    backend.db.addPurchaseRequisition(new PurchaseRequisition(itemID, RestockVal, new java.util.Date(), backend.getCurrentAccount().getId(), Status.PENDING));
                     greenLabel.setVisible(true);
 
                     dropItemID.fieldCombo.setSelectedIndex(-1);
