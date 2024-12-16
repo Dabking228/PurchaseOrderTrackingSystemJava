@@ -54,6 +54,9 @@ public class PurchaseRequisitionTable extends TablePanel<PurchaseRequisition> {
         if(role.hasPermission("PurchaseRequisition", Permission.UPDATE)){
             System.out.println("hewewe"); // TOOD: Remove
             PRPanel.viewOnlyUpdate();
+        } else if (role == role.PURCHASE_MANAGER){
+            System.out.println("im PMMMMM"); // TODO: remove
+            PRPanel.viewApprove();
         }
         
         PRPanel.setRowNum(tableModel.getValueAt(modelRow, 0).toString());

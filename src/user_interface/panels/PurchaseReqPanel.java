@@ -29,10 +29,10 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
     protected ItemListReq ItemList;
 
     protected FieldDropdown<data.Item> dropItemID;
-    protected FieldText fieldItemName, fieldItemStock, fieldItemMinStock, fieldRestockVal;
+    protected FieldText fieldItemName, fieldItemStock, fieldItemMinStock, fieldRestockVal, fieldStatus;
     protected JLabel greenLabel;
-    protected JPanel editcfm;
-    protected JButton editConfirm, editCancel, confirmButton, deleteButton, editButton;
+    protected JPanel editcfm, approvecfm;
+    protected JButton editConfirm, editCancel, confirmButton, deleteButton, editButton, approveButton, rejectButton;
 
     public PurchaseReqPanel(Backend backend, MainMenu parent) {
         super("Purchase Requisition", parent, backend.db.purchaseRequisitionsMap, backend);
@@ -54,6 +54,11 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
 
         fieldRestockVal = new FieldText("Item Ordered", true);
         contentPanel.add(fieldRestockVal);
+
+        fieldStatus = new FieldText("Status");
+        fieldStatus.setEditable(false);
+        contentPanel.add(fieldStatus);
+
 
         greenLabel = new JLabel("Item added");
         greenLabel.setVisible(false);
@@ -85,6 +90,13 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
         editcfm.setMaximumSize(new Dimension(300, 30));
         contentPanel.add(editcfm);
 
+        approvecfm = new JPanel(new GridLayout(1,2));
+        approveButton = new JButton("Approve");
+        rejectButton = new JButton("Reject");
+        approvecfm.add(approveButton);
+        approvecfm.add(rejectButton);
+        approvecfm.setMaximumSize(new Dimension(300,30));
+        contentPanel.add(approvecfm);
 
         PRList.setItem(items);
         PRList.setValue();
@@ -148,7 +160,6 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
             try{
                 int RestockVal = fieldRestockVal.getIntData();
 
-
                 if (PR.getQuantity() != RestockVal) {
                     System.out.println("restocknum changed"); //TODO: remove
                     backend.db.purchaseRequisitionsMap.get(PR.getId()).setQuantity(RestockVal);
@@ -173,6 +184,20 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
             
             editcfm.setVisible(false);
         });
+    
+        approveButton.addActionListener(e -> {
+            PR.setStatus(Status.APPROVED);
+            fieldStatus.setData(PR.getStatus().toString());
+
+            approvecfm.setVisible(false);
+        });
+
+        rejectButton.addActionListener(e->{
+            PR.setStatus(Status.REJECTED);
+            fieldStatus.setData(PR.getStatus().toString());
+
+            approvecfm.setVisible(false);
+        });
     }
 
 
@@ -180,7 +205,9 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
         createHideOrShow(true);
         editorHideOrShow(false);
         editHideOrShow(false);
+        approveHideOrSHow(false);
 
+        fieldStatus.setVisible(false);
         dropItemID.setEditable(true);
         fieldRestockVal.setEditable(true);
     }
@@ -198,17 +225,27 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
         editcfm.setVisible(bool);
     }
 
+    void approveHideOrSHow(boolean bool){
+        approvecfm.setVisible(bool);
+    }
     public void viewOnly() {
         createHideOrShow(false);
         editorHideOrShow(false);
         editHideOrShow(false);
+        approveHideOrSHow(false);
 
         dropItemID.setEditable(false);
         fieldRestockVal.setEditable(false);
+        fieldStatus.setVisible(true);
     }
 
     public void viewOnlyUpdate() {
         editorHideOrShow(true);
+    }
+
+    public void viewApprove(){
+        approveHideOrSHow(true);
+        fieldStatus.setVisible(true);
     }
 
     public void setData() {
@@ -223,6 +260,7 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
         fieldItemStock.setData(String.valueOf(item.getStockLevel()));
         fieldItemMinStock.setData(String.valueOf(item.getReorderLevel()));
         fieldRestockVal.setData(String.valueOf(PR.getQuantity()));
+        fieldStatus.setData(PR.getStatus().toString());
     }
 
     public void setRowNum(String data) {
