@@ -2,47 +2,114 @@ package user_interface.panels;
 import backend.Backend;
 import data.Item;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import java.awt.Color;
+import java.awt.Font;
+
 import user_interface.*;
 
 public class StockEntry extends Panel<Item> {
-    protected FieldText itemID, itemName, StockAmt, ReStckAmt, itemIDString;
+    protected FieldDropdown<Item> itemIDDropdown;
+    protected FieldText itemName, StockAmt, ReStockAmt, itemIDString;
+    private JButton confirmButton, cancelButton;
+    private JLabel successLabel;
 
 
     public StockEntry(Backend backend, MainMenu parent) {
         super("Stock Entry Form", parent, backend.db.itemsMap, backend);
 
-        itemID = new FieldText("Item ID: ");
-        contentPanel.add(itemID);
+        // itemID = new FieldText("Item ID: ");
+        // contentPanel.add(itemID);
+        itemIDDropdown = new FieldDropdown<>("Item ID: ", backend.db.itemsMap, new ItemList());
+        contentPanel.add(itemIDDropdown);
 
         itemName = new FieldText("Item Name: ");
+        itemName.setEditable(false);
         contentPanel.add(itemName);
 
         StockAmt = new FieldText("Stock: ", true);
         contentPanel.add(StockAmt);
 
-        ReStckAmt = new FieldText("Minimum Amount of Stock: ", true);
-        contentPanel.add(ReStckAmt);
+        ReStockAmt = new FieldText("Minimum Amount of Stock: ", true);
+        ReStockAmt.setEditable(false);
+        contentPanel.add(ReStockAmt);
         
         backButton.addActionListener(e -> {
             parent.showMainMenu();
         });
 
-        JButton confirmButton = new JButton("Confirm");
+        // Success label
+        successLabel = new JLabel("Stock entered successfully!");
+        successLabel.setVisible(false);
+        successLabel.setForeground(Color.GREEN);
+        successLabel.setFont(new Font(successLabel.getText(), Font.BOLD, 20));
+        contentPanel.add(successLabel);
+
+        // Confirm Button
+        confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(e -> {
             try {
-                
-                String itemIDString = itemID.getData();
-                String itemNameString = itemName.getData();
-                String StockAmtString = StockAmt.getData();
-                String ReStckAmtString = ReStckAmt.getData();
+                // Fetch selected item from dropdown
+                Item selectedItem = itemIDDropdown.getSelected().getValue();
+                if (selectedItem != null) {
+                    // Update stock amount
+                    int stockAmount = StockAmt.getIntData();
+                    selectedItem.setStockLevel(stockAmount);
 
+                    // Show success message
+                    successLabel.setVisible(true);
+
+                    // Reset stock input field
+                    StockAmt.resetField();
+
+                    // Save changes to the database
+                    backend.db.save();
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         });
+        contentPanel.add(confirmButton);
+
+        // Cancel Button
+        cancelButton = new JButton("Cancel");
+        cancelButton.addActionListener(e -> {
+            parent.showMainMenu();
+        });
+        contentPanel.add(cancelButton);
+
+        //Set up dropdown listener to populate fields
+        itemIDDropdown.addActionListener(e -> {
+            try {
+                Item selectedItem = itemIDDropdown.getSelected().getValue();
+                if (selectedItem != null) {
+                    fieldItemName.setData(selectedItem.getItemName());
+                    fieldRestockLevel.setData(String.valueOf(selectedItem.getReorderLevel()));
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+    
     }
-    
-    
+}   
+
+        // JButton confirmButton = new JButton("Confirm");
+        // confirmButton.addActionListener(e -> {
+        //     try {
+                
+        //         String itemIDString = itemIDDropdown.getData();
+        //         String itemNameString = itemName.getData();
+        //         String StockAmtString = StockAmt.getData();
+        //         String ReStockAmtString = ReStockAmt.getData();
+
+        //     } catch (Exception ex) {
+        //         ex.printStackTrace();
+        //     }
+        // });
+  
+
+
 
     // public Item promptForItemDetails() {
     // }
@@ -95,4 +162,4 @@ public class StockEntry extends Panel<Item> {
     //     return null; 
     // }
 
-}
+
