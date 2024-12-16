@@ -11,10 +11,10 @@ public class StockEntry extends Panel<Item> {
     public StockEntry(Backend backend, MainMenu parent) {
         super("Stock Entry Form", parent, backend.db.itemsMap, backend);
 
-        itemID = new FieldText("Item ID");
+        itemID = new FieldText("Item ID: ");
         contentPanel.add(itemID);
 
-        itemName = new FieldText("Item ID");
+        itemName = new FieldText("Item Name: ");
         contentPanel.add(itemName);
 
         StockAmt = new FieldText("Stock: ", true);
