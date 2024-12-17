@@ -33,7 +33,7 @@ public enum Role {
     private static Map<String, EnumSet<Permission>> buildSalesManagerPermissions() {
         Map<String, EnumSet<Permission>> permissions = new HashMap<>();
         permissions.put("Items", EnumSet.of(Permission.READ));
-        permissions.put("Sales", EnumSet.of(Permission.READ));
+        permissions.put("Sales", EnumSet.allOf(Permission.class));
         permissions.put("PurchaseRequisition", EnumSet.of(Permission.CREATE, Permission.READ));
         permissions.put("PurchaseOrder", EnumSet.of(Permission.READ));
         return permissions;
