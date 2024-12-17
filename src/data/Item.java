@@ -80,4 +80,9 @@ public class Item extends BaseItem {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
+    @Override
+    public void printLog(){
+        System.out.println("Item loaded.");
+    }  
 }

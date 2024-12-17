@@ -56,4 +56,9 @@ public class Sale extends BaseItem {
     public void setSalesManagerId(String salesManagerId) {
         this.salesManagerId = salesManagerId;
     }
+
+    @Override
+    public void printLog(){
+        System.out.println("Sale loaded.");
+    }    
 }

@@ -43,4 +43,9 @@ public class Supplier extends BaseItem {
     public void setContactInfo(String contactInfo) {
         this.contactInfo = contactInfo;
     }
+
+    @Override
+    public void printLog(){
+        System.out.println("Supplier loaded.");
+    }  
 }

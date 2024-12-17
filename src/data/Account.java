@@ -43,4 +43,9 @@ public class Account extends BaseItem {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    @Override
+    public void printLog(){
+        System.out.println("Account loaded.");
+    }
 }

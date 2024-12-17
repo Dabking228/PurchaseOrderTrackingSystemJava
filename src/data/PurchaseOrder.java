@@ -80,4 +80,9 @@ public class PurchaseOrder extends BaseItem {
     public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }
+
+    @Override
+    public void printLog(){
+        System.out.println("Purchase order loaded.");
+    }
 }

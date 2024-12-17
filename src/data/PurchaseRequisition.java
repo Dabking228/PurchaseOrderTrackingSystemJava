@@ -68,4 +68,9 @@ public class PurchaseRequisition extends BaseItem {
     public void setStatus(Status status) {
         this.status = status;
     }
+
+    @Override
+    public void printLog(){
+        System.out.println("Purchase requisition loaded.");
+    }    
 }
