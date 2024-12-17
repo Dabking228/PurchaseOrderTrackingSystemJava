@@ -57,7 +57,7 @@ public class Backend {
                 pr2.getId(),
                 supplier.getId(),
                 account.getId(),
-                Status.DELIVERD,
+                Status.DELIVERED,
                 new java.util.Date(),
                 500.00);
         db.addPurchaseOrder(po2);
