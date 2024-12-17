@@ -1,24 +1,22 @@
-package user_interface.table;
+package user_interface.tables;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.swing.*;
 
 import data.Item;
 import data.Permission;
 import data.Role;
 import data.Supplier;
 import user_interface.MainMenu;
-import user_interface.panels.ItemPanel;
+import user_interface.panels.ItemForm;
 import backend.Backend;
 
-public class ItemsTable extends TablePanel<Item> {
+public class ItemTable extends TablePanel<Item> {
     protected MainMenu parent;
-    protected ItemPanel itemPanel;
+    protected ItemForm itemPanel;
     protected Role role;
 
-    public ItemsTable(Backend backend, MainMenu parent) {
+    public ItemTable(Backend backend, MainMenu parent) {
         super("Items", 5, parent, backend.db.itemsMap, new ItemsTableModel(), backend);
         this.parent = parent;
     }
@@ -26,29 +24,29 @@ public class ItemsTable extends TablePanel<Item> {
     @Override
     public void createAddPanel() {
         role = backend.getCurrentAccount().getRole();
-        itemPanel = parent.getPanel("itemPanel", ItemPanel.class);
+        itemPanel = parent.getPanel("AddItem", ItemForm.class);
         itemPanel.setBack("itemsTable");
-        if(role.hasPermission("Items", Permission.CREATE)){
+        if (role.hasPermission("Items", Permission.CREATE)) {
             itemPanel.CreateItem();
         }
-        parent.showPanel("itemPanel");
+        parent.showPanel("AddItem");
     }
 
     @Override
     public void createEditPanel(int modelRow) {
         role = backend.getCurrentAccount().getRole();
-        itemPanel = parent.getPanel("itemPanel", ItemPanel.class);
+        itemPanel = parent.getPanel("AddItem", ItemForm.class);
         itemPanel.setBack("itemsTable");
 
         itemPanel.setRowNum(tableModel.getValueAt(modelRow, 6).toString());
         itemPanel.setData();
 
         itemPanel.viewOnly();
-        if(role.hasPermission("Items", Permission.UPDATE)){
+        if (role.hasPermission("Items", Permission.UPDATE)) {
             itemPanel.viewUpdate();
         }
 
-        parent.showPanel("itemPanel");
+        parent.showPanel("AddItem");
     }
 
     @Override

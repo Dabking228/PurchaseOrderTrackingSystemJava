@@ -1,4 +1,4 @@
-package user_interface.table;
+package user_interface.tables;
 
 import java.util.ArrayList;
 
@@ -7,27 +7,27 @@ import data.PurchaseOrder;
 import data.Role;
 import data.Status;
 import user_interface.MainMenu;
-import user_interface.panels.PurchaseOrderPanel;
+import user_interface.panels.POForm;
 
-public class TrackPurchaseOrderTable extends PurchaseOrdersTable{
+public class TrackPurchaseOrderTable extends POTable {
     private Role role;
-    private PurchaseOrderPanel POPanel;
-    public TrackPurchaseOrderTable(Backend backend, MainMenu parent){
+    private POForm POPanel;
+
+    public TrackPurchaseOrderTable(Backend backend, MainMenu parent) {
         super(backend, parent);
     }
 
     @Override
-    public void createEditPanel(int modelRow){
+    public void createEditPanel(int modelRow) {
         role = backend.getCurrentAccount().getRole();
-        System.out.println("helo from  track purchase order table"); //TODO: remove
-        POPanel = parent.getPanel("PurOrdPane", PurchaseOrderPanel.class);
+        System.out.println("helo from  track purchase order table"); // TODO: remove
+        POPanel = parent.getPanel("AddPO", POForm.class);
         POPanel.setBack("trackPO");
         POPanel.setRowNum(tableModel.getValueAt(modelRow, 11).toString());
         POPanel.viewOnly();
         POPanel.setData();
-        
 
-        parent.showPanel("PurOrdPane");
+        parent.showPanel("AddPO");
     }
 
     @Override
@@ -42,6 +42,6 @@ public class TrackPurchaseOrderTable extends PurchaseOrdersTable{
         tableModel.setItems(array);
         ((PurchaseOrdersTableModel) tableModel).setMaps(backend.db.purchaseRequisitionsMap, backend.db.suppliersMap,
                 backend.db.itemsMap);
-        
+
     }
 }

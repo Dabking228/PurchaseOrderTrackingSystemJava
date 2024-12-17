@@ -17,7 +17,7 @@ import data.*;
 
 import user_interface.MainMenu;
 
-public class ItemPanel extends Panel<Item> {
+public class ItemForm extends BasePanel<Item> {
     protected FieldText fieldItemID, fieldItemName, fieldNumStock, fieldRestockLevel, fieldPrice;
     protected FieldDropdown<data.Supplier> SupplierDrop;
     protected JButton deleteButton, editButton, editConfirm, editCancel, confirmButton;
@@ -29,7 +29,7 @@ public class ItemPanel extends Panel<Item> {
     protected Item item;
     private String panelName;
 
-    public ItemPanel(Backend backend, MainMenu parent) {
+    public ItemForm(Backend backend, MainMenu parent) {
         super("Add New Item", parent, backend.db.itemsMap, backend);
         this.itemList = new ItemListPanel();
         role = backend.getCurrentAccount().getRole();
@@ -68,7 +68,7 @@ public class ItemPanel extends Panel<Item> {
         editCancel = new JButton("Cancel");
         editcfm.add(editConfirm);
         editcfm.add(editCancel);
-        editcfm.setMaximumSize(new Dimension(300,30));
+        editcfm.setMaximumSize(new Dimension(300, 30));
         editcfm.setVisible(false);
         contentPanel.add(editcfm);
 
@@ -184,28 +184,28 @@ public class ItemPanel extends Panel<Item> {
         });
     }
 
-    void createHideOrShow(boolean bool){
+    void createHideOrShow(boolean bool) {
         confirmButton.setVisible(bool);
     }
 
-    void editorHideOrShow(boolean bool){
+    void editorHideOrShow(boolean bool) {
         deleteButton.setVisible(bool);
         editButton.setVisible(bool);
     }
-    
-    void editHideOrShow(boolean bool){
+
+    void editHideOrShow(boolean bool) {
         editcfm.setVisible(bool);
     }
 
     // Show buttons for creating items
-    public void CreateItem(){
+    public void CreateItem() {
         createHideOrShow(true);
         editorHideOrShow(false);
         editHideOrShow(false);
     }
 
     // Hides all button with READ permision only
-    public void viewOnly(){
+    public void viewOnly() {
         createHideOrShow(false);
         editorHideOrShow(false);
         editHideOrShow(false);
@@ -219,7 +219,7 @@ public class ItemPanel extends Panel<Item> {
     }
 
     // Show buttons that have UPDATE permiison
-    public void viewUpdate(){
+    public void viewUpdate() {
         createHideOrShow(false);
         editorHideOrShow(true);
         editHideOrShow(false);
@@ -240,14 +240,14 @@ public class ItemPanel extends Panel<Item> {
         fieldNumStock.setData(String.valueOf(item.getStockLevel()));
         fieldRestockLevel.setData(String.valueOf(item.getReorderLevel()));
         fieldPrice.setData(String.valueOf(item.getPrice()));
-        
+
     }
 
     public void setRowNum(String data) {
         this.rowData = data;
     }
-    
-    public void setBack(String PanelName){
+
+    public void setBack(String PanelName) {
         this.panelName = PanelName;
     }
 }

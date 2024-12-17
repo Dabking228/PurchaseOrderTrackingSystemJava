@@ -1,26 +1,23 @@
-package user_interface.table;
+package user_interface.tables;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.List;
-
-import javax.swing.*;
 
 import data.Item;
 import data.Permission;
 import data.PurchaseRequisition;
 import data.Role;
 import user_interface.MainMenu;
-import user_interface.add_item_dialog.AddNewItem;
-import user_interface.panels.PurchaseReqPanel;
+
+import user_interface.panels.PRForm;
 import backend.Backend;
 
-public class PurchaseRequisitionTable extends TablePanel<PurchaseRequisition> {
+public class PRTable extends TablePanel<PurchaseRequisition> {
     protected MainMenu parent;
-    protected PurchaseReqPanel PRPanel;
+    protected PRForm PRPanel;
     private Role role;
-    public PurchaseRequisitionTable(Backend backend, MainMenu parent) {
+
+    public PRTable(Backend backend, MainMenu parent) {
         super("PurchaseRequisition", 5, parent, backend.db.purchaseRequisitionsMap, new PurchaseRequisitionTableModel(),
                 backend);
         this.backend = backend;
@@ -31,40 +28,32 @@ public class PurchaseRequisitionTable extends TablePanel<PurchaseRequisition> {
     public void createAddPanel() {
         // TODO add item panel
         role = backend.getCurrentAccount().getRole();
-        PRPanel = parent.getPanel("purReqPane", PurchaseReqPanel.class);
-        
-        System.out.println("heewewewe"); //TODO: remove
-        if(role.hasPermission("PurchaseRequisition", Permission.CREATE)){
+        PRPanel = parent.getPanel("AddPR", PRForm.class);
+
+        System.out.println("heewewewe"); // TODO: remove
+        if (role.hasPermission("PurchaseRequisition", Permission.CREATE)) {
             PRPanel.createPR();
         }
-        parent.showPanel("purReqPane");
+        parent.showPanel("AddPR");
 
-        
     }
 
     @Override
     public void createEditPanel(int modelRow) {
         // TODO add item panel but with fields filled in
         role = backend.getCurrentAccount().getRole();
-        System.out.println("helo"); //TODO: Remove
-        PRPanel = parent.getPanel("purReqPane", PurchaseReqPanel.class);
+        PRPanel = parent.getPanel("AddPR", PRForm.class);
         PRPanel.setRowNum(tableModel.getValueAt(modelRow, 6).toString());
         PRPanel.setData();
 
         PRPanel.viewOnly();
 
-        if(role.hasPermission("PurchaseRequisition", Permission.UPDATE)){
-            System.out.println("hewewe"); // TOOD: Remove
+        if (role.hasPermission("PurchaseRequisition", Permission.UPDATE)) {
             PRPanel.viewOnlyUpdate();
-        } else if (role == role.PURCHASE_MANAGER){
-            System.out.println("im PMMMMM"); // TODO: remove
+        } else if (role == Role.PURCHASE_MANAGER) {
             PRPanel.viewApprove();
         }
-        
-        
-
-        parent.showPanel("purReqPane");
-        
+        parent.showPanel("AddPR");
     }
 
     @Override

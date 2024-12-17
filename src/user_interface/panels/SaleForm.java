@@ -14,12 +14,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.Map;
-import javax.swing.ButtonGroup;
-import javax.swing.JOptionPane;
 
 import user_interface.*;
 
-public class CreateSale extends Panel<Item> {
+public class SaleForm extends BasePanel<Item> {
     protected FieldDropdown<Item> itemNameDrop;
     protected FieldText fieldItemStock, fieldSellQuantity, fieldSaleManager;
     private JButton confirmButton, deleteButton, editButton, editConfirm, editCancel;
@@ -32,7 +30,7 @@ public class CreateSale extends Panel<Item> {
     private Sale sale;
     private String panelName;
 
-    public CreateSale(Backend backend, MainMenu parent) {
+    public SaleForm(Backend backend, MainMenu parent) {
         super("Sales Form", parent, backend.db.itemsMap, backend);
 
         itemNameDrop = new FieldDropdown<Item>("Item Name: ", backend.db.itemsMap, new ItemList());

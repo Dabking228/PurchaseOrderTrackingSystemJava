@@ -1,39 +1,29 @@
-package user_interface.table;
+package user_interface.tables;
 
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-
 import backend.Backend;
 import data.Item;
-import data.Permission;
 import user_interface.MainMenu;
-import user_interface.panels.ItemPanel;
+import user_interface.panels.ItemForm;
 
-public class RestockItemsTable extends ItemsTable {
-    public RestockItemsTable(Backend backend, MainMenu parent) {
+public class ItemRestockTable extends ItemTable {
+    public ItemRestockTable(Backend backend, MainMenu parent) {
         super(backend, parent);
-        
-    }
-
-    @Override
-    public void createAddPanel(){
-
     }
 
     @Override
     public void createEditPanel(int modelRow) {
         role = backend.getCurrentAccount().getRole();
-        itemPanel = parent.getPanel("itemPanel", ItemPanel.class);
+        itemPanel = parent.getPanel("AddItem", ItemForm.class);
         itemPanel.setBack("restockItem");
 
         itemPanel.setRowNum(tableModel.getValueAt(modelRow, 6).toString());
         itemPanel.setData();
 
         itemPanel.viewOnly();
-       
 
-        parent.showPanel("itemPanel");
+        parent.showPanel("AddItem");
     }
 
     @Override

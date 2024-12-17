@@ -6,29 +6,26 @@ import java.util.Map;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import user_interface.add_item_dialog.AddNewItem;
 import backend.Backend;
 import data.Permission;
-import data.PurchaseRequisition;
 import data.Role;
-import user_interface.table.*;
 import user_interface.MainMenu;
-import user_interface.panels.Panel;
-import user_interface.panels.PurchaseOrderPanel;
-import user_interface.panels.CreateSale;
-import user_interface.panels.ItemPanel;
-import user_interface.panels.AddUserPanel;
-import user_interface.panels.TitlePanel;
+import user_interface.components.TitlePanel;
+import user_interface.panels.BasePanel;
+import user_interface.panels.POForm;
+import user_interface.panels.SaleForm;
+import user_interface.panels.ItemForm;
+import user_interface.panels.AccountForm;
 import user_interface.panels.SalesReport;
-import user_interface.panels.PurchaseReqPanel;;
-
+import user_interface.tables.*;
+import user_interface.panels.PRForm;;
 
 public class MainMenu extends JPanel {
     private CardLayout cardLayout;
     Backend backend;
     private UserInterface userInterface;
     private Role role;
-    private Map<String, Panel<?>> panels = new HashMap<>();
+    private Map<String, BasePanel<?>> panels = new HashMap<>();
 
     public MainMenu(Backend backend, UserInterface userInterface) {
         this.backend = backend;
@@ -44,29 +41,28 @@ public class MainMenu extends JPanel {
         MainMenuPanel mainMenuPanel = new MainMenuPanel(backend, this);
         this.add(mainMenuPanel, "mainMenuPanel");
 
-        this.createTablePanel("Items", "itemsTable", ItemsTable.class);
-        this.createTablePanel("Accounts", "accountsTable", AccountsTable.class);
-        this.createTablePanel("Sales", "salesTable", SalesTable.class);
-        this.createTablePanel("Suppliers", "suppliersTable", SuppliersTable.class);
-        this.createTablePanel("PurchaseRequisition", "purchaseRequisitionTable", PurchaseRequisitionTable.class);
-        this.createTablePanel("PurchaseOrder", "purchaseOrdersTable", PurchaseOrdersTable.class);
+        this.createTable("Items", "itemsTable", ItemTable.class);
+        this.createTable("Accounts", "accountsTable", AccountTable.class);
+        this.createTable("Sales", "salesTable", SaleTable.class);
+        this.createTable("Suppliers", "suppliersTable", SupplierTable.class);
+        this.createTable("PurchaseRequisition", "purchaseRequisitionTable", PRTable.class);
+        this.createTable("PurchaseOrder", "purchaseOrdersTable", POTable.class);
 
-        this.createFeaturePanel("addUser", "addUserPanel", AddUserPanel.class);
-        this.createFeaturePanel("addItem", "itemPanel", ItemPanel.class);
-        this.createFeaturePanel("salesReport", "salesReport", SalesReport.class);
-        this.createFeatureTablePanel("restockItem", "restockItem", RestockItemsTable.class);
-        this.createFeatureTablePanel("trackPurchaseOrder", "trackPO", TrackPurchaseOrderTable.class);
-        this.createFeaturePanel("viewItem", "itemPanelView", ItemPanel.class, true);
-        this.createFeaturePanel("purReq", "purReqPane", PurchaseReqPanel.class);
-        this.createFeaturePanel("PurOrd", "PurOrdPane", PurchaseOrderPanel.class);
-        this.createFeaturePanel("CreateSale", "CreateSalePane", CreateSale.class);
-        // TODO the other panels
+        this.createFeature("salesReport", "salesReport", SalesReport.class);
+        this.createTableWithFeatureCheck("trackPurchaseOrder", "trackPO", TrackPurchaseOrderTable.class);
+        this.createTableWithFeatureCheck("restockItem", "restockItem", ItemRestockTable.class);
+
+        this.createAddPanel("AddAccount", AccountForm.class);
+        this.createAddPanel("AddItem", ItemForm.class);
+        this.createAddPanel("AddSale", SaleForm.class);
+        this.createAddPanel("AddPR", PRForm.class);
+        this.createAddPanel("AddPO", POForm.class);
 
         showPanel("mainMenuPanel");
     }
 
     // create panel methods
-    private <T extends TablePanel<?>> void createTablePanel(String panelName, Class<T> tableClass) {
+    private <T extends TablePanel<?>> void createTable(String panelName, Class<T> tableClass) {
         try {
             T tablePanel = tableClass
                     .getDeclaredConstructor(Backend.class, MainMenu.class)
@@ -77,15 +73,15 @@ public class MainMenu extends JPanel {
         }
     }
 
-    private <T extends TablePanel<?>> void createTablePanel(String permissionName, String panelName,
+    private <T extends TablePanel<?>> void createTable(String permissionName, String panelName,
             Class<T> tableClass) {
         if (!role.hasPermission(permissionName, Permission.READ)) {
             return;
         }
-        createTablePanel(panelName, tableClass);
+        createTable(panelName, tableClass);
     }
 
-    private <T extends Panel<?>> void createFeaturePanel(String panelName, Class<T> panelClass) {
+    private <T extends BasePanel<?>> void createPanel(String panelName, Class<T> panelClass) {
         try {
             T panel = panelClass
                     .getDeclaredConstructor(Backend.class, MainMenu.class)
@@ -97,41 +93,29 @@ public class MainMenu extends JPanel {
         }
     }
 
-    private <T extends Panel<?>> void createFeaturePanel(String feature, String panelName, Class<T> panelClass) {
+    private <T extends BasePanel<?>> void createFeature(String feature, String panelName, Class<T> panelClass) {
         if (!role.hasFeature(feature)) {
             return;
         }
-        createFeaturePanel(panelName, panelClass);
+        createPanel(panelName, panelClass);
     }
 
-    private <T extends Panel<?>> void createFeaturePanel(String feature, String panelName, Class<T> panelClass,
-            boolean viewOnly) {
-        if (!role.hasFeature(feature)) {
-            return;
-        }
-
-        try {
-            T panel = panelClass
-                    .getDeclaredConstructor(Backend.class, MainMenu.class, boolean.class)
-                    .newInstance(backend, this, true);
-            this.add(panel, panelName);
-            panels.put(panelName, panel);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private <T extends TablePanel<?>> void createFeatureTablePanel(String feature, String panelName,
+    private <T extends TablePanel<?>> void createTableWithFeatureCheck(String feature, String panelName,
             Class<T> panelClass) {
         if (!role.hasFeature(feature)) {
             return;
         }
-        createTablePanel(panelName, panelClass);
+        createTable(panelName, panelClass);
+    }
+
+    // TODO
+    private <T extends BasePanel<?>> void createAddPanel(String panelName, Class<T> panelClass) {
+        createPanel(panelName, panelClass);
     }
 
     // other methods
-    public <T extends Panel<?>> T getPanel(String panelName, Class<T> panelClass) {
-        Panel<?> panel = panels.get(panelName);
+    public <T extends BasePanel<?>> T getPanel(String panelName, Class<T> panelClass) {
+        BasePanel<?> panel = panels.get(panelName);
         if (panelClass.isInstance(panel)) {
             return (T) panel;
         } else {
@@ -218,7 +202,7 @@ class MainMenuPanel extends JPanel {
         createTableButton("PurchaseRequisition", "Edit Purchase Requisition Table", "purchaseRequisitionTable");
         createTableButton("PurchaseOrder", "Edit Purchase Order Table", "purchaseOrdersTable");
 
-        createFeatureButton("CreateSale", "Create Sales", "CreateSalePane");
+        createFeatureButton("CreateSale", "Create Sales", "AddSale");
         createFeatureButton("salesReport", "Sales Report", "salesReport");
         createFeatureButton("trackPurchaseOrder", "Track Purchase Order", "trackPO");
         createFeatureButton("restockItem", "Restock Items", "restockItem");

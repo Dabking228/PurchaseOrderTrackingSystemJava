@@ -14,11 +14,10 @@ import javax.swing.JLabel;
 
 import backend.Backend;
 import data.Account;
-import data.Permission;
 import data.Role;
 import user_interface.MainMenu;
 
-public class AddUserPanel extends Panel<Account> {
+public class AccountForm extends BasePanel<Account> {
     protected FieldText fieldUsername;
     protected FieldPassword fieldPassword;
     protected JLabel greenLabel, roleLabel;
@@ -30,7 +29,7 @@ public class AddUserPanel extends Panel<Account> {
     private JButton editConfirm, editCancel, deleteButton, editButton, confirmButton;
     private JPanel editcfm;
 
-    public AddUserPanel(Backend backend, MainMenu parent) {
+    public AccountForm(Backend backend, MainMenu parent) {
         super("Add User", parent, backend.db.accountsMap, backend);
         this.accountList = new AccountList();
         role = backend.getCurrentAccount().getRole();
@@ -91,7 +90,7 @@ public class AddUserPanel extends Panel<Account> {
                     System.out.println("pass changed"); // TODO: remove
                     account.setPassword(password);
                 }
-                if (covertedRole  != account.getRole()) {
+                if (covertedRole != account.getRole()) {
                     System.out.println("role changed"); // TODO: remove
                     account.setRole(getRoleFromString(roleString));
                 }
@@ -136,12 +135,11 @@ public class AddUserPanel extends Panel<Account> {
             fieldPassword.setEditable(true);
             roleComboBox.setEnabled(true);
         });
-        
+
         // init item lists
         accountList.setItem(items);
         accountList.setValue();
         // If is a view only
-    
 
         confirmButton = new JButton("Add User");
         confirmButton.addActionListener(e -> {
@@ -153,10 +151,12 @@ public class AddUserPanel extends Panel<Account> {
                 // Ad thisser to the backend
 
                 if (!username.isEmpty() || !password.isEmpty()) {
-                    
+
                     backend.db.addAccount(new Account(username, password, getRoleFromString(roleString)));
                     greenLabel.setVisible(true);
-                    System.out.println("Adding user: " + username + ":" + password + ":" + getRoleFromString(roleString)); // TODO: Remove
+                    System.out
+                            .println("Adding user: " + username + ":" + password + ":" + getRoleFromString(roleString)); // TODO:
+                                                                                                                         // Remove
 
                     // Reset field and data
                     fieldUsername.resetField();
@@ -177,26 +177,26 @@ public class AddUserPanel extends Panel<Account> {
 
     }
 
-    void createHideOrShow(boolean bool){
+    void createHideOrShow(boolean bool) {
         confirmButton.setVisible(bool);
     }
 
-    void editorHideOrShow(boolean bool){
+    void editorHideOrShow(boolean bool) {
         deleteButton.setVisible(bool);
         editButton.setVisible(bool);
     }
-    
-    void editHideOrShow(boolean bool){
+
+    void editHideOrShow(boolean bool) {
         editcfm.setVisible(bool);
     }
 
-    public void CreateUser(){
+    public void CreateUser() {
         createHideOrShow(true);
         editorHideOrShow(false);
         editHideOrShow(false);
     }
 
-    public void viewOnly(){
+    public void viewOnly() {
         createHideOrShow(false);
         editorHideOrShow(false);
         editHideOrShow(false);
@@ -206,7 +206,7 @@ public class AddUserPanel extends Panel<Account> {
         roleComboBox.setEnabled(false);
     }
 
-    public void viewUpdate(){
+    public void viewUpdate() {
         createHideOrShow(false);
         editorHideOrShow(true);
         editHideOrShow(false);
@@ -221,7 +221,7 @@ public class AddUserPanel extends Panel<Account> {
         fieldUsername.setData(account.getUsername());
         fieldPassword.setPassword(account.getPassword());
         roleComboBox.setSelectedItem(getRoleString(account.getRole()));
-        
+
     }
 
     public void setRowNum(String data) {
@@ -245,7 +245,7 @@ public class AddUserPanel extends Panel<Account> {
         }
     }
 
-    Role getRoleFromString(String role){
+    Role getRoleFromString(String role) {
         switch (role) {
             case "Admin":
                 return Role.ADMIN;
@@ -254,7 +254,7 @@ public class AddUserPanel extends Panel<Account> {
             case "Inventory Manager":
                 return Role.INVENTORY_MANAGER;
             case "Purchase Manager":
-                return Role.PURCHASE_MANAGER;            
+                return Role.PURCHASE_MANAGER;
             case "Sales Manager":
                 return Role.SALES_MANAGER;
             default:

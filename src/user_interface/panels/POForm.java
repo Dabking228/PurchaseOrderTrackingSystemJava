@@ -19,7 +19,7 @@ import javax.swing.Timer;
 
 import user_interface.*;
 
-public class PurchaseOrderPanel extends Panel<PurchaseOrder> {
+public class POForm extends BasePanel<PurchaseOrder> {
     private String rowData;
     private PurchaseOrder PO;
     private boolean FMView = false;
@@ -30,9 +30,10 @@ public class PurchaseOrderPanel extends Panel<PurchaseOrder> {
     protected FieldDropdown<PurchaseRequisition> dropPR;
     private JLabel greenLabel;
     private JPanel editcfm, approvecfm;
-    private JButton confirmButton, deleteButton, editButton, editConfirm, editCancel, approveButton, rejectButton, paymentButton;
+    private JButton confirmButton, deleteButton, editButton, editConfirm, editCancel, approveButton, rejectButton,
+            paymentButton;
 
-    public PurchaseOrderPanel(Backend backend, MainMenu parent) {
+    public POForm(Backend backend, MainMenu parent) {
         super("Purchase Order Panel", parent, backend.db.purchaseOrdersMap, backend);
 
         dropPR = new FieldDropdown<PurchaseRequisition>("Name || Order Amount", backend.db.purchaseRequisitionsMap,
@@ -202,22 +203,22 @@ public class PurchaseOrderPanel extends Panel<PurchaseOrder> {
             editcfm.setVisible(false);
         });
 
-        approvecfm = new JPanel(new GridLayout(1,2));
+        approvecfm = new JPanel(new GridLayout(1, 2));
         approveButton = new JButton("Approve");
         rejectButton = new JButton("Reject");
         approvecfm.add(approveButton);
         approvecfm.add(rejectButton);
-        approvecfm.setMaximumSize(new Dimension(300,30));
+        approvecfm.setMaximumSize(new Dimension(300, 30));
         approvecfm.setVisible(false);
         contentPanel.add(approvecfm);
 
-        approveButton.addActionListener(e ->{
+        approveButton.addActionListener(e -> {
             backend.db.purchaseOrdersMap.get(PO.getId()).setPoStatus(Status.APPROVED);
             fieldPOStatus.setData(PO.getPoStatus().toString());
             approvecfm.setVisible(false);
             FMPayment();
         });
-        rejectButton.addActionListener(e ->{
+        rejectButton.addActionListener(e -> {
             backend.db.purchaseOrdersMap.get(PO.getId()).setPoStatus(Status.REJECTED);
             fieldPOStatus.setData(PO.getPoStatus().toString());
             approvecfm.setVisible(false);
@@ -227,7 +228,7 @@ public class PurchaseOrderPanel extends Panel<PurchaseOrder> {
         paymentButton.setVisible(false);
         titleButtonPanel.add(paymentButton);
 
-        paymentButton.addActionListener(e ->{
+        paymentButton.addActionListener(e -> {
             backend.db.purchaseOrdersMap.get(PO.getId()).setPoStatus(Status.PAID);
             fieldPOStatus.setData(PO.getPoStatus().toString());
             paymentButton.setVisible(false);
@@ -253,8 +254,6 @@ public class PurchaseOrderPanel extends Panel<PurchaseOrder> {
         approvecfm.setVisible(false);
     }
 
-    
-
     public void createPO() {
         dropPR.AddUpdateItems();
         createHideOrShow(true);
@@ -274,11 +273,11 @@ public class PurchaseOrderPanel extends Panel<PurchaseOrder> {
         editHideOrShow(false);
     }
 
-    public void FMView(boolean bool){
+    public void FMView(boolean bool) {
         this.FMView = bool;
     }
 
-    void FMPayment(){
+    void FMPayment() {
         paymentButton.setVisible(true);
     }
 
@@ -299,12 +298,12 @@ public class PurchaseOrderPanel extends Panel<PurchaseOrder> {
         fieldTotalStock.setData(String.valueOf(PR.getQuantity()));
         fieldtotalAmount.setData(String.valueOf(PO.getTotalAmount()));
         System.out.println(FMView);
-        if(FMView){
+        if (FMView) {
             System.out.println("am i in fm? yess");
-            if(PO.getPoStatus() == Status.PENDING && PR.getStatus() == Status.APPROVED){
+            if (PO.getPoStatus() == Status.PENDING && PR.getStatus() == Status.APPROVED) {
                 approvecfm.setVisible(true);
             }
-            if(PO.getPoStatus() == Status.APPROVED && PR.getStatus() == Status.APPROVED){
+            if (PO.getPoStatus() == Status.APPROVED && PR.getStatus() == Status.APPROVED) {
                 FMPayment();
             }
         }
@@ -314,7 +313,7 @@ public class PurchaseOrderPanel extends Panel<PurchaseOrder> {
         this.rowData = data;
     }
 
-    public void setBack(String PanelName){
+    public void setBack(String PanelName) {
         this.panelName = PanelName;
     }
 }

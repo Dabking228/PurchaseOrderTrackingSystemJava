@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.util.Date;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -14,13 +13,12 @@ import javax.swing.Timer;
 
 import backend.Backend;
 import data.Item;
-import data.Permission;
 import data.PurchaseRequisition;
-import data.Role;
 import data.Status;
 import user_interface.*;
+
 // TODO: Data added doesnt update in the dropdown
-public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
+public class PRForm extends BasePanel<PurchaseRequisition> {
     // private boolean viewOnly;
     protected String rowData;
     private PurchaseRequisition PR;
@@ -33,7 +31,7 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
     protected JPanel editcfm, approvecfm;
     protected JButton editConfirm, editCancel, confirmButton, deleteButton, editButton, approveButton, rejectButton;
 
-    public PurchaseReqPanel(Backend backend, MainMenu parent) {
+    public PRForm(Backend backend, MainMenu parent) {
         super("Purchase Requisition", parent, backend.db.purchaseRequisitionsMap, backend);
         this.backend = backend;
 
@@ -55,7 +53,6 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
         fieldStatus = new FieldText("Status");
         fieldStatus.setEditable(false);
         contentPanel.add(fieldStatus);
-
 
         greenLabel = new JLabel("Item added");
         greenLabel.setVisible(false);
@@ -87,12 +84,12 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
         editcfm.setMaximumSize(new Dimension(300, 30));
         contentPanel.add(editcfm);
 
-        approvecfm = new JPanel(new GridLayout(1,2));
+        approvecfm = new JPanel(new GridLayout(1, 2));
         approveButton = new JButton("Approve");
         rejectButton = new JButton("Reject");
         approvecfm.add(approveButton);
         approvecfm.add(rejectButton);
-        approvecfm.setMaximumSize(new Dimension(300,30));
+        approvecfm.setMaximumSize(new Dimension(300, 30));
         contentPanel.add(approvecfm);
 
         // auto pull data from itemsmap to fill up the details
@@ -116,15 +113,15 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
                 System.out.println(dropItemID.getSelected().getValue().getId());
                 System.out.println(fieldRestockVal.getIntData());
 
-                if(!itemID.isEmpty()|| RestockVal != 0){
-                    backend.db.addPurchaseRequisition(new PurchaseRequisition(itemID, RestockVal, new java.util.Date(), backend.getCurrentAccount().getId(), Status.PENDING));
+                if (!itemID.isEmpty() || RestockVal != 0) {
+                    backend.db.addPurchaseRequisition(new PurchaseRequisition(itemID, RestockVal, new java.util.Date(),
+                            backend.getCurrentAccount().getId(), Status.PENDING));
                     greenLabel.setVisible(true);
 
                     dropItemID.fieldCombo.setSelectedIndex(-1);
                     fieldItemStock.setData("");
                     fieldItemMinStock.setData("");
                     fieldRestockVal.setData("");
-                    
 
                     Timer timer = new Timer(2000, g -> greenLabel.setVisible(false));
                     timer.setRepeats(false);
@@ -136,10 +133,10 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
             }
         });
 
-        //delete button logic
+        // delete button logic
         deleteButton.addActionListener(e -> {
             backend.db.purchaseRequisitionsMap.remove(PR.getId());
-            parent.showPanel("purchaseRequisitionTable"); 
+            parent.showPanel("purchaseRequisitionTable");
         });
 
         editButton.addActionListener(e -> {
@@ -149,34 +146,33 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
 
         editConfirm.addActionListener(e -> {
             editcfm.setVisible(false);
-            
-            try{
+
+            try {
                 int RestockVal = fieldRestockVal.getIntData();
 
                 if (PR.getQuantity() != RestockVal) {
-                    System.out.println("restocknum changed"); //TODO: remove
+                    System.out.println("restocknum changed"); // TODO: remove
                     backend.db.purchaseRequisitionsMap.get(PR.getId()).setQuantity(RestockVal);
                 }
 
-                System.out.println("item updated"); //TODO: remove
+                System.out.println("item updated"); // TODO: remove
                 fieldRestockVal.setEditable(false);
 
-            } catch (Exception err){
+            } catch (Exception err) {
                 System.out.println(err);
                 fieldRestockVal.setEditable(false);
                 fieldRestockVal.setData(String.valueOf(PR.getQuantity()));
             }
-           
-            
+
         });
 
         editCancel.addActionListener(e -> {
             fieldRestockVal.setEditable(false);
             fieldRestockVal.setData(String.valueOf(PR.getQuantity()));
-            
+
             editcfm.setVisible(false);
         });
-    
+
         approveButton.addActionListener(e -> {
             PR.setStatus(Status.APPROVED);
             fieldStatus.setData(PR.getStatus().toString());
@@ -184,14 +180,13 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
             approvecfm.setVisible(false);
         });
 
-        rejectButton.addActionListener(e->{
+        rejectButton.addActionListener(e -> {
             PR.setStatus(Status.REJECTED);
             fieldStatus.setData(PR.getStatus().toString());
 
             approvecfm.setVisible(false);
         });
     }
-
 
     public void createPR() {
         dropItemID.AddUpdateItems();
@@ -214,13 +209,14 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
         deleteButton.setVisible(bool);
     }
 
-    void editHideOrShow(boolean bool){
+    void editHideOrShow(boolean bool) {
         editcfm.setVisible(bool);
     }
 
-    void approveHideOrSHow(boolean bool){
+    void approveHideOrSHow(boolean bool) {
         approvecfm.setVisible(bool);
     }
+
     public void viewOnly() {
         createHideOrShow(false);
         editorHideOrShow(false);
@@ -236,11 +232,11 @@ public class PurchaseReqPanel extends Panel<data.PurchaseRequisition> {
         editorHideOrShow(true);
     }
 
-    public void viewApprove(){
-        if(PR.getStatus() == Status.PENDING){
+    public void viewApprove() {
+        if (PR.getStatus() == Status.PENDING) {
             approveHideOrSHow(true);
         }
-        
+
         fieldStatus.setVisible(true);
     }
 

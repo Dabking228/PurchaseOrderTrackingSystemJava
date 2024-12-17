@@ -1,22 +1,20 @@
-package user_interface.table;
+package user_interface.tables;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.Map;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
 import backend.Backend;
-import data.Account;
 import data.BaseItem;
 import data.Role;
 import data.Permission;
 import user_interface.MainMenu;
 import user_interface.components.ButtonColumn;
-import user_interface.panels.TitlePanel;
+import user_interface.components.TitlePanel;
 
 public abstract class TablePanel<T extends BaseItem> extends JPanel implements TableRefreshable {
     protected JPanel panel, titleButtonPanel;

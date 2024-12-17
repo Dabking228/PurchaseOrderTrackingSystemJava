@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
-public class SalesReport extends Panel<Sale> {
+public class SalesReport extends BasePanel<Sale> {
 
     public SalesReport(Backend backend, MainMenu parent) {
         super("Sales Report", parent, backend.db.salesMap, backend);

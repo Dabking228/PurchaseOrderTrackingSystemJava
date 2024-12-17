@@ -1,24 +1,23 @@
-package user_interface.table;
+package user_interface.tables;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.swing.*;
 
 import data.Item;
 import data.Permission;
 import data.Role;
 import data.Sale;
 import user_interface.MainMenu;
-import user_interface.add_item_dialog.AddNewItem;
-import user_interface.panels.CreateSale;
+
+import user_interface.panels.SaleForm;
 import backend.Backend;
 
-public class SalesTable extends TablePanel<Sale> {
+public class SaleTable extends TablePanel<Sale> {
     private MainMenu parent;
-    private CreateSale createSale;
+    private SaleForm createSale;
     private Role role;
-    public SalesTable(Backend backend, MainMenu parent) {
+
+    public SaleTable(Backend backend, MainMenu parent) {
         super("Sales", 4, parent, backend.db.salesMap, new SalesTableModel(), backend);
         this.backend = backend;
         this.parent = parent;
@@ -26,26 +25,26 @@ public class SalesTable extends TablePanel<Sale> {
 
     @Override
     public void createAddPanel() {
-        createSale = parent.getPanel("CreateSalePane", CreateSale.class);
+        createSale = parent.getPanel("AddSale", SaleForm.class);
         createSale.setBack("salesTable");
-        parent.showPanel("CreateSalePane");
+        parent.showPanel("AddSale");
     }
 
     @Override
     public void createEditPanel(int modelRow) {
         role = backend.getCurrentAccount().getRole();
-        createSale = parent.getPanel("CreateSalePane", CreateSale.class);
+        createSale = parent.getPanel("AddSale", SaleForm.class);
         createSale.setBack("salesTable");
 
         createSale.setRowNum(tableModel.getValueAt(modelRow, 5).toString());
         createSale.setData();
 
         createSale.viewOnly();
-        if(role.hasPermission("Sales", Permission.UPDATE)){
+        if (role.hasPermission("Sales", Permission.UPDATE)) {
             createSale.viewUpdate();
         }
 
-        parent.showPanel("CreateSalePane");
+        parent.showPanel("AddSale");
     }
 
     @Override

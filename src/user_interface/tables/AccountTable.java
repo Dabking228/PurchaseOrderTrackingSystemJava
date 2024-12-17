@@ -1,21 +1,19 @@
-package user_interface.table;
-
-import javax.swing.*;
+package user_interface.tables;
 
 import data.Account;
 import data.Permission;
 import data.Role;
 import user_interface.MainMenu;
-import user_interface.add_item_dialog.AddNewItem;
-import user_interface.panels.AddUserPanel;
+
+import user_interface.panels.AccountForm;
 import backend.Backend;
 
-public class AccountsTable extends TablePanel<Account> {
+public class AccountTable extends TablePanel<Account> {
     protected MainMenu parent;
-    protected AddUserPanel UserPanel;
+    protected AccountForm UserPanel;
     protected Role role;
-    
-    public AccountsTable(Backend backend, MainMenu parent) {
+
+    public AccountTable(Backend backend, MainMenu parent) {
         super("Accounts", 2, parent, backend.db.accountsMap, new AccountsTableModel(), backend);
         this.parent = parent;
         this.backend = backend;
@@ -24,25 +22,25 @@ public class AccountsTable extends TablePanel<Account> {
     @Override
     public void createAddPanel() {
         role = backend.getCurrentAccount().getRole();
-        UserPanel = parent.getPanel("addUserPanel", AddUserPanel.class);
-        if(role.hasPermission("Accounts", Permission.CREATE)){
+        UserPanel = parent.getPanel("AddAccount", AccountForm.class);
+        if (role.hasPermission("Accounts", Permission.CREATE)) {
             UserPanel.CreateUser();
         }
-        parent.showPanel("addUserPanel");
+        parent.showPanel("AddAccount");
     }
 
     @Override
     public void createEditPanel(int modelRow) {
         role = backend.getCurrentAccount().getRole();
-        UserPanel = parent.getPanel("addUserPanel", AddUserPanel.class);
+        UserPanel = parent.getPanel("AddAccount", AccountForm.class);
         UserPanel.setRowNum(tableModel.getValueAt(modelRow, 0).toString());
         UserPanel.setData();
 
         UserPanel.viewOnly();
-        if(role.hasPermission("Accounts", Permission.UPDATE)){
+        if (role.hasPermission("Accounts", Permission.UPDATE)) {
             UserPanel.viewUpdate();
         }
-        parent.showPanel("addUserPanel");
+        parent.showPanel("AddAccount");
 
     }
 }

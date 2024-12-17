@@ -4,14 +4,13 @@ import java.util.Map;
 import java.awt.*;
 
 import javax.swing.*;
-import javax.swing.GroupLayout.ParallelGroup;
-import javax.swing.GroupLayout.SequentialGroup;
 
 import backend.Backend;
 import data.BaseItem;
 import user_interface.MainMenu;
+import user_interface.components.TitlePanel;
 
-public abstract class Panel<T extends BaseItem> extends JPanel {
+public abstract class BasePanel<T extends BaseItem> extends JPanel {
     protected JPanel panel, titleButtonPanel;
     protected JButton backButton;
     protected CustomJPanel contentPanel;
@@ -19,7 +18,7 @@ public abstract class Panel<T extends BaseItem> extends JPanel {
     protected Backend backend;
     protected MainMenu parent;
 
-    public Panel(String title, MainMenu parent, Map<String, T> items, Backend backend) {
+    public BasePanel(String title, MainMenu parent, Map<String, T> items, Backend backend) {
         this.items = items;
         this.backend = backend;
         this.parent = parent;

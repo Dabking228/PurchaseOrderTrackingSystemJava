@@ -1,14 +1,12 @@
-package user_interface.table;
-
-import javax.swing.*;
+package user_interface.tables;
 
 import data.Supplier;
 import user_interface.MainMenu;
-import user_interface.add_item_dialog.AddNewItem;
+
 import backend.Backend;
 
-public class SuppliersTable extends TablePanel<Supplier> {
-    public SuppliersTable(Backend backend, MainMenu parent) {
+public class SupplierTable extends TablePanel<Supplier> {
+    public SupplierTable(Backend backend, MainMenu parent) {
         super("Suppliers", 3, parent, backend.db.suppliersMap, new SuppliersTableModel(), backend);
         this.backend = backend;
     }

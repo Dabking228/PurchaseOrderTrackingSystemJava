@@ -1,14 +1,9 @@
 package user_interface.panels;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -53,11 +48,11 @@ public class FieldDropdown<T extends BaseItem> extends JPanel {
         setMaximumSize(getPreferredSize());
     }
 
-    public FieldDropdown(String fieldName, Map<String, T> items, ComboList<T> lists){
-        this(fieldName, items, lists,null);
-       
+    public FieldDropdown(String fieldName, Map<String, T> items, ComboList<T> lists) {
+        this(fieldName, items, lists, null);
 
     }
+
     public ComboItem<T> getSelected() {
         if (fieldCombo.getSelectedIndex() != -1) {
             return (ComboItem<T>) fieldCombo.getSelectedItem();
@@ -76,8 +71,8 @@ public class FieldDropdown<T extends BaseItem> extends JPanel {
             }
         }
     }
-    
-    public void AddUpdateItems(){
+
+    public void AddUpdateItems() {
         lists.setValue();
         fieldCombo.removeAllItems();
         for (String UUID : lists.UUID) {
@@ -117,8 +112,8 @@ abstract class ComboList<T extends BaseItem> {
     protected String[] UUID;
     protected T[] values;
     protected Backend backend;
-    
-    public void setBackend(Backend backend){
+
+    public void setBackend(Backend backend) {
         this.backend = backend;
     }
 

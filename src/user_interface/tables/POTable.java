@@ -1,9 +1,7 @@
-package user_interface.table;
+package user_interface.tables;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.swing.*;
 
 import data.Item;
 import data.Permission;
@@ -12,16 +10,16 @@ import data.PurchaseRequisition;
 import data.Role;
 import data.Supplier;
 import user_interface.MainMenu;
-import user_interface.add_item_dialog.AddNewItem;
-import user_interface.panels.PurchaseOrderPanel;
+
+import user_interface.panels.POForm;
 import backend.Backend;
 
-public class PurchaseOrdersTable extends TablePanel<PurchaseOrder> {
+public class POTable extends TablePanel<PurchaseOrder> {
     protected MainMenu parent;
-    private PurchaseOrderPanel POPanel;
+    private POForm POPanel;
     private Role role;
-    
-    public PurchaseOrdersTable(Backend backend, MainMenu parent) {
+
+    public POTable(Backend backend, MainMenu parent) {
         super("PurchaseOrder", 10, parent, backend.db.purchaseOrdersMap, new PurchaseOrdersTableModel(), backend);
         this.backend = backend;
         this.parent = parent;
@@ -31,35 +29,34 @@ public class PurchaseOrdersTable extends TablePanel<PurchaseOrder> {
     public void createAddPanel() {
         // TODO add item panel
         role = backend.getCurrentAccount().getRole();
-        POPanel = parent.getPanel("PurOrdPane", PurchaseOrderPanel.class);
+        POPanel = parent.getPanel("AddPO", POForm.class);
         POPanel.setBack("purchaseOrdersTable");
-        if(role.hasPermission("PurchaseOrder", Permission.CREATE)){
+        if (role.hasPermission("PurchaseOrder", Permission.CREATE)) {
             POPanel.createPO();
         }
 
-        parent.showPanel("PurOrdPane");
+        parent.showPanel("AddPO");
     }
 
     @Override
     public void createEditPanel(int modelRow) {
         role = backend.getCurrentAccount().getRole();
-        System.out.println("helo from purchase order table"); //TODO: remove
-        POPanel = parent.getPanel("PurOrdPane", PurchaseOrderPanel.class);
-        
+        System.out.println("helo from purchase order table"); // TODO: remove
+        POPanel = parent.getPanel("AddPO", POForm.class);
+
         POPanel.setBack("purchaseOrdersTable");
         POPanel.setRowNum(tableModel.getValueAt(modelRow, 11).toString());
-        
-        
+
         POPanel.viewOnly();
 
-        if(role.hasPermission("PurchaseOrder", Permission.CREATE)){
+        if (role.hasPermission("PurchaseOrder", Permission.CREATE)) {
             POPanel.viewOnlyUpdate();
-        } else if(role == Role.FINANCE_MANAGER){
+        } else if (role == Role.FINANCE_MANAGER) {
             System.out.println("im a FMFMMMM");
             POPanel.FMView(true);
         }
         POPanel.setData();
-        parent.showPanel("PurOrdPane");
+        parent.showPanel("AddPO");
     }
 
     @Override
