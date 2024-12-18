@@ -124,7 +124,6 @@ public class POForm extends BasePanel<PurchaseOrder> {
         });
 
         dropPR.fieldCombo.addActionListener(e -> {
-            // System.out.println(dropItemID.getSelected().getValue());
 
             PurchaseRequisition item = (dropPR.getSelected() != null)
                     ? (PurchaseRequisition) dropPR.getSelected().getValue()
@@ -182,7 +181,6 @@ public class POForm extends BasePanel<PurchaseOrder> {
                 double totalVal = fieldtotalAmount.getDoubleData();
 
                 if (PO.getTotalAmount() != totalVal) {
-                    System.out.println("total amount changed"); // TODO: remove
                     backend.db.purchaseOrdersMap.get(PO.getId()).setTotalAmount(totalVal);
                 }
 
@@ -297,9 +295,7 @@ public class POForm extends BasePanel<PurchaseOrder> {
         fieldCurrStock.setData(String.valueOf(item.getStockLevel()));
         fieldTotalStock.setData(String.valueOf(PR.getQuantity()));
         fieldtotalAmount.setData(String.valueOf(PO.getTotalAmount()));
-        System.out.println(FMView);
         if (FMView) {
-            System.out.println("am i in fm? yess");
             if (PO.getPoStatus() == Status.PENDING && PR.getStatus() == Status.APPROVED) {
                 approvecfm.setVisible(true);
             }

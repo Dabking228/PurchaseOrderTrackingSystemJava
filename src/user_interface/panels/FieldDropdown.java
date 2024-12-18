@@ -77,8 +77,6 @@ public class FieldDropdown<T extends BaseItem> extends JPanel {
         fieldCombo.removeAllItems();
         for (String UUID : lists.UUID) {
             fieldCombo.addItem(new ComboItem<T>(lists.getName(UUID), lists.getValue(UUID)));
-            // System.out.println(lists.getName(UUID));
-            // System.out.println(lists.getValue(UUID));
         }
     }
 
@@ -132,7 +130,6 @@ abstract class ComboList<T extends BaseItem> {
             UUID[i] = item.getKey();
             values[i] = item.getValue();
             i++;
-            // System.out.println(item.getValue());
         }
     }
 

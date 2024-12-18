@@ -26,11 +26,9 @@ public class PRTable extends TablePanel<PurchaseRequisition> {
 
     @Override
     public void createAddPanel() {
-        // TODO add item panel
         role = backend.getCurrentAccount().getRole();
         PRPanel = parent.getPanel("AddPR", PRForm.class);
 
-        System.out.println("heewewewe"); // TODO: remove
         if (role.hasPermission("PurchaseRequisition", Permission.CREATE)) {
             PRPanel.createPR();
         }
@@ -40,7 +38,6 @@ public class PRTable extends TablePanel<PurchaseRequisition> {
 
     @Override
     public void createEditPanel(int modelRow) {
-        // TODO add item panel but with fields filled in
         role = backend.getCurrentAccount().getRole();
         PRPanel = parent.getPanel("AddPR", PRForm.class);
         PRPanel.setRowNum(tableModel.getValueAt(modelRow, 6).toString());

@@ -83,25 +83,18 @@ public class AccountForm extends BasePanel<Account> {
                 Role covertedRole = getRoleFromString(roleString);
 
                 if (!username.equals(account.getUsername())) {
-                    System.out.println("username changed"); // TODO: remove
                     backend.db.accountsMap.get(account.getId()).setUsername(username);
                 }
                 if (!password.equals(account.getPassword())) {
-                    System.out.println("pass changed"); // TODO: remove
                     account.setPassword(password);
                 }
                 if (covertedRole != account.getRole()) {
-                    System.out.println("role changed"); // TODO: remove
                     account.setRole(getRoleFromString(roleString));
                 }
 
-                System.out.println("item updated"); // TODO: remove
                 fieldUsername.setEditable(false);
                 fieldPassword.setEditable(false);
                 roleComboBox.setEnabled(false);
-                System.out.println(account.getUsername());
-                System.out.println(account.getPassword());
-                System.out.println(account.getRole());
                 editcfm.setVisible(false);
             } catch (Exception err) {
                 System.out.println(err);
@@ -154,9 +147,6 @@ public class AccountForm extends BasePanel<Account> {
 
                     backend.db.addAccount(new Account(username, password, getRoleFromString(roleString)));
                     greenLabel.setVisible(true);
-                    System.out
-                            .println("Adding user: " + username + ":" + password + ":" + getRoleFromString(roleString)); // TODO:
-                                                                                                                         // Remove
 
                     // Reset field and data
                     fieldUsername.resetField();
@@ -213,10 +203,7 @@ public class AccountForm extends BasePanel<Account> {
     }
 
     public void setData() {
-        System.out.println(rowData); // TODO: Remove
         account = backend.db.getAccount(rowData);
-        System.out.println("yay"); // TODO: Remove
-        System.out.println(account.getPassword()); // TODO: Remove
 
         fieldUsername.setData(account.getUsername());
         fieldPassword.setPassword(account.getPassword());

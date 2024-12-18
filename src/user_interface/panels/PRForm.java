@@ -94,7 +94,6 @@ public class PRForm extends BasePanel<PurchaseRequisition> {
 
         // auto pull data from itemsmap to fill up the details
         dropItemID.fieldCombo.addActionListener(e -> {
-            // System.out.println(dropItemID.getSelected().getValue());
 
             data.Item item = (dropItemID.getSelected() != null)
                     ? (data.Item) dropItemID.getSelected().getValue()
@@ -110,8 +109,6 @@ public class PRForm extends BasePanel<PurchaseRequisition> {
             try {
                 String itemID = dropItemID.getSelected().getValue().getId();
                 int RestockVal = fieldRestockVal.getIntData();
-                System.out.println(dropItemID.getSelected().getValue().getId());
-                System.out.println(fieldRestockVal.getIntData());
 
                 if (!itemID.isEmpty() || RestockVal != 0) {
                     backend.db.addPurchaseRequisition(new PurchaseRequisition(itemID, RestockVal, new java.util.Date(),
@@ -151,11 +148,9 @@ public class PRForm extends BasePanel<PurchaseRequisition> {
                 int RestockVal = fieldRestockVal.getIntData();
 
                 if (PR.getQuantity() != RestockVal) {
-                    System.out.println("restocknum changed"); // TODO: remove
                     backend.db.purchaseRequisitionsMap.get(PR.getId()).setQuantity(RestockVal);
                 }
 
-                System.out.println("item updated"); // TODO: remove
                 fieldRestockVal.setEditable(false);
 
             } catch (Exception err) {

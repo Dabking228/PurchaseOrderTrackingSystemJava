@@ -102,9 +102,4 @@ public class Backend {
         db.addItem(newItem);
         System.out.println("Added custom item: " + name + " under category: " + category);
     }
-
-    public boolean addItem(Item newItem) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addItem'");
-    }
 }

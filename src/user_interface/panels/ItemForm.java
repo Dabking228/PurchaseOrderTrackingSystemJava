@@ -81,24 +81,19 @@ public class ItemForm extends BasePanel<Item> {
                 BigDecimal price = new BigDecimal(fieldPrice.getData());
 
                 if (item.getItemName() != itemName) {
-                    System.out.println("item changed"); // TODO: remove
                     backend.db.itemsMap.get(itemList.getObjectUUID(item.getItemCode())).setItemName(itemName);
                 }
                 if (item.getStockLevel() != numStock) {
-                    System.out.println("numstock changed"); // TODO: remove
                     backend.db.itemsMap.get(itemList.getObjectUUID(item.getItemCode())).setStockLevel(numStock);
                 }
                 if (item.getReorderLevel() != minStock) {
-                    System.out.println("restocknum changed"); // TODO: remove
                     backend.db.itemsMap.get(itemList.getObjectUUID(item.getItemCode()))
                             .setReorderLevel(minStock);
                 }
                 if (item.getPrice() != price) {
-                    System.out.println("price changed"); // TODO: remove
                     backend.db.itemsMap.get(itemList.getObjectUUID(item.getItemCode())).setPrice(price);
                 }
 
-                System.out.println("item updated"); // TODO: remove
                 fieldItemName.setEditable(false);
                 fieldNumStock.setEditable(false);
                 fieldRestockLevel.setEditable(false);
@@ -160,7 +155,6 @@ public class ItemForm extends BasePanel<Item> {
                 int numStock = fieldNumStock.getIntData();
                 int minStock = fieldRestockLevel.getIntData();
                 BigDecimal price = new BigDecimal(fieldPrice.getData());
-                System.out.println(numStock);
                 if (!itemID.isEmpty() || !itemName.isEmpty() || numStock != 0 || minStock != 0) {
                     backend.db.addItem(new Item(itemID, itemName, supplierID, numStock, minStock, price));
                     greenLabel.setVisible(true);
@@ -230,9 +224,6 @@ public class ItemForm extends BasePanel<Item> {
         SupplierDrop.AddUpdateItems();
         // item = itemList.getObject(rowData);
         item = backend.db.getItem(rowData);
-        System.out.println("yay"); // TODO: Remove
-        System.out.println(rowData); // TODO: Remove
-        System.out.println(item.getSupplierId()); // TODO: Remove
 
         fieldItemID.setData(item.getItemCode());
         fieldItemName.setData(item.getItemName());

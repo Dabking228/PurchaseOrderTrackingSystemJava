@@ -72,10 +72,6 @@ public class UserInterface {
     }
 
     public void showPanel(String panelName) {
-        // TODO Custom behaviour if we need it
-        // if (panelName.equals("login")) {
-        // }
-
         cardLayout.show(mainPanel, panelName);
         frame.pack();
         frame.setVisible(true);

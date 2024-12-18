@@ -27,7 +27,6 @@ public class POTable extends TablePanel<PurchaseOrder> {
 
     @Override
     public void createAddPanel() {
-        // TODO add item panel
         role = backend.getCurrentAccount().getRole();
         POPanel = parent.getPanel("AddPO", POForm.class);
         POPanel.setBack("POTable");
@@ -41,7 +40,6 @@ public class POTable extends TablePanel<PurchaseOrder> {
     @Override
     public void createEditPanel(int modelRow) {
         role = backend.getCurrentAccount().getRole();
-        System.out.println("helo from purchase order table"); // TODO: remove
         POPanel = parent.getPanel("AddPO", POForm.class);
 
         POPanel.setBack("POTable");
@@ -52,7 +50,6 @@ public class POTable extends TablePanel<PurchaseOrder> {
         if (role.hasPermission("PurchaseOrder", Permission.CREATE)) {
             POPanel.viewOnlyUpdate();
         } else if (role == Role.FINANCE_MANAGER) {
-            System.out.println("im a FMFMMMM");
             POPanel.FMView(true);
         }
         POPanel.setData();

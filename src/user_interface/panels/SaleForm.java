@@ -83,7 +83,6 @@ public class SaleForm extends BasePanel<Item> {
         });
 
         itemNameDrop.fieldCombo.addActionListener(e -> {
-            // System.out.println(dropItemID.getSelected().getValue());
 
             data.Item item = (itemNameDrop.getSelected() != null)
                     ? (data.Item) itemNameDrop.getSelected().getValue()

@@ -20,7 +20,6 @@ public class TrackPurchaseOrderTable extends POTable {
     @Override
     public void createEditPanel(int modelRow) {
         role = backend.getCurrentAccount().getRole();
-        System.out.println("helo from  track purchase order table"); // TODO: remove
         POPanel = parent.getPanel("AddPO", POForm.class);
         POPanel.setBack("trackPO");
         POPanel.setRowNum(tableModel.getValueAt(modelRow, 11).toString());
