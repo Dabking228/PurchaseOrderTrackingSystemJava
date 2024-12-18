@@ -30,7 +30,7 @@ public class SupplierTable extends TablePanel<Supplier> {
         createSupplier = parent.getPanel("AddSupplier", SupplierForm.class);
         createSupplier.setBack("supplierTable");
 
-        createSupplier.setRowNum(tableModel.getValueAt(modelRow, 0).toString());
+        createSupplier.setRowNum(tableModel.getValueAt(modelRow, 4).toString());
         createSupplier.setData();
 
         createSupplier.viewOnly();
@@ -64,6 +64,8 @@ class SuppliersTableModel extends TablePanelModel<Supplier> {
                 return supplier.getContactInfo();
             case 3:
                 return "View";
+            case 4:
+                return supplier.getId();
             default:
                 return null;
         }
@@ -81,6 +83,15 @@ class SuppliersTableModel extends TablePanelModel<Supplier> {
                 return "View";
             default:
                 return null;
+        }
+    }
+
+    public boolean isCellEditable(int row, int column) {
+        switch (column) {
+            case 3:
+                return true;
+            default:
+                return false;
         }
     }
 }
