@@ -53,12 +53,12 @@ public class MainMenu extends JPanel {
         this.createTableWithFeatureCheck("trackPurchaseOrder", "trackPO", TrackPurchaseOrderTable.class);
         this.createTableWithFeatureCheck("restockItem", "restockItem", ItemRestockTable.class);
 
-        this.createAddPanel("AddAccount", AccountForm.class);
-        this.createAddPanel("AddItem", ItemForm.class);
-        this.createAddPanel("AddSale", SaleForm.class);
-        this.createAddPanel("AddPR", PRForm.class);
-        this.createAddPanel("AddPO", POForm.class);
-        this.createAddPanel("AddSupplier", SupplierForm.class);
+        this.createPanel("AddAccount", AccountForm.class);
+        this.createPanel("AddItem", ItemForm.class);
+        this.createPanel("AddSale", SaleForm.class);
+        this.createPanel("AddPR", PRForm.class);
+        this.createPanel("AddPO", POForm.class);
+        this.createPanel("AddSupplier", SupplierForm.class);
 
         showPanel("mainMenuPanel");
     }
@@ -108,11 +108,6 @@ public class MainMenu extends JPanel {
             return;
         }
         createTable(panelName, panelClass);
-    }
-
-    // TODO
-    private <T extends BasePanel<?>> void createAddPanel(String panelName, Class<T> panelClass) {
-        createPanel(panelName, panelClass);
     }
 
     // other methods
