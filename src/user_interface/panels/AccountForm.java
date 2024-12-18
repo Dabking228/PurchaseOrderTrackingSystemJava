@@ -62,7 +62,7 @@ public class AccountForm extends BasePanel<Account> {
         contentPanel.add(greenLabel);
 
         backButton.addActionListener(e -> {
-            parent.showPanel("accountsTable");
+            parent.showPanel("accountTable");
         });
 
         editcfm = new JPanel(new GridLayout(1, 2));
@@ -127,7 +127,7 @@ public class AccountForm extends BasePanel<Account> {
 
         deleteButton.addActionListener(e -> {
             backend.db.accountsMap.remove(accountList.getObjectUUID(account.getUsername()));
-            parent.showPanel("accountsTable");
+            parent.showPanel("accountTable");
         });
 
         editButton.addActionListener(e -> {

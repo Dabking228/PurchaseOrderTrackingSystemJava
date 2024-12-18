@@ -133,7 +133,7 @@ public class ItemForm extends BasePanel<Item> {
 
         deleteButton.addActionListener(e -> {
             backend.db.itemsMap.remove(itemList.getObjectUUID(item.getItemCode()));
-            parent.showPanel("itemsTable");
+            parent.showPanel("itemTable");
         });
 
         editButton.addActionListener(e -> {

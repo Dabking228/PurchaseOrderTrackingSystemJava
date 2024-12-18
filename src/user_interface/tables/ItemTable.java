@@ -25,7 +25,7 @@ public class ItemTable extends TablePanel<Item> {
     public void createAddPanel() {
         role = backend.getCurrentAccount().getRole();
         itemPanel = parent.getPanel("AddItem", ItemForm.class);
-        itemPanel.setBack("itemsTable");
+        itemPanel.setBack("itemTable");
         if (role.hasPermission("Items", Permission.CREATE)) {
             itemPanel.CreateItem();
         }
@@ -36,7 +36,7 @@ public class ItemTable extends TablePanel<Item> {
     public void createEditPanel(int modelRow) {
         role = backend.getCurrentAccount().getRole();
         itemPanel = parent.getPanel("AddItem", ItemForm.class);
-        itemPanel.setBack("itemsTable");
+        itemPanel.setBack("itemTable");
 
         itemPanel.setRowNum(tableModel.getValueAt(modelRow, 6).toString());
         itemPanel.setData();

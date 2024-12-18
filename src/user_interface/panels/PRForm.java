@@ -61,7 +61,7 @@ public class PRForm extends BasePanel<PurchaseRequisition> {
         contentPanel.add(greenLabel);
 
         backButton.addActionListener(e -> {
-            parent.showPanel("purchaseRequisitionTable");
+            parent.showPanel("PRTable");
             dropItemID.fieldCombo.setSelectedIndex(-1);
             fieldItemStock.setData("");
             fieldItemMinStock.setData("");
@@ -136,7 +136,7 @@ public class PRForm extends BasePanel<PurchaseRequisition> {
         // delete button logic
         deleteButton.addActionListener(e -> {
             backend.db.purchaseRequisitionsMap.remove(PR.getId());
-            parent.showPanel("purchaseRequisitionTable");
+            parent.showPanel("PRTable");
         });
 
         editButton.addActionListener(e -> {

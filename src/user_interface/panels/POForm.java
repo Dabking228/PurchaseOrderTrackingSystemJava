@@ -99,7 +99,7 @@ public class POForm extends BasePanel<PurchaseOrder> {
 
                 Timer timer = new Timer(2000, g -> {
                     greenLabel.setVisible(false);
-                    parent.showPanel("purchaseOrdersTable");
+                    parent.showPanel("POTable");
                 });
                 timer.setRepeats(false);
                 timer.start();
@@ -164,7 +164,7 @@ public class POForm extends BasePanel<PurchaseOrder> {
 
         deleteButton.addActionListener(e -> {
             backend.db.purchaseOrdersMap.remove(PO.getId());
-            parent.showPanel("purchaseOrdersTable");
+            parent.showPanel("POTable");
         });
 
         editcfm = new JPanel(new GridLayout(1, 2));

@@ -26,7 +26,7 @@ public class SaleTable extends TablePanel<Sale> {
     @Override
     public void createAddPanel() {
         createSale = parent.getPanel("AddSale", SaleForm.class);
-        createSale.setBack("salesTable");
+        createSale.setBack("saleTable");
         parent.showPanel("AddSale");
     }
 
@@ -34,7 +34,7 @@ public class SaleTable extends TablePanel<Sale> {
     public void createEditPanel(int modelRow) {
         role = backend.getCurrentAccount().getRole();
         createSale = parent.getPanel("AddSale", SaleForm.class);
-        createSale.setBack("salesTable");
+        createSale.setBack("saleTable");
 
         createSale.setRowNum(tableModel.getValueAt(modelRow, 5).toString());
         createSale.setData();

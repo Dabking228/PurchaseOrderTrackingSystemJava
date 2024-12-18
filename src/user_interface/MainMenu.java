@@ -17,6 +17,7 @@ import user_interface.panels.SaleForm;
 import user_interface.panels.ItemForm;
 import user_interface.panels.AccountForm;
 import user_interface.panels.SalesReport;
+import user_interface.panels.SupplierForm;
 import user_interface.tables.*;
 import user_interface.panels.PRForm;;
 
@@ -41,12 +42,12 @@ public class MainMenu extends JPanel {
         MainMenuPanel mainMenuPanel = new MainMenuPanel(backend, this);
         this.add(mainMenuPanel, "mainMenuPanel");
 
-        this.createTable("Items", "itemsTable", ItemTable.class);
-        this.createTable("Accounts", "accountsTable", AccountTable.class);
-        this.createTable("Sales", "salesTable", SaleTable.class);
-        this.createTable("Suppliers", "suppliersTable", SupplierTable.class);
-        this.createTable("PurchaseRequisition", "purchaseRequisitionTable", PRTable.class);
-        this.createTable("PurchaseOrder", "purchaseOrdersTable", POTable.class);
+        this.createTable("Items", "itemTable", ItemTable.class);
+        this.createTable("Accounts", "accountTable", AccountTable.class);
+        this.createTable("Sales", "saleTable", SaleTable.class);
+        this.createTable("Suppliers", "supplierTable", SupplierTable.class);
+        this.createTable("PurchaseRequisition", "PRTable", PRTable.class);
+        this.createTable("PurchaseOrder", "POTable", POTable.class);
 
         this.createFeature("salesReport", "salesReport", SalesReport.class);
         this.createTableWithFeatureCheck("trackPurchaseOrder", "trackPO", TrackPurchaseOrderTable.class);
@@ -57,6 +58,7 @@ public class MainMenu extends JPanel {
         this.createAddPanel("AddSale", SaleForm.class);
         this.createAddPanel("AddPR", PRForm.class);
         this.createAddPanel("AddPO", POForm.class);
+        this.createAddPanel("AddSupplier", SupplierForm.class);
 
         showPanel("mainMenuPanel");
     }
@@ -195,12 +197,12 @@ class MainMenuPanel extends JPanel {
     }
 
     private void createButtons() {
-        createTableButton("Items", "Edit Items Table", "itemsTable");
-        createTableButton("Accounts", "Edit Accounts Table", "accountsTable");
-        createTableButton("Sales", "Edit Sales Table", "salesTable");
-        createTableButton("Suppliers", "Edit Suppliers Table", "suppliersTable");
-        createTableButton("PurchaseRequisition", "Edit Purchase Requisition Table", "purchaseRequisitionTable");
-        createTableButton("PurchaseOrder", "Edit Purchase Order Table", "purchaseOrdersTable");
+        createTableButton("Items", "Edit Items Table", "itemTable");
+        createTableButton("Accounts", "Edit Accounts Table", "accountTable");
+        createTableButton("Sales", "Edit Sales Table", "saleTable");
+        createTableButton("Suppliers", "Edit Suppliers Table", "supplierTable");
+        createTableButton("PurchaseRequisition", "Edit Purchase Requisition Table", "PRTable");
+        createTableButton("PurchaseOrder", "Edit Purchase Order Table", "POTable");
 
         createFeatureButton("CreateSale", "Create Sales", "AddSale");
         createFeatureButton("salesReport", "Sales Report", "salesReport");

@@ -1,24 +1,44 @@
 package user_interface.tables;
 
+import data.Permission;
+import data.Role;
 import data.Supplier;
 import user_interface.MainMenu;
-
+import user_interface.panels.SupplierForm;
 import backend.Backend;
 
 public class SupplierTable extends TablePanel<Supplier> {
+    private SupplierForm createSupplier;
+    private MainMenu parent;
+
     public SupplierTable(Backend backend, MainMenu parent) {
         super("Suppliers", 3, parent, backend.db.suppliersMap, new SuppliersTableModel(), backend);
         this.backend = backend;
+        this.parent = parent;
     }
 
     @Override
     public void createAddPanel() {
-        // TODO add item panel
+        createSupplier = parent.getPanel("AddSupplier", SupplierForm.class);
+        createSupplier.setBack("supplierTable");
+        parent.showPanel("AddSupplier");
     }
 
     @Override
     public void createEditPanel(int modelRow) {
-        // TODO add item panel but with fields filled in
+        Role role = backend.getCurrentAccount().getRole();
+        createSupplier = parent.getPanel("AddSupplier", SupplierForm.class);
+        createSupplier.setBack("supplierTable");
+
+        createSupplier.setRowNum(tableModel.getValueAt(modelRow, 0).toString());
+        createSupplier.setData();
+
+        createSupplier.viewOnly();
+        if (role.hasPermission("Suppliers", Permission.UPDATE)) {
+            createSupplier.viewUpdate();
+        }
+
+        parent.showPanel("AddSupplier");
     }
 }
 

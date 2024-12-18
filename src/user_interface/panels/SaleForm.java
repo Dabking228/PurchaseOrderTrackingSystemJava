@@ -156,7 +156,7 @@ public class SaleForm extends BasePanel<Item> {
 
             item.setStockLevel(item.getStockLevel() + itemsold);
             backend.db.salesMap.remove(sale.getId());
-            parent.showPanel("salesTable");
+            parent.showPanel("saleTable");
         });
 
         editcfm = new JPanel(new GridLayout(1, 2));
