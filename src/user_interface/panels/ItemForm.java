@@ -193,6 +193,7 @@ public class ItemForm extends BasePanel<Item> {
 
     // Show buttons for creating items
     public void CreateItem() {
+        SupplierDrop.AddUpdateItems();
         createHideOrShow(true);
         editorHideOrShow(false);
         editHideOrShow(false);
