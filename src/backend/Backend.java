@@ -12,6 +12,7 @@ public class Backend {
         db.load();
 
         // test code for now
+        // TODO remove
         Account account = new Account("admin", "admin", Role.ADMIN);
         db.addAccount(account);
         Account account2 = new Account("sale", "sale", Role.SALES_MANAGER);
