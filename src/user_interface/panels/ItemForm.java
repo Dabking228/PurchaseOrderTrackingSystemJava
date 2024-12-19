@@ -60,6 +60,12 @@ public class ItemForm extends BasePanel<Item> {
 
         backButton.addActionListener(e -> {
             parent.showPanel(panelName);
+            fieldItemID.setData("");
+            fieldItemName.setData("");
+            SupplierDrop.fieldCombo.setSelectedIndex(-1);
+            fieldNumStock.setData("");
+            fieldRestockLevel.setData("");
+            fieldPrice.setData("");
         });
 
         // Button creation for Edit, Delete
@@ -180,6 +186,13 @@ public class ItemForm extends BasePanel<Item> {
 
     void createHideOrShow(boolean bool) {
         confirmButton.setVisible(bool);
+
+        fieldItemID.setEditable(bool);
+        fieldItemName.setEditable(bool);
+        SupplierDrop.setEditable(bool);
+        fieldNumStock.setEditable(bool);
+        fieldRestockLevel.setEditable(bool);
+        fieldPrice.setEditable(bool);
     }
 
     void editorHideOrShow(boolean bool) {
