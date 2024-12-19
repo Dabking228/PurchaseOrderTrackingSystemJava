@@ -2,8 +2,10 @@ package backend;
 
 import java.io.*;
 import java.lang.reflect.*;
+import java.math.BigDecimal;
 import java.nio.file.*;
 import java.util.Map;
+import java.util.Arrays;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
@@ -74,7 +76,8 @@ public class CSV {
                 // Find the constructor that matches the number of parameters
                 for (Constructor<?> constructor : constructors) {
                     if (constructor.getParameterCount() == data.length) {
-                        if (constructor.getParameters()[constructor.getParameterCount() - 1].getName().equals("Id")) {
+                        Class<?>[] parameterTypes = constructor.getParameterTypes();
+                        if (parameterTypes[parameterTypes.length - 1].equals(String.class)) {
                             matchingConstructor = (Constructor<T>) constructor;
                             break;
                         }
@@ -93,7 +96,9 @@ public class CSV {
 
                     // Create a new instance using the matching constructor
                     T object = matchingConstructor.newInstance(parameters);
-                    hashMap.put(data[0], object);
+                    hashMap.put(object.getId(), object);
+                } else {
+                    System.out.println("No matching constructor found for: " + clazz.getName());
                 }
             }
 
@@ -126,6 +131,9 @@ public class CSV {
             } catch (ParseException e) {
                 throw new IllegalArgumentException("Invalid date format: " + value, e);
             }
+
+        } else if (type == BigDecimal.class) {
+            return new BigDecimal(value);
         }
 
         throw new IllegalArgumentException("Unsupported parameter type: " + type.getName());

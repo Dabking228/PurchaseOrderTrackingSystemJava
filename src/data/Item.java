@@ -82,7 +82,7 @@ public class Item extends BaseItem {
     }
 
     @Override
-    public void printLog(){
+    public void printLog() {
         System.out.println("Item loaded.");
-    }  
+    }
 }

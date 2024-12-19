@@ -45,7 +45,7 @@ public class Account extends BaseItem {
     }
 
     @Override
-    public void printLog(){
+    public void printLog() {
         System.out.println("Account loaded.");
     }
 }
